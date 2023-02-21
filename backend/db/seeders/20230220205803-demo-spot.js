@@ -51,6 +51,34 @@ module.exports = {
         price: 3455,
         avgRating: 4.9,
         previewImage: "image url"
+      },
+      {
+        ownerId: 1,
+        address: "456 Drewery Lane",
+        city: "Palestine",
+        state: "Ohio",
+        country: "United States of America",
+        lat: 40.0495980,
+        lng: 84.7433678,
+        name: "Joe Rogan",
+        description: "Place where trains fall over",
+        price: 1,
+        avgRating: 1.3,
+        previewImage: "image url"
+      },
+      {
+        ownerId: 1,
+        address: "6001 Preston Rd Suite",
+        city: "Plano",
+        state: "Texas",
+        country: "United States of America",
+        lat: 33.0553542,
+        lng: -96.9366722,
+        name: "HEB",
+        description: "Place where dreams come ture",
+        price: 555,
+        avgRating: 4.8,
+        previewImage: "image url"
       }
     ], {});
   },

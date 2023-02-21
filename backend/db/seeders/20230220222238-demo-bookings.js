@@ -17,6 +17,18 @@ module.exports = {
         endDate: new Date(),
       },
       {
+        spotId: 4,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+      {
+        spotId: 5,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+      {
         spotId: 2,
         userId: 2,
         startDate: new Date(),
