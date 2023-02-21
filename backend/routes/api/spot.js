@@ -2,7 +2,7 @@
 const express = require('express');
 
 const { Spot, User } = require('../../db/models');
-const { restoreUser } = require("../../utils/auth.js");
+const { restoreUser, requireAuth } = require("../../utils/auth.js");
 const router = express.Router();
 
 router.use(restoreUser);
@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
 router.get(
     '/current',
     restoreUser,
+    requireAuth,
     async (req, res) => {
         const { user } = req;
         if (user) {
