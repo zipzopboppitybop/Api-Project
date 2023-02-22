@@ -39,13 +39,11 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
-    lat: DataTypes.FLOAT,
-    lng: DataTypes.FLOAT,
+    lat: DataTypes.DECIMAL(9, 7),
+    lng: DataTypes.DECIMAL(9, 7),
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    avgRating: DataTypes.FLOAT,
-    previewImage: DataTypes.STRING
+    price: DataTypes.DECIMAL(18, 2)
   }, {
     sequelize,
     modelName: 'Spot',

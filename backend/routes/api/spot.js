@@ -14,6 +14,23 @@ const validateSpot = [
         .exists({ checkFalsy: true })
         .notEmpty()
         .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('State is required'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isNumeric()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Longitude is not valid'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('City is required'),
     handleValidationErrors
 ];
 const router = express.Router();
@@ -21,9 +38,43 @@ router.use(restoreUser);
 // Get All Spots
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll();
+    const allSpotsData = [];
+    for (let i = 0; i < allSpots.length; i++) {
+        let spot = allSpots[i];
+        let spotData = spot.toJSON();
+        let starsSum = await Review.sum("stars", {
+            where: {
+                spotId: {
+                    [Op.is]: spot.id
+                }
+            }
+        });
+        let starsCount = await Review.count({
+            where: {
+                spotId: {
+                    [Op.is]: spot.id
+                }
+            }
+        });
+        let image = await SpotImage.findOne({
+            attributes: ["url"],
+            where: {
+                spotId: {
+                    [Op.is]: spot.id
+                },
+                preview: {
+                    [Op.is]: true
+                }
+            }
+        });
+
+        spotData.avgRating = starsSum / starsCount;
+        spotData.previewImage = image.url;
+        allSpotsData.push(spotData);
+    }
 
     res.json({
-        Spots: allSpots
+        Spots: allSpotsData
     })
 });
 
@@ -41,10 +92,44 @@ router.get(
                     }
                 }
             });
+            const allSpotsData = [];
+            for (let i = 0; i < allSpots.length; i++) {
+                let spot = allSpots[i];
+                let spotData = spot.toJSON();
+                let starsSum = await Review.sum("stars", {
+                    where: {
+                        spotId: {
+                            [Op.is]: spot.id
+                        }
+                    }
+                });
+                let starsCount = await Review.count({
+                    where: {
+                        spotId: {
+                            [Op.is]: spot.id
+                        }
+                    }
+                });
+                let image = await SpotImage.findOne({
+                    attributes: ["url"],
+                    where: {
+                        spotId: {
+                            [Op.is]: spot.id
+                        },
+                        preview: {
+                            [Op.is]: true
+                        }
+                    }
+                });
+
+                spotData.avgRating = starsSum / starsCount;
+                spotData.previewImage = image.url;
+                allSpotsData.push(spotData);
+            }
 
             //res.status(200);
             return res.json({
-                Spots: allSpots
+                Spots: allSpotsData
             });
         } else {
             const err = new Error();
@@ -70,6 +155,13 @@ router.get(
             return res.json(err);
         }
 
+        let starsSum = await Review.sum("stars", {
+            where: {
+                spotId: {
+                    [Op.is]: currentSpot.id
+                }
+            }
+        });
         let currentSpotData = currentSpot.toJSON();
         currentSpotData.numReviews = await Review.count({
             where: {
@@ -78,7 +170,7 @@ router.get(
                 }
             }
         })
-        currentSpotData.avgStarRating = currentSpotData.avgRating;
+        currentSpotData.avgStarRating = starsSum / currentSpotData.numReviews;
         currentSpotData.SpotImages = await SpotImage.findAll({
             attributes: ["id", "url", "preview"],
             where: {

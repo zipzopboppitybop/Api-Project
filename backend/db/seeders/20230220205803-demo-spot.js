@@ -20,9 +20,7 @@ module.exports = {
         lng: -122.4730327,
         name: "App Academy",
         description: "Place where web developers are created",
-        price: 123,
-        avgRating: 4.5,
-        previewImage: "image url"
+        price: 123
       },
       {
         ownerId: 2,
@@ -34,9 +32,7 @@ module.exports = {
         lng: -100.4730327,
         name: "Universal Studios",
         description: "Place where dreams die",
-        price: 1233,
-        avgRating: 4.7,
-        previewImage: "image url"
+        price: 1233
       },
       {
         ownerId: 3,
@@ -48,9 +44,7 @@ module.exports = {
         lng: -222.4730327,
         name: "Bruh Studios",
         description: "Place where I Live",
-        price: 3455,
-        avgRating: 4.9,
-        previewImage: "image url"
+        price: 3455
       },
       {
         ownerId: 1,
@@ -62,9 +56,7 @@ module.exports = {
         lng: -222.4730327,
         name: "Bruh Studios",
         description: "Place where I Live",
-        price: 3455,
-        avgRating: 4.9,
-        previewImage: "image url"
+        price: 3455
       },
       {
         ownerId: 1,
@@ -76,9 +68,7 @@ module.exports = {
         lng: -222.4730327,
         name: "Bruh Studios",
         description: "Place where I Live",
-        price: 3455,
-        avgRating: 4.9,
-        previewImage: "image url"
+        price: 3455
       }
     ], {});
   },
