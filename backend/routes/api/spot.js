@@ -1,18 +1,19 @@
 // backend/routes/api/spot.js
 const express = require('express');
 const { Op } = require("sequelize");
-const { Spot, User, SpotImage } = require('../../db/models');
+const { Spot, User, SpotImage, Review, Bookings } = require('../../db/models');
 const { restoreUser, requireAuth } = require("../../utils/auth.js");
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const validateLogin = [
-    check('credential')
+const validateSpot = [
+    check('address')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
-    check('password')
+        .withMessage('Street Address is required'),
+    check('city')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a password.'),
+        .notEmpty()
+        .withMessage('City is required'),
     handleValidationErrors
 ];
 const router = express.Router();
@@ -55,6 +56,7 @@ router.get(
     }
 );
 
+//Get Spot by id with owner,images, and number of reviews
 router.get(
     '/:spotId',
     async (req, res) => {
@@ -69,7 +71,13 @@ router.get(
         }
 
         let currentSpotData = currentSpot.toJSON();
-
+        currentSpotData.numReviews = await Review.count({
+            where: {
+                spotId: {
+                    [Op.is]: currentSpot.id
+                }
+            }
+        })
         currentSpotData.avgStarRating = currentSpotData.avgRating;
         currentSpotData.SpotImages = await SpotImage.findAll({
             attributes: ["id", "url", "preview"],
@@ -94,5 +102,27 @@ router.get(
         res.json(currentSpotData);
     }
 );
+
+// Create a Spot
+router.post(
+    '/',
+    validateSpot,
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+        if (user) {
+            const { address, city, state, country, lat, lng, name, description, price } = req.body;
+            const newSpot = await user.createSpot({ ownerId: user.id, address, city, state, country, lat, lng, name, description, price });
+
+            return res.json(newSpot);
+
+        } else {
+            const err = new Error();
+            err.message = 'Authentication required';
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        };
+    });
 
 module.exports = router;
