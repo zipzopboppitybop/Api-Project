@@ -26,11 +26,20 @@ const validateSpot = [
     check('lng')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .isNumeric()
         .withMessage('Longitude is not valid'),
-    check('city')
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 51 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('City is required'),
+        .withMessage('Description is required'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Price per day is required'),
     handleValidationErrors
 ];
 const router = express.Router();
@@ -81,6 +90,7 @@ router.get('/', async (req, res) => {
 // Get All Spots That Belong To Current User
 router.get(
     '/current',
+    requireAuth,
     restoreUser,
     async (req, res) => {
         const { user } = req;
@@ -122,22 +132,19 @@ router.get(
                     }
                 });
 
-                spotData.avgRating = starsSum / starsCount;
-                spotData.previewImage = image.url;
+                if (!image || !starsCount || starsSum) {
+                    spotData.previewImage = "";
+                    spotData.avgRating = 0;
+                }
+
                 allSpotsData.push(spotData);
             }
-
-            //res.status(200);
             return res.json({
                 Spots: allSpotsData
             });
-        } else {
-            const err = new Error();
-            err.message = 'Authentication required';
-            err.statusCode = 401;
-            res.status(401);
-            return res.json(err);
-        };
+        }
+
+
     }
 );
 
@@ -199,6 +206,7 @@ router.get(
 router.post(
     '/',
     validateSpot,
+    requireAuth,
     restoreUser,
     async (req, res) => {
         const { user } = req;
