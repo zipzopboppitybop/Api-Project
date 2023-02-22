@@ -5,6 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { ValidationError } = require('sequelize');
 const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
@@ -30,16 +31,19 @@ const router = express.Router();
 // Sign up
 router.post(
     '/',
-    validateSignup,
     async (req, res) => {
         const { firstName, lastName, email, password, username } = req.body;
         const user = await User.signup({ firstName, lastName, email, username, password });
 
         await setTokenCookie(res, user);
+        let userData = user.toJSON();
+        userData.token = "";
+        delete userData.createdAt;
+        delete userData.updatedAt;
 
-        return res.json({
-            user: user
-        });
+
+
+        return res.json(userData);
     }
 );
 

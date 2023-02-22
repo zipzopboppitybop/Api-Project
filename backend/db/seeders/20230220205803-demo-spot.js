@@ -51,6 +51,34 @@ module.exports = {
         price: 3455,
         avgRating: 4.9,
         previewImage: "image url"
+      },
+      {
+        ownerId: 1,
+        address: "345 Looney Lane",
+        city: "Houston",
+        state: "Texas",
+        country: "United States of America",
+        lat: 37.7643243,
+        lng: -222.4730327,
+        name: "Bruh Studios",
+        description: "Place where I Live",
+        price: 3455,
+        avgRating: 4.9,
+        previewImage: "image url"
+      },
+      {
+        ownerId: 1,
+        address: "345 Looney Lane",
+        city: "Houston",
+        state: "Texas",
+        country: "United States of America",
+        lat: 37.7643243,
+        lng: -222.4730327,
+        name: "Bruh Studios",
+        description: "Place where I Live",
+        price: 3455,
+        avgRating: 4.9,
+        previewImage: "image url"
       }
     ], {});
   },

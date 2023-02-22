@@ -27,6 +27,18 @@ module.exports = {
         userId: 3,
         startDate: new Date(),
         endDate: new Date(),
+      },
+      {
+        spotId: 4,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+      {
+        spotId: 5,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
       }
     ], {});
   },

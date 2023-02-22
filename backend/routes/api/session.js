@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -31,7 +31,7 @@ router.post(
             const err = new Error('Login failed');
             err.status = 401;
             err.title = 'Login failed';
-            err.errors = { credential: 'The provided credentials were invalid.' };
+            err.errors = { credential: 'Invalid credenitals' };
             return next(err);
         }
 
@@ -61,7 +61,13 @@ router.get(
             return res.json({
                 user: user.toSafeObject()
             });
-        } else return res.json({ user: null });
+        } else {
+            const err = new Error();
+            err.message = 'Authentication required';
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        };
     }
 );
 
