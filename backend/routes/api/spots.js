@@ -1,13 +1,22 @@
 const express = require('express');
 const { Op } = require("sequelize");
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, Review, User, sequelize, SpotImage } = require('../../db/models');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const user = require('../../db/models/user');
+const validateLogin = [
+    check('credential')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Please provide a valid email or username.'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a password.'),
+    handleValidationErrors
+];
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", restoreUser, async (req, res) => {
     const allSpots = await Spot.findAll({
         include: [
             {
@@ -55,5 +64,17 @@ router.get("/", async (req, res) => {
 
     res.json(spotData);
 })
+
+router.get(
+    '/current',
+    restoreUser,
+    requireAuth,
+    (req, res) => {
+        const { user } = req;
+        if (user) {
+            return res.json("hello")
+        } else return res.json({ user: null });
+    }
+);
 
 module.exports = router;
