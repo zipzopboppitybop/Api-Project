@@ -4,14 +4,15 @@ const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static async signup({ username, email, password }) {
-      const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({
-        username,
-        email,
-        hashedPassword
-      });
-      return await User.scope('currentUser').findByPk(user.id);
+    toSafeObject() {
+      const { id, firstName, lastName, username, email } = this; // context will be the User instance
+      return { id, firstName, lastName, username, email };
+    }
+    validatePassword(password) {
+      return bcrypt.compareSync(password, this.hashedPassword.toString());
+    }
+    static getCurrentUserById(id) {
+      return User.scope("currentUser").findByPk(id);
     }
     static async login({ credential, password }) {
       const { Op } = require('sequelize');
@@ -27,15 +28,16 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
-    validatePassword(password) {
-      return bcrypt.compareSync(password, this.hashedPassword.toString());
-    }
-    static getCurrentUserById(id) {
-      return User.scope("currentUser").findByPk(id);
-    }
-    toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+    static async signup({ firstName, lastName, username, email, password }) {
+      const hashedPassword = bcrypt.hashSync(password);
+      const user = await User.create({
+        firstName,
+        lastName,
+        username,
+        email,
+        hashedPassword
+      });
+      return await User.scope('currentUser').findByPk(user.id);
     }
     static associate(models) {
       // define association here
@@ -44,6 +46,20 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [2, 30]
+        }
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [2, 30]
+        }
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
