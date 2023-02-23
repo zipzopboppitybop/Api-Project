@@ -22,13 +22,7 @@ router.get("/", async (req, res) => {
             }
         });
         const users = await spot.getUsers();
-        let rating = 0;
-
-        for (let j = 0; j < users.length; j++) {
-            const user = users[j];
-            const stars = user.Review.stars;
-            rating += stars;
-        }
+        const usersSum = users.length
 
         const spotData = {
             id: spot.id,
@@ -44,7 +38,7 @@ router.get("/", async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
-            avgRating: rating / users.length,
+            avgRating: usersSum,
             previewImage: image[0].url
         };
 
