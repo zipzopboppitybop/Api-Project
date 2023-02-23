@@ -339,6 +339,7 @@ router.put(
     }
 )
 
+//Delete a Spot
 router.delete(
     '/:spotId',
     restoreUser,
