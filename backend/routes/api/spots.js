@@ -8,7 +8,13 @@ const user = require('../../db/models/user');
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    const allSpots = await Spot.findAll();
+    const allSpots = await Spot.findAll({
+        include: [
+            {
+                model: Review
+            }
+        ]
+    });
     const payload = [];
 
     for (let i = 0; i < allSpots.length; i++) {
