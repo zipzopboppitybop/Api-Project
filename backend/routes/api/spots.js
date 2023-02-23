@@ -200,6 +200,7 @@ router.get(
     }
 )
 
+//Create A Spot
 router.post(
     '/',
     requireAuth,
@@ -216,6 +217,48 @@ router.post(
             res.json(newSpot)
         }
 
+    }
+)
+
+//Create A Spot (Can only create image on spot you control)
+router.post(
+    '/:spotId/images',
+    requireAuth,
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+        if (user) {
+            const currentSpot = await Spot.findByPk(req.params.spotId)
+
+            if (!currentSpot) {
+                const err = Error();
+                err.message = "Spot couldn't be found";
+                err.statusCode = 404;
+                res.status(404);
+                res.json(err);
+            }
+
+            if (user.id !== currentSpot.ownerId) {
+                const err = new Error();
+                err.message = "Authentication required";
+                err.statusCode = 401;
+                res.status(401);
+                res.json(err);
+            }
+
+            const { url, preview } = req.body;
+
+            const newImage = await SpotImage.create({
+                url, preview
+            })
+
+            const newImageData = newImage.toJSON();
+
+            delete newImageData.createdAt;
+            delete newImageData.updatedAt;
+
+            res.json(newImageData);
+        }
     }
 )
 module.exports = router;
