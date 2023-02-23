@@ -8,9 +8,33 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     const allSpots = await Spot.findAll();
-    const allSpotsData = [];
+    const payload = [];
 
-    res.json(allSpots);
+    for (let i = 0; i < allSpots.length; i++) {
+        const spot = allSpots[i];
+        const images = await spot.getSpotImages({
+            attributes: ["url"]
+        });
+        const spotData = {
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            previewImage: images
+        };
+        payload.push(spotData);
+    }
+
+    res.json(payload);
 })
 
 module.exports = router;
