@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require("sequelize");
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot } = require('../../db/models');
+const { Spot, Review, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const user = require('../../db/models/user');
@@ -22,6 +22,19 @@ router.get("/", async (req, res) => {
             }
         });
 
+        const reviews = await Review.findOne({
+            where: {
+                spotId: {
+                    [Op.is]: spot.id
+                }
+            },
+            attributes: {
+                include: [
+                    [sequelize.fn('AVG', sequelize.col('stars')), "avgRating"]
+                ]
+            }
+        })
+
         const spotData = {
             id: spot.id,
             ownerId: spot.ownerId,
@@ -36,7 +49,7 @@ router.get("/", async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
-            avgRating: usersSum,
+            avgRating: reviews.toJSON().avgRating,
             previewImage: image[0].url
         };
 
