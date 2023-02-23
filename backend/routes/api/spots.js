@@ -307,29 +307,33 @@ router.put(
         if (address) {
             currentSpot.address = address;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (city) {
+            currentSpot.city = city;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (state) {
+            currentSpot.state = state;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (country) {
+            currentSpot.country = country;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (lat) {
+            currentSpot.lat = lat;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (lng) {
+            currentSpot.lng = lng;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (name) {
+            currentSpot.name = name;
         }
-        if (address) {
-            currentSpot.address = address;
+        if (description) {
+            currentSpot.description = description;
         }
+        if (price) {
+            currentSpot.price = price;
+        }
+        await currentSpot.save();
 
-        res.json(newSpot)
+        res.json(currentSpot)
 
 
     }
