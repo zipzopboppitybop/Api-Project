@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require("sequelize");
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, Review, sequelize } = require('../../db/models');
+const { Spot, Review, User, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const user = require('../../db/models/user');
@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     const allSpots = await Spot.findAll({
         include: [
             {
-                model: Review
+                model: User
             }
         ]
     });
