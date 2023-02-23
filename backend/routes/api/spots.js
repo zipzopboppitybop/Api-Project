@@ -221,7 +221,7 @@ router.post(
     }
 )
 
-//Create A Spot (Can only create image on spot you control)
+//Create An Image on Spot (Can only create image on spot you control)
 router.post(
     '/:spotId/images',
     restoreUser,
@@ -256,7 +256,7 @@ router.post(
         const { url, preview } = req.body;
 
         const newImage = await SpotImage.create({
-            url, preview
+            spotId: currentSpot.id, url, preview,
         })
 
         const newImageData = newImage.toJSON();
