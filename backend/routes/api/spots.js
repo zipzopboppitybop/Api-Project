@@ -73,62 +73,68 @@ router.get("/", restoreUser, async (req, res) => {
 router.get(
     '/current',
     restoreUser,
-    requireAuth,
     async (req, res) => {
         const { user } = req;
-        if (user) {
-            const userSpots = await Spot.findAll({
-                where: {
-                    ownerId: user.id
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            res.json(err);
+        }
+
+        const userSpots = await Spot.findAll({
+            where: {
+                ownerId: user.id
+            },
+            include: [
+                {
+                    model: Review
                 },
-                include: [
-                    {
-                        model: Review
-                    },
-                    {
-                        model: SpotImage
-                    }
+                {
+                    model: SpotImage
+                }
+            ]
+        })
+        const spotData = [];
+
+        for (let i = 0; i < userSpots.length; i++) {
+            const spot = userSpots[i];
+
+            spotData.push(spot.toJSON());
+        }
+        for (let i = 0; i < spotData.length; i++) {
+            const spot = spotData[i];
+            if (spot.SpotImages.length > 0) {
+                for (let j = 0; j < spot.SpotImages.length; j++) {
+                    const image = spot.SpotImages[j];
+
+                    if (image.preview === true) spot.previewImage = image.url;
+                }
+                if (!spot.previewImage) spot.previewImage = "No Preview Image";
+            } else spot.previewImage = "No Preview Image";
+
+            const ratings = await Review.findOne({
+                where: {
+                    spotId: spot.id
+                },
+                attributes: [
+                    [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
                 ]
             })
-            const spotData = [];
-
-            for (let i = 0; i < userSpots.length; i++) {
-                const spot = userSpots[i];
-
-                spotData.push(spot.toJSON());
-            }
-            for (let i = 0; i < spotData.length; i++) {
-                const spot = spotData[i];
-                if (spot.SpotImages.length > 0) {
-                    for (let j = 0; j < spot.SpotImages.length; j++) {
-                        const image = spot.SpotImages[j];
-
-                        if (image.preview === true) spot.previewImage = image.url;
-                    }
-                    if (!spot.previewImage) spot.previewImage = "No Preview Image";
-                } else spot.previewImage = "No Preview Image";
-
-                const ratings = await Review.findOne({
-                    where: {
-                        spotId: spot.id
-                    },
-                    attributes: [
-                        [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
-                    ]
-                })
-                let reviewAvg = ratings.toJSON().avgRating
-                if (reviewAvg) spot.avgRating = reviewAvg;
-                else spot.avgRating = "No Review Yet"
+            let reviewAvg = ratings.toJSON().avgRating
+            if (reviewAvg) spot.avgRating = reviewAvg;
+            else spot.avgRating = "No Review Yet"
 
 
-                delete spot.SpotImages;
-                delete spot.Reviews;
-            }
+            delete spot.SpotImages;
+            delete spot.Reviews;
+        }
 
-            return res.json({
-                Spots: spotData
-            })
-        } else return res.json({ user: null });
+        return res.json({
+            Spots: spotData
+        })
     }
 );
 
@@ -204,24 +210,29 @@ router.get(
 //Create A Spot
 router.post(
     '/',
-    requireAuth,
+
     restoreUser,
     async (req, res) => {
         const { user } = req;
-        if (user) {
-            const { address, city, state, country, lat, lng, name, description, price } = req.body;
-
-            const newSpot = await Spot.create({
-                ownerId: user.id, address, city, state, country, lat, lng, name, description, price
-            })
-
-            res.json(newSpot)
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            res.json(err);
         }
 
+        const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+        const newSpot = await Spot.create({
+            ownerId: user.id, address, city, state, country, lat, lng, name, description, price
+        })
+
+        res.json(newSpot)
     }
 )
 
-//Create An Image on Spot (Can only create image on spot you control)
+//Create An Image on Spot (Can only create image on spot you own)
 router.post(
     '/:spotId/images',
     restoreUser,
@@ -247,9 +258,9 @@ router.post(
 
         if (user.id !== currentSpot.ownerId) {
             const err = new Error();
-            err.message = "Authentication required";
-            err.statusCode = 401;
-            res.status(401);
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403);
             res.json(err);
         }
 
@@ -272,13 +283,12 @@ router.post(
 //Edit A Spot
 router.put(
     '/:spotId',
-    requireAuth,
     restoreUser,
     async (req, res) => {
         const { user } = req;
         if (!user) {
             const err = new Error();
-            err.message = "Authorization required";
+            err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
             res.json(err);
@@ -347,7 +357,7 @@ router.delete(
         const { user } = req;
         if (!user) {
             const err = new Error();
-            err.message = "Authorization required";
+            err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
             res.json(err);
