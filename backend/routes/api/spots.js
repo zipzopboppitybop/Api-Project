@@ -21,8 +21,6 @@ router.get("/", async (req, res) => {
                 }
             }
         });
-        const users = await spot.getUsers();
-        const usersSum = users.length
 
         const spotData = {
             id: spot.id,
