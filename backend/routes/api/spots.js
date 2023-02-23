@@ -12,8 +12,13 @@ router.get("/", async (req, res) => {
 
     for (let i = 0; i < allSpots.length; i++) {
         const spot = allSpots[i];
-        const images = await spot.getSpotImages({
-            attributes: ["url"]
+        const image = await spot.getSpotImages({
+            attributes: ["url"],
+            where: {
+                preview: {
+                    [Op.is]: true
+                }
+            }
         });
         const spotData = {
             id: spot.id,
@@ -29,7 +34,7 @@ router.get("/", async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
-            previewImage: images
+            previewImage: image[0].url
         };
         payload.push(spotData);
     }
