@@ -9,48 +9,51 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     const allSpots = await Spot.findAll({
-
+        include: [
+            {
+                model: Review
+            },
+            {
+                model: SpotImage
+            }
+        ]
     });
 
-    const payload = [];
+    const spotData = [];
 
     for (let i = 0; i < allSpots.length; i++) {
         const spot = allSpots[i];
-        const spotData = spot.toJSON();
 
-        const image = await spot.getSpotImages({
-            attributes: ["url"],
+        spotData.push(spot.toJSON());
+    }
+
+    for (let i = 0; i < spotData.length; i++) {
+        const spot = spotData[i];
+        if (spot.SpotImages.length > 0) {
+            for (let j = 0; j < spot.SpotImages.length; j++) {
+                const image = spot.SpotImages[j];
+
+                if (image.preview === true) spot.previewImage = image.url;
+            }
+            if (!spot.previewImage) spot.previewImage = "No Preview Image";
+        } else spot.previewImage = "No Preview Image";
+
+        const ratings = await Review.findOne({
             where: {
-                preview: {
-                    [Op.is]: true
-                }
-            },
-            limit: 1
-        });
-        const reviews = await Review.findOne({
-            where: {
-                spotId: {
-                    [Op.is]: spot.id
-                }
+                spotId: spot.id
             },
             attributes: [
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
             ]
-        });
+        })
 
-        if (!image) {
-            spotData.previewImage = ""
-        }
-        if (!reviews) {
-            spotData.avgRating = 0
-        }
+        spot.avgRating = ratings.toJSON().avgRating;
 
-        spotData.avgRating = reviews.toJSON().avgRating;
-        spotData.previewImage = image[0].url;
-        payload.push(spotData);
+        delete spot.SpotImages;
+        delete spot.Reviews;
     }
 
-    res.json(payload);
+    res.json(spotData);
 })
 
 module.exports = router;
