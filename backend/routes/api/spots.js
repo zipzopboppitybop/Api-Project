@@ -14,6 +14,7 @@ const validateLogin = [
         .withMessage('Please provide a password.'),
     handleValidationErrors
 ];
+//Work on errors
 const router = express.Router();
 
 router.get("/", restoreUser, async (req, res) => {
@@ -199,4 +200,22 @@ router.get(
     }
 )
 
+router.post(
+    '/',
+    requireAuth,
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+        if (user) {
+            const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+            const newSpot = await Spot.create({
+                ownerId: user.id, address, city, state, country, lat, lng, name, description, price
+            })
+
+            res.json(newSpot)
+        }
+
+    }
+)
 module.exports = router;
