@@ -256,6 +256,7 @@ router.post(
 
             delete newImageData.createdAt;
             delete newImageData.updatedAt;
+            delete newImageData.spotId;
 
             res.json(newImageData);
         }
