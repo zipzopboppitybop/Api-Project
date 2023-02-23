@@ -339,4 +339,44 @@ router.put(
     }
 )
 
+router.delete(
+    '/:spotId',
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+        if (!user) {
+            const err = new Error();
+            err.message = "Authorization required";
+            err.statusCode = 401;
+            res.status(401);
+            res.json(err);
+        }
+
+        const currentSpot = await Spot.findByPk(req.params.spotId)
+
+        if (!currentSpot) {
+            const err = Error();
+            err.message = "Spot couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            res.json(err);
+        }
+
+        if (user.id !== currentSpot.ownerId) {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403);
+            res.json(err);
+        }
+
+        await currentSpot.destroy();
+
+        res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
+    }
+)
+
 module.exports = router;
