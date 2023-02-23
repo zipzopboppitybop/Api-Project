@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       });
+      User.belongsToMany(
+        models.Spot,
+        { through: models.Review }
+      );
     }
   };
 

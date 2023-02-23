@@ -1,9 +1,10 @@
 const express = require('express');
 const { Op } = require("sequelize");
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage } = require('../../db/models');
+const { Spot } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const user = require('../../db/models/user');
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -20,6 +21,14 @@ router.get("/", async (req, res) => {
                 }
             }
         });
+        const users = await spot.getUsers();
+        let avgRating = 0;
+
+        for (let j = 0; j < users.length; j++) {
+            const user = users[j];
+            avgRating += user.Review.stars;
+        }
+
         const spotData = {
             id: spot.id,
             ownerId: spot.ownerId,
@@ -34,8 +43,10 @@ router.get("/", async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
+            avgRating: avgRating / users.length,
             previewImage: image[0].url
         };
+
         payload.push(spotData);
     }
 
