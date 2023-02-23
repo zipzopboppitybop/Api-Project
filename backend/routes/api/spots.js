@@ -67,9 +67,11 @@ router.get("/", restoreUser, async (req, res) => {
     res.json(spotData);
 })
 
+//Get Current User's Spots
 router.get(
     '/current',
     restoreUser,
+    requireAuth,
     async (req, res) => {
         const { user } = req;
         if (user) {
@@ -127,5 +129,74 @@ router.get(
         } else return res.json({ user: null });
     }
 );
+
+//Get Details Of Current Spot From Id
+router.get(
+    '/:spotId',
+    async (req, res) => {
+        const currentSpot = await Spot.findByPk(req.params.spotId, {
+            include: [
+                {
+                    model: Review
+                },
+                {
+                    model: User,
+                    attributes: ["id", "firstName", "lastName"]
+                }
+            ],
+        })
+
+        if (!currentSpot) {
+            const err = Error();
+            err.message = "Spot couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            res.json(err);
+        }
+
+        const currentSpotData = currentSpot.toJSON();
+
+        const ratings = await Review.findOne({
+            where: {
+                spotId: currentSpot.id
+            },
+            attributes: [
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'],
+            ]
+        })
+
+        const count = await Review.findOne({
+            where: {
+                spotId: currentSpot.id
+            },
+            attributes: [
+                [sequelize.fn("COUNT", sequelize.col("id")), 'numReviews']
+            ]
+        })
+
+        const currentSpotImages = await SpotImage.findAll({
+            where: {
+                spotId: currentSpot.id
+            },
+            attributes: ["id", "url", "preview"]
+        })
+
+        let reviewAvg = ratings.toJSON().avgRating
+        let reviewCount = count.toJSON().numReviews
+
+        if (reviewCount) currentSpotData.numReviews = reviewCount;
+        else currentSpotData.numReviews = "No Reviews Yet"
+        if (reviewAvg) currentSpotData.avgStarRating = reviewAvg;
+        else currentSpotData.avgRating = "No Reviews Yet"
+
+        currentSpotData.SpotImages = currentSpotImages
+        currentSpotData.Owner = currentSpotData.User
+
+        delete currentSpotData.User
+        delete currentSpotData.Reviews;
+
+        res.json(currentSpotData)
+    }
+)
 
 module.exports = router;
