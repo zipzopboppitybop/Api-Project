@@ -161,7 +161,7 @@ router.get(
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const userSpots = await Spot.findAll({
@@ -335,7 +335,7 @@ router.post(
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -538,7 +538,7 @@ router.delete(
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const currentSpot = await Spot.findByPk(req.params.spotId)
@@ -548,7 +548,7 @@ router.delete(
             err.message = "Spot couldn't be found";
             err.statusCode = 404;
             res.status(404);
-            res.json(err);
+            return res.json(err);
         }
 
         if (user.id !== currentSpot.ownerId) {
@@ -556,7 +556,7 @@ router.delete(
             err.message = "Forbidden";
             err.statusCode = 403;
             res.status(403);
-            res.json(err);
+            return res.json(err);
         }
 
         await currentSpot.destroy();

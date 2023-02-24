@@ -17,7 +17,7 @@ router.get(
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const userReviews = await Review.findAll({
@@ -57,10 +57,9 @@ router.get(
                     }
                 }
             })
-
-            review.Spot.previewImage = previewImage.url;
+            if (!previewImage) review.Spot.previewImage = "No Preview Image Yet"
+            else review.Spot.previewImage = previewImage.url;
         }
-
 
         res.json({
             Reviews: reviewData
@@ -68,4 +67,60 @@ router.get(
     }
 )
 
+//Create Image to Review
+router.post(
+    '/:reviewId/images',
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        }
+
+        const currentReview = await Review.findByPk(req.params.reviewId, {
+            include: {
+                model: ReviewImage
+            }
+        });
+
+        if (!currentReview) {
+            const err = new Error();
+            err.message = "Review couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            return res.json(err);
+        }
+
+        if (currentReview.userId !== user.id) {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
+
+        const reviewImagesLength = currentReview.ReviewImages;
+
+        if (reviewImagesLength.length > 10) {
+            const err = new Error();
+            err.message = "Maximum number of images for this resource was reached";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
+
+        const { url } = req.body;
+
+        const newReviewImage = await ReviewImage.create({
+            reviewId: currentReview.id, url: url
+        })
+
+        res.json(newReviewImage);
+    }
+)
 module.exports = router;
