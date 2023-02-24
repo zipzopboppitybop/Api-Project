@@ -412,17 +412,29 @@ router.post(
             return res.json(err);
         }
 
-        const currentSpot = await Spot.findByPk(req.params.spotId, {
-            include: {
-                model: Review
-            }
-        })
+        const currentSpot = await Spot.findByPk(req.params.spotId)
+        if (!currentSpot) {
+            const err = Error();
+            err.message = "Spot couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            return res.json(err);
+        }
+
         const reviews = await Review.findOne({
             where: {
                 userId: user.id,
                 spotId: currentSpot.id
             }
         })
+
+        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
+            const err = new Error();
+            err.message = "User already has a review for this spot";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
 
         if (!reviews) {
             const { review, stars } = req.body;
@@ -435,21 +447,7 @@ router.post(
             res.json(newReview);
         }
 
-        if (!currentSpot) {
-            const err = Error();
-            err.message = "Spot couldn't be found";
-            err.statusCode = 404;
-            res.status(404);
-            return res.json(err);
-        }
 
-        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
-            const err = new Error();
-            err.message = "User already has a review for this spot";
-            err.statusCode = 403;
-            res.status(403);
-            return res.json(err);
-        }
     }
 )
 
