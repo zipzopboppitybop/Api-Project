@@ -95,6 +95,18 @@ const validateReview = [
 
     handleValidationErrors
 ];
+const validateSpotImage = [
+    check('url')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Url is required'),
+    check('preview')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isBoolean()
+        .withMessage('Preview must be true or false'),
+    handleValidationErrors
+];
 //Work on errors
 const router = express.Router();
 
@@ -352,6 +364,7 @@ router.post(
 router.post(
     '/:spotId/images',
     restoreUser,
+    validateSpotImage,
     async (req, res) => {
         const { user } = req;
         if (!user) {

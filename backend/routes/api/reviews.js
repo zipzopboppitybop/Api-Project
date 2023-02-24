@@ -5,6 +5,25 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isInt({ min: 1, max: 5 })
+        .withMessage("Stars must be an integer from 1 to 5"),
+
+    handleValidationErrors
+];
+const validateReviewImage = [
+    check('url')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Url is required'),
+]
 
 router.get(
     '/current',
@@ -70,6 +89,7 @@ router.get(
 //Create Image to Review
 router.post(
     '/:reviewId/images',
+    validateReviewImage,
     restoreUser,
     async (req, res) => {
         const { user } = req;
@@ -115,12 +135,111 @@ router.post(
         }
 
         const { url } = req.body;
-
+        if (!url) {
+            const err = new Error();
+            err.message = "Validation Error";
+            err.statusCode = 400;
+            err.errors = { url: "Url is required" };
+            res.status(400);
+            return res.json(err);
+        }
         const newReviewImage = await ReviewImage.create({
             reviewId: currentReview.id, url: url
         })
 
-        res.json(newReviewImage);
+        const reviewImageData = newReviewImage.toJSON();
+
+        delete reviewImageData.createdAt;
+        delete reviewImageData.updatedAt;
+        delete reviewImageData.reviewId;
+
+        res.json(reviewImageData);
+    }
+)
+
+router.put(
+    '/:reviewId',
+    restoreUser,
+    validateReview,
+    async (req, res) => {
+        const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401)
+            return res.json(err);
+        }
+
+        const currentReview = await Review.findByPk(req.params.reviewId);
+
+        if (!currentReview) {
+            const err = new Error();
+            err.message = "Review couldn't be found";
+            err.statusCode = 404;
+            res.status(404)
+            return res.json(err);
+        }
+
+        if (user.id !== currentReview.userId) {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403)
+            return res.json(err);
+        }
+
+        const { review, stars } = req.body;
+
+        if (review !== undefined) currentReview.review = review;
+        if (stars !== undefined) currentReview.stars = stars;
+
+        await currentReview.save();
+
+        res.json(currentReview)
+    }
+)
+
+router.delete(
+    '/:reviewId',
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401)
+            return res.json(err);
+        }
+
+        const currentReview = await Review.findByPk(req.params.reviewId);
+
+        if (!currentReview) {
+            const err = new Error();
+            err.message = "Review couldn't be found";
+            err.statusCode = 404;
+            res.status(404)
+            return res.json(err);
+        }
+
+        if (user.id !== currentReview.userId) {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403)
+            return res.json(err);
+        }
+
+        await currentReview.destroy();
+
+        res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
+
     }
 )
 module.exports = router;
