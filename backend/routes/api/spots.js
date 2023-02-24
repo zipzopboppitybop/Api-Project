@@ -4,7 +4,6 @@ const { Spot, Review, User, sequelize, SpotImage } = require('../../db/models');
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const e = require('express');
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
@@ -86,7 +85,7 @@ const validateSpotEdit = [
 //Work on errors
 const router = express.Router();
 
-router.get("/", restoreUser, async (req, res) => {
+router.get("/", async (req, res) => {
     const allSpots = await Spot.findAll({
         include: [
             {
