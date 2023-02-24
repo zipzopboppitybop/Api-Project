@@ -45,7 +45,7 @@ const validateSpot = [
     check('price')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Price is required'),
+        .withMessage('Price per day is required'),
     handleValidationErrors
 ];
 const validateSpotEdit = [

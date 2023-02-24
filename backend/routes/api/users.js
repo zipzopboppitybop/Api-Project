@@ -33,6 +33,10 @@ router.post(
         .exists({ checkFalsy: true })
         .isEmail()
         .withMessage('Invalid email'),
+    check('userName')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Username is required'),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
