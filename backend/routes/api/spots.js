@@ -5,14 +5,82 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const e = require('express');
-const validateLogin = [
-    check('credential')
+const validateSpot = [
+    check('address')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
-    check('password')
+        .withMessage('Street address is required'),
+    check('city')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a password.'),
+        .notEmpty()
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Country is required'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Name is required'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 50 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Description is required'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Price is required'),
+    handleValidationErrors
+];
+const validateSpotEdit = [
+    check('address')
+
+        .notEmpty()
+        .withMessage('Street address is required'),
+    check('city')
+        .isEmpty()
+        .withMessage('City is required'),
+    check('state')
+        .isEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .isEmpty()
+        .withMessage('Country is required'),
+    check('lat')
+        .isEmpty()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .isEmpty()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .isEmpty()
+        .withMessage('Name is required'),
+    check('name')
+        .isEmpty()
+        .isLength({ max: 50 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .isEmpty()
+        .withMessage('Description is required'),
+    check('price')
+        .isEmpty()
+        .withMessage('Price is required'),
     handleValidationErrors
 ];
 //Work on errors
@@ -159,7 +227,7 @@ router.get(
             err.message = "Spot couldn't be found";
             err.statusCode = 404;
             res.status(404);
-            res.json(err);
+            return res.json(err);
         }
 
         const currentSpotData = currentSpot.toJSON();
@@ -169,7 +237,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'],
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
             ]
         })
 
@@ -189,13 +257,13 @@ router.get(
             attributes: ["id", "url", "preview"]
         })
 
-        let reviewAvg = ratings.toJSON().avgRating
+        let reviewAvg = ratings.toJSON().avgStarRating
         let reviewCount = count.toJSON().numReviews
 
         if (reviewCount) currentSpotData.numReviews = reviewCount;
         else currentSpotData.numReviews = "No Reviews Yet"
         if (reviewAvg) currentSpotData.avgStarRating = reviewAvg;
-        else currentSpotData.avgRating = "No Reviews Yet"
+        else currentSpotData.avgStarRating = "No Reviews Yet"
 
         currentSpotData.SpotImages = currentSpotImages
         currentSpotData.Owner = currentSpotData.User
@@ -210,7 +278,7 @@ router.get(
 //Create A Spot
 router.post(
     '/',
-
+    validateSpot,
     restoreUser,
     async (req, res) => {
         const { user } = req;
@@ -243,7 +311,7 @@ router.post(
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const currentSpot = await Spot.findByPk(req.params.spotId)
@@ -253,7 +321,7 @@ router.post(
             err.message = "Spot couldn't be found";
             err.statusCode = 404;
             res.status(404);
-            res.json(err);
+            return res.json(err);
         }
 
         if (user.id !== currentSpot.ownerId) {
@@ -261,7 +329,7 @@ router.post(
             err.message = "Forbidden";
             err.statusCode = 403;
             res.status(403);
-            res.json(err);
+            return res.json(err);
         }
 
         const { url, preview } = req.body;
@@ -286,12 +354,19 @@ router.put(
     restoreUser,
     async (req, res) => {
         const { user } = req;
+        let errorsLength = 0;
+        const validationError = new Error();
+
+        validationError.message = "Validation Error"
+        validationError.statusCode = 400;
+        validationError.errors = {};
+
         if (!user) {
             const err = new Error();
             err.message = "Authentication required";
             err.statusCode = 401;
             res.status(401);
-            res.json(err);
+            return res.json(err);
         }
 
         const currentSpot = await Spot.findByPk(req.params.spotId)
@@ -301,7 +376,7 @@ router.put(
             err.message = "Spot couldn't be found";
             err.statusCode = 404;
             res.status(404);
-            res.json(err);
+            return res.json(err);
         }
 
         if (user.id !== currentSpot.ownerId) {
@@ -309,43 +384,41 @@ router.put(
             err.message = "Forbidden";
             err.statusCode = 403;
             res.status(403);
-            res.json(err);
+            return res.json(err);
         }
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
         if (address) {
-            currentSpot.address = address;
+            if (address !== undefined) {
+                currentSpot.address = address;
+            } else if (address === undefined) {
+                console.log(address);
+                errorsLength += 1;
+                validationError.errors.address = "Street address is required";
+            }
+        } else {
+            console.log(address);
+            errorsLength += 1;
+            validationError.errors.address = "Street address is required";
         }
-        if (city) {
-            currentSpot.city = city;
-        }
-        if (state) {
-            currentSpot.state = state;
-        }
-        if (country) {
-            currentSpot.country = country;
-        }
-        if (lat) {
-            currentSpot.lat = lat;
-        }
-        if (lng) {
-            currentSpot.lng = lng;
-        }
-        if (name) {
-            currentSpot.name = name;
-        }
-        if (description) {
-            currentSpot.description = description;
-        }
-        if (price) {
-            currentSpot.price = price;
+
+        if (city !== undefined) currentSpot.city = city;
+        if (state !== undefined) currentSpot.state = state;
+        if (country !== undefined) currentSpot.country = country;
+        if (lat !== undefined) currentSpot.lat = lat;
+        if (lng !== undefined) currentSpot.lng = lng;
+        if (name !== undefined) currentSpot.name = name;
+        if (description !== undefined) currentSpot.description = description;
+        if (price !== undefined) currentSpot.price = price;
+
+        if (errorsLength > 0) {
+            res.status(400)
+            return res.json(validationError);
         }
         await currentSpot.save();
 
-        res.json(currentSpot)
-
-
+        res.json(currentSpot);
     }
 )
 

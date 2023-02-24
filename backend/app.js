@@ -57,11 +57,13 @@ app.use((_req, _res, next) => {
 app.use((err, _req, _res, next) => {
     // check if error is a Sequelize error:
     if (err instanceof ValidationError) {
-        let errors = {};
+        let errors = {}
         for (let error of err.errors) {
             errors[error.path] = error.message;
         }
         err.title = 'Validation error';
+        err.message = "User already exists"
+        err.statusCode = 400;
         err.errors = errors;
     }
     next(err);
@@ -69,14 +71,27 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
-    res.status(err.status || 500);
-    //console.error(err);
-    res.json({
-        title: err.title || 'Server Error',
-        message: err.message,
-        errors: err.errors,
-        stack: isProduction ? null : err.stack
-    });
+    if (err.status === 400) {
+        res.status(400);
+        res.json({
+            //title: err.title || 'Server Error',
+            message: err.message,
+            statusCode: err.status,
+            errors: err.errors,
+            stack: isProduction ? null : err.stack
+        });
+    } else {
+        res.status(403);
+        err.statusCode = 403;
+        res.json({
+            //title: err.title || 'Server Error',
+            message: err.message,
+            statusCode: 403,
+            errors: err.errors,
+            stack: isProduction ? null : err.stack
+        });
+    }
+
 });
 
 module.exports = app;
