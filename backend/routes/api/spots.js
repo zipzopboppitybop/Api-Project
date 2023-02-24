@@ -82,6 +82,19 @@ const validateSpotEdit = [
         .withMessage('Price is required'),
     handleValidationErrors
 ];
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isInt({ min: 1, max: 5 })
+        .withMessage("Stars must be an integer from 1 to 5"),
+
+    handleValidationErrors
+];
 //Work on errors
 const router = express.Router();
 
@@ -380,6 +393,63 @@ router.post(
         delete newImageData.spotId;
 
         res.json(newImageData);
+    }
+)
+
+//Create a Review On Spot
+router.post(
+    '/:spotId/reviews',
+    validateReview,
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        }
+
+        const currentSpot = await Spot.findByPk(req.params.spotId, {
+            include: {
+                model: Review
+            }
+        })
+        const reviews = await Review.findOne({
+            where: {
+                userId: user.id,
+                spotId: currentSpot.id
+            }
+        })
+
+        if (!reviews) {
+            const { review, stars } = req.body;
+
+            const newReview = await Review.create({
+                userId: user.id, spotId: currentSpot.id, review, stars
+            })
+
+
+            res.json(newReview);
+        }
+
+        if (!currentSpot) {
+            const err = Error();
+            err.message = "Spot couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            return res.json(err);
+        }
+
+        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
+            const err = new Error();
+            err.message = "User already has a review for this spot";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
     }
 )
 
