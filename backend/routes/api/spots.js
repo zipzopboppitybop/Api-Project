@@ -296,8 +296,26 @@ router.get(
             ]
         })
 
+        const reviewData = [];
+
+        for (let i = 0; i < spotReviews.length; i++) {
+            const review = spotReviews[i];
+
+            reviewData.push(review.toJSON());
+        }
+        for (let i = 0; i < reviewData.length; i++) {
+            const review = reviewData[i];
+            const reviewImages = await ReviewImage.findAll({
+                where: {
+                    reviewId: review.id
+                }
+            })
+            if (reviewImages.length > 0) review.ReviewImages = reviewImages
+            else review.ReviewImages = "No Review Images Yet";
+        }
+
         res.json({
-            Reviews: spotReviews
+            Reviews: reviewData
         });
     }
 )

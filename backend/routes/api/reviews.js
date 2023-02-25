@@ -53,8 +53,7 @@ router.get(
                     attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"]
                 },
                 {
-                    model: ReviewImage,
-                    attributes: ["id", "url"]
+                    model: ReviewImage
                 }
             ]
         })
@@ -78,9 +77,16 @@ router.get(
             })
             if (!previewImage) review.Spot.previewImage = "No Preview Image Yet"
             else review.Spot.previewImage = previewImage.url;
+
+            const reviewImages = await ReviewImage.findAll({
+                where: {
+                    reviewId: review.id
+                },
+                attributes: ["id", "url"]
+            })
+            if (reviewImages.length > 0) review.ReviewImages = reviewImages
+            else review.ReviewImages = "No Review Images Yet";
         }
-
-
 
         res.json({
             Reviews: reviewData
@@ -88,7 +94,7 @@ router.get(
     }
 )
 
-//Create Image to Review
+//Create Image for Review
 router.post(
     '/:reviewId/images',
     validateReviewImage,
