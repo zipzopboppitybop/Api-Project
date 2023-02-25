@@ -157,6 +157,7 @@ router.post(
     }
 )
 
+//Edit a Review
 router.put(
     '/:reviewId',
     restoreUser,
@@ -201,6 +202,7 @@ router.put(
     }
 )
 
+//Delete a Review
 router.delete(
     '/:reviewId',
     restoreUser,

@@ -80,4 +80,58 @@ router.get(
     }
 )
 
+router.delete(
+    "/:bookingId",
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401)
+            return res.json(err);
+        }
+
+        const currentBooking = await Booking.findByPk(req.params.bookingId);
+
+        if (!currentBooking) {
+            const err = new Error();
+            err.message = "Booking couldn't be found";
+            err.statusCode = 404;
+            res.status(404)
+            return res.json(err);
+        }
+
+        const currentSpot = await Spot.findByPk(currentBooking.spotId);
+
+        const currentTime = new Date();
+        const currentTimeInteger = currentTime.getTime()
+
+        if (currentTimeInteger > currentBooking.startDate && currentTimeInteger < currentBooking.endDate) {
+            const err = new Error();
+            err.message = "Bookings that have been started can't be deleted";
+            err.statusCode = 403;
+            res.status(403)
+            return res.json(err);
+        }
+
+        if (user.id === currentBooking.userId || user.id === currentSpot.ownerId) {
+            await currentBooking.destroy();
+
+            return res.json({
+                message: `Successfully deleted ${currentBooking.id}`,
+                statusCode: 200
+            })
+        } else {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403)
+            return res.json(err);
+        }
+    }
+)
+
 module.exports = router;
