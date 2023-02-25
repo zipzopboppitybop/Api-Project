@@ -471,6 +471,7 @@ router.post(
         }
 
         const currentSpot = await Spot.findByPk(req.params.spotId)
+
         if (!currentSpot) {
             const err = Error();
             err.message = "Spot couldn't be found";
@@ -506,6 +507,114 @@ router.post(
         }
 
 
+    }
+)
+
+//Create Booking For Spot From Id
+router.post(
+    '/:spotId/bookings',
+    restoreUser,
+    async (req, res) => {
+        const { user } = req;
+        let errorsLength = 0;
+        let forbiddenErrorsLength = 0;
+        const validationError = new Error();
+        const forbiddenError = new Error();
+
+        validationError.message = "Validation Error"
+        validationError.statusCode = 400;
+        validationError.errors = {};
+        forbiddenError.message = "Sorry, this spot is already booked for the specified dates";
+        forbiddenError.statusCode = 403;
+        forbiddenError.errors = {};
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        };
+
+        const currentSpot = await Spot.findByPk(req.params.spotId, {
+            include: {
+                model: Booking
+            }
+        });
+
+
+        if (!currentSpot) {
+            const err = Error();
+            err.message = "Spot couldn't be found";
+            err.statusCode = 404;
+            res.status(404);
+            return res.json(err);
+        };
+
+        if (user.id === currentSpot.ownerId) {
+            const err = new Error();
+            err.message = "Forbidden";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        };
+
+
+        const { startDate, endDate } = req.body;
+        const startDateResult = new Date(startDate);
+        const startDateInteger = startDateResult.getTime();
+        const endDateResult = new Date(endDate);
+        const endDateInteger = endDateResult.getTime();
+
+        if (endDateInteger === startDateInteger) {
+            validationError.errors.endDate = "endDate cannot be on or before startDate";
+            errorsLength++;
+        }
+
+        const dates = [];
+        for (let i = 0; i < currentSpot.Bookings.length; i++) {
+            const booking = currentSpot.Bookings[i];
+
+            dates.push(booking.toJSON());
+        }
+        for (let i = 0; i < dates.length; i++) {
+            const booking = dates[i];
+            const bookingStartDate = new Date(booking.startDate)
+            const bookingEndDate = new Date(booking.endDate)
+            const bookingStartDateInteger = bookingStartDate.getTime();
+            const bookingEndDateInteger = bookingEndDate.getTime();
+
+            if (bookingStartDateInteger === startDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            } else if (bookingEndDateInteger === startDateInteger) {
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            } else if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            } else if (bookingEndDateInteger === endDateInteger) {
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            }
+        }
+
+
+
+        const newBooking = await Booking.create({
+            spotId: currentSpot.id, userId: user.id, startDate: startDateResult, endDate: endDateResult
+        })
+
+        if (errorsLength > 0) {
+            res.status(400)
+            return res.json(validationError);
+        } else if (forbiddenErrorsLength > 0) {
+            res.status(403)
+            return res.json(forbiddenError);
+        }
+
+        res.json(newBooking)
     }
 )
 
