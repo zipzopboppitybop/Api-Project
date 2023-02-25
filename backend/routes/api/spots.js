@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require("sequelize");
 const { Spot, Review, User, sequelize, SpotImage, ReviewImage, Booking } = require('../../db/models');
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+const { restoreUser } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const validateSpot = [
@@ -45,41 +45,6 @@ const validateSpot = [
         .exists({ checkFalsy: true })
         .notEmpty()
         .withMessage('Price per day is required'),
-    handleValidationErrors
-];
-const validateSpotEdit = [
-    check('address')
-
-        .notEmpty()
-        .withMessage('Street address is required'),
-    check('city')
-        .isEmpty()
-        .withMessage('City is required'),
-    check('state')
-        .isEmpty()
-        .withMessage('State is required'),
-    check('country')
-        .isEmpty()
-        .withMessage('Country is required'),
-    check('lat')
-        .isEmpty()
-        .withMessage('Latitude is not valid'),
-    check('lng')
-        .isEmpty()
-        .withMessage('Longitude is not valid'),
-    check('name')
-        .isEmpty()
-        .withMessage('Name is required'),
-    check('name')
-        .isEmpty()
-        .isLength({ max: 50 })
-        .withMessage('Name must be less than 50 characters'),
-    check('description')
-        .isEmpty()
-        .withMessage('Description is required'),
-    check('price')
-        .isEmpty()
-        .withMessage('Price is required'),
     handleValidationErrors
 ];
 const validateReview = [
@@ -288,8 +253,10 @@ router.get(
         else currentSpotData.numReviews = "No Reviews Yet"
         if (reviewAvg) currentSpotData.avgStarRating = reviewAvg;
         else currentSpotData.avgStarRating = "No Reviews Yet"
+        if (currentSpotImages.length > 0) currentSpotData.SpotImages = currentSpotImages
+        else currentSpotData.SpotImages = "No Images Yet"
 
-        currentSpotData.SpotImages = currentSpotImages
+
         currentSpotData.Owner = currentSpotData.User
 
         delete currentSpotData.User

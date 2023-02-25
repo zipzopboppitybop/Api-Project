@@ -80,6 +80,8 @@ router.get(
             else review.Spot.previewImage = previewImage.url;
         }
 
+
+
         res.json({
             Reviews: reviewData
         })

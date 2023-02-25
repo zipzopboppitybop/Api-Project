@@ -1,5 +1,5 @@
 const express = require('express');
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -33,10 +33,6 @@ router.post(
         .exists({ checkFalsy: true })
         .isEmail()
         .withMessage('Invalid email'),
-    // check('userName')
-    //     .exists({ checkFalsy: true })
-    //     .notEmpty()
-    //     .withMessage('Username is required'),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
