@@ -1,5 +1,5 @@
 const express = require('express');
-const { Op } = require("sequelize");
+const { Op, ValidationError } = require("sequelize");
 const { Spot, Review, User, sequelize, SpotImage, ReviewImage, Booking } = require('../../db/models');
 const { restoreUser } = require('../../utils/auth');
 const { check } = require('express-validator');
@@ -23,18 +23,20 @@ const validateSpot = [
         .withMessage('Country is required'),
     check('lat')
         .exists({ checkFalsy: true })
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Latitude is not valid')
         .notEmpty()
         .withMessage('Latitude is not valid'),
     check('lng')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .withMessage('Longitude is not valid')
+        .isFloat({ min: -180, max: 180 })
         .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Name is required'),
-    check('name')
-        .exists({ checkFalsy: true })
+        .withMessage('Name is required')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
@@ -44,7 +46,9 @@ const validateSpot = [
     check('price')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Price per day is required'),
+        .withMessage('Price per day is required')
+        .isDecimal({ decimal_digits: '0,2' })
+        .withMessage('Price per day is not valid'),
     handleValidationErrors
 ];
 const validateReview = [
@@ -156,7 +160,8 @@ router.get(
                 }
             ]
         })
-        const spotData = [];
+
+        let spotData = [];
 
         for (let i = 0; i < userSpots.length; i++) {
             const spot = userSpots[i];
@@ -190,6 +195,8 @@ router.get(
             delete spot.SpotImages;
             delete spot.Reviews;
         }
+
+        if (spotData.length < 1) spotData = "No Spots Yet";
 
         return res.json({
             Spots: spotData
@@ -383,6 +390,8 @@ router.post(
         }
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+
 
         const newSpot = await Spot.create({
             ownerId: user.id, address, city, state, country, lat, lng, name, description, price
@@ -646,33 +655,71 @@ router.put(
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-        if (address) {
-            if (address !== undefined) {
-                currentSpot.address = address;
-            } else if (address === undefined) {
-                console.log(address);
-                errorsLength += 1;
-                validationError.errors.address = "Street address is required";
-            }
-        } else {
-            console.log(address);
-            errorsLength += 1;
+        if (address && address !== "") currentSpot.address = address
+        else if (address === "") {
             validationError.errors.address = "Street address is required";
+            errorsLength++;
         }
 
-        if (city !== undefined) currentSpot.city = city;
-        if (state !== undefined) currentSpot.state = state;
-        if (country !== undefined) currentSpot.country = country;
-        if (lat !== undefined) currentSpot.lat = lat;
-        if (lng !== undefined) currentSpot.lng = lng;
-        if (name !== undefined) currentSpot.name = name;
-        if (description !== undefined) currentSpot.description = description;
-        if (price !== undefined) currentSpot.price = price;
+        if (city && city !== "") currentSpot.city = city;
+        else if (city === "") {
+            validationError.errors.city = "City is required";
+            errorsLength++;
+        }
+
+        if (state && state !== "") currentSpot.state = state;
+        else if (state === "") {
+            validationError.errors.state = "State is required";
+            errorsLength++;
+        }
+
+        if (country && country !== "") currentSpot.country = country;
+        else if (country === "") {
+            validationError.errors.country = "Country is required";
+            errorsLength++;
+        }
+
+        if (lat && lat > 90 || lat && lat < -90 || lat && lat === true || lat === false || lat && isNaN(lat)) {
+            validationError.errors.lat = "Latitude is not valid";
+            errorsLength++;
+        } else if (lat && lat !== "") currentSpot.lat = lat;
+
+        if (lng && lng > 180 || lng && lng < -180 || lng && lng === true || lng && lng === false || lng && isNaN(lng)) {
+            validationError.errors.lng = "Longitude is not valid";
+            errorsLength++;
+        } else if (lng && lng !== "") currentSpot.lng = lng;
+
+        if (name && name.length > 50) {
+            validationError.errors.name = "Name must be less than 50 characters";
+            errorsLength++;
+        }
+        else if (name && name !== "") currentSpot.name = name;
+        else if (name === "") {
+            validationError.errors.name = "Name is required";
+            errorsLength++;
+        }
+
+        if (description && description !== "") currentSpot.description = description;
+        else if (description === "") {
+            validationError.errors.description = "Description is required";
+            errorsLength++;
+        }
+
+        if (price && isNaN(price)) {
+            validationError.errors.price = "Price is not valid";
+            errorsLength++;
+        }
+        else if (price && price !== "") currentSpot.price = price;
+        else if (price === "") {
+            validationError.errors.price = "Price per day is required";
+            errorsLength++;
+        }
 
         if (errorsLength > 0) {
             res.status(400)
             return res.json(validationError);
         }
+
         await currentSpot.save();
 
         res.json(currentSpot);
