@@ -123,7 +123,9 @@ router.get("/", async (req, res) => {
         delete spot.Reviews;
     }
 
-    res.json(spotData);
+    res.json({
+        Spots: spotData
+    });
 })
 
 //Get Current User's Spots
