@@ -59,6 +59,7 @@ const validateReview = [
     check('stars')
         .exists({ checkFalsy: true })
         .notEmpty()
+        .withMessage("Stars must be an integer from 1 to 5")
         .isInt({ min: 1, max: 5 })
         .withMessage("Stars must be an integer from 1 to 5"),
 
@@ -68,12 +69,16 @@ const validateSpotImage = [
     check('url')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Url is required'),
+        .withMessage('Url is required')
+        .isString()
+        .withMessage("Url must be a string"),
     check('preview')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .isBoolean()
-        .withMessage('Preview must be true or false'),
+        .withMessage('Preview is required')
+        .isBoolean({ loose: true })
+        .withMessage("Preview must be string of true or false"),
+
     handleValidationErrors
 ];
 //Work on errors
@@ -306,7 +311,7 @@ router.get(
             ]
         })
 
-        const reviewData = [];
+        let reviewData = [];
 
         for (let i = 0; i < spotReviews.length; i++) {
             const review = spotReviews[i];
@@ -318,11 +323,14 @@ router.get(
             const reviewImages = await ReviewImage.findAll({
                 where: {
                     reviewId: review.id
-                }
+                },
+                attributes: ["id", "url"]
             })
             if (reviewImages.length > 0) review.ReviewImages = reviewImages
             else review.ReviewImages = "No Review Images Yet";
         }
+
+        if (reviewData.length < 1) reviewData = "No Reviews Yet"
 
         res.json({
             Reviews: reviewData
@@ -336,6 +344,15 @@ router.get(
     restoreUser,
     async (req, res) => {
         const { user } = req;
+
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        }
+
         const currentSpot = await Spot.findByPk(req.params.spotId);
 
         if (!currentSpot) {
@@ -346,13 +363,19 @@ router.get(
             return res.json(err);
         }
 
-        if (!user) {
+        if (user.id !== currentSpot.ownerId) {
             const currentSpotBookings = await Booking.findAll({
                 where: {
                     spotId: currentSpot.id
                 },
                 attributes: ["spotId", "startDate", "endDate"]
             })
+
+            if (currentSpotBookings.length < 1) {
+                return res.json({
+                    Bookings: "No Bookings Yet"
+                })
+            }
 
             return res.json({
                 Bookings: currentSpotBookings
@@ -368,6 +391,13 @@ router.get(
                 attributes: ["id", "firstName", "lastName"]
             }
         })
+
+        if (currentSpotBookings.length < 1) {
+            return res.json({
+                Bookings: "No Bookings Yet"
+            })
+        }
+
 
         res.json({
             Bookings: currentSpotBookings
@@ -484,14 +514,6 @@ router.post(
             }
         })
 
-        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
-            const err = new Error();
-            err.message = "User already has a review for this spot";
-            err.statusCode = 403;
-            res.status(403);
-            return res.json(err);
-        }
-
         if (!reviews) {
             const { review, stars } = req.body;
 
@@ -499,11 +521,14 @@ router.post(
                 userId: user.id, spotId: currentSpot.id, review, stars
             })
 
-
-            res.json(newReview);
+            return res.json(newReview);
+        } else {
+            const err = new Error();
+            err.message = "User already has a review for this spot";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
         }
-
-
     }
 )
 
@@ -563,8 +588,8 @@ router.post(
         const endDateResult = new Date(endDate);
         const endDateInteger = endDateResult.getTime();
 
-        if (endDateInteger === startDateInteger) {
-            validationError.errors.endDate = "endDate cannot be on or before startDate";
+        if (endDateInteger <= startDateInteger) {
+            validationError.errors.endDate = "End Date cannot be on or before start Date";
             errorsLength++;
         }
 
@@ -584,14 +609,17 @@ router.post(
             if (bookingStartDateInteger === startDateInteger) {
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingEndDateInteger === startDateInteger) {
+            } if (bookingEndDateInteger === startDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
+            } if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingEndDateInteger === endDateInteger) {
+            } if (bookingEndDateInteger === endDateInteger) {
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            } if (bookingStartDateInteger > startDateInteger && startDateInteger < bookingEndDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
             }
@@ -680,12 +708,12 @@ router.put(
             errorsLength++;
         }
 
-        if (lat && lat > 90 || lat && lat < -90 || lat && lat === true || lat === false || lat && isNaN(lat)) {
+        if (lat && typeof lat === "string" || lat && lat > 90 || lat && lat < -90 || lat && lat === true || lat && lat === false || lat === "") {
             validationError.errors.lat = "Latitude is not valid";
             errorsLength++;
         } else if (lat && lat !== "") currentSpot.lat = lat;
 
-        if (lng && lng > 180 || lng && lng < -180 || lng && lng === true || lng && lng === false || lng && isNaN(lng)) {
+        if (lng && typeof lng === "string" || lng && lng > 180 || lng && lng < -180 || lng && lng === true || lng && lng === false || lng === "") {
             validationError.errors.lng = "Longitude is not valid";
             errorsLength++;
         } else if (lng && lng !== "") currentSpot.lng = lng;

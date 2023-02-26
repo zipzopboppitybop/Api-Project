@@ -58,7 +58,7 @@ router.post(
         delete userData.updatedAt
         userData.token = token
 
-        return res.json(maybeUser);
+        return res.json(userData);
     }
 );
 

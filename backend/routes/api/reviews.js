@@ -58,7 +58,7 @@ router.get(
             ]
         })
 
-        const reviewData = [];
+        let reviewData = [];
 
         for (let i = 0; i < userReviews.length; i++) {
             const review = userReviews[i];
@@ -86,6 +86,10 @@ router.get(
             })
             if (reviewImages.length > 0) review.ReviewImages = reviewImages
             else review.ReviewImages = "No Review Images Yet";
+        }
+
+        if (reviewData.length < 1) {
+            reviewData = "No Reviews Yet"
         }
 
         res.json({
@@ -169,9 +173,14 @@ router.post(
 router.put(
     '/:reviewId',
     restoreUser,
-    validateReview,
     async (req, res) => {
         const { user } = req;
+        let errorsLength = 0;
+        const validationError = new Error();
+
+        validationError.message = "Validation Error"
+        validationError.statusCode = 400;
+        validationError.errors = {};
 
         if (!user) {
             const err = new Error();
@@ -201,8 +210,22 @@ router.put(
 
         const { review, stars } = req.body;
 
-        if (review !== undefined) currentReview.review = review;
-        if (stars !== undefined) currentReview.stars = stars;
+        if (review && review !== "") currentReview.review = review;
+        else if (review === "") {
+            validationError.errors.review = "Review is required";
+            errorsLength++;
+        }
+
+
+        if (stars && typeof stars === "string" || stars < 1 || stars && stars > 5 || stars === "") {
+            validationError.errors.stars = "Stars must be an integer from 1 to 5";
+            errorsLength++;
+        } else if (stars && stars !== "") currentReview.stars = stars;
+
+        if (errorsLength > 0) {
+            res.status(400)
+            return res.json(validationError);
+        }
 
         await currentReview.save();
 
