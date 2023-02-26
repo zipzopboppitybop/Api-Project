@@ -115,7 +115,8 @@ router.get("/", async (req, res) => {
                 spotId: spot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
+
             ]
         })
         let reviewAvg = ratings.toJSON().avgRating
@@ -184,7 +185,7 @@ router.get(
                     spotId: spot.id
                 },
                 attributes: [
-                    [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+                    [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
                 ]
             })
             let reviewAvg = ratings.toJSON().avgRating
@@ -235,7 +236,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
+                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
             ]
         })
 
@@ -244,7 +245,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn("COUNT", sequelize.col("id")), 'numReviews']
+                [sequelize.fn('COUNT', sequelize.cast(sequelize.col('id'), 'integer')), 'numReviews']
             ]
         })
 
