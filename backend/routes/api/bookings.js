@@ -45,12 +45,6 @@ router.get(
             }
         })
 
-        if (!userBookings) {
-            res.json({
-                Bookings: "Currently no Bookings"
-            });
-        }
-
         const userBookingsData = [];
 
         for (let i = 0; i < userBookings.length; i++) {
@@ -71,8 +65,12 @@ router.get(
 
             if (!previewImage) booking.Spot.previewImage = "No Preview Image Yet"
             else booking.Spot.previewImage = previewImage.url;
+        }
 
-
+        if (userBookingsData.length < 1) {
+            return res.json({
+                Bookings: "No Bookings Yet"
+            })
         }
 
         res.json({
