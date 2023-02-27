@@ -30,6 +30,7 @@ router.post(
             const err = new Error();
             err.message = "Invalid credentials"
             err.statusCode = 401;
+            res.status(401)
             return res.json(err);
         }
 
