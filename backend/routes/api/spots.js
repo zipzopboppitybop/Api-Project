@@ -719,7 +719,7 @@ router.post(
             forbiddenErrorsLength++;
         }
 
-        if (endDateInteger === startDateInteger) {
+        if (endDateInteger <= startDateInteger) {
             validationError.errors.endDate = "endDate cannot be on or before startDate";
             errorsLength++;
         }
