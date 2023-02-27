@@ -166,33 +166,27 @@ router.get(
         //Lat
         if (req.query.minLat && req.query.maxLat) {
             where.lat = { [Op.between]: [req.query.minLat, req.query.maxLat] }
-        }
-        if (req.query.minLat) {
+        } else if (req.query.minLat) {
             where.lat = { [Op.gte]: req.query.minLat }
-        }
-        if (req.query.maxLat) {
+        } else if (req.query.maxLat) {
             where.lat = { [Op.lte]: req.query.maxLat }
         }
 
         //Lng
         if (req.query.minLng && req.query.maxLng) {
             where.lng = { [Op.between]: [req.query.minLng, req.query.maxLng] }
-        }
-        if (req.query.minLng) {
+        } else if (req.query.minLng) {
             where.Lng = { [Op.gte]: req.query.minLng }
-        }
-        if (req.query.maxLng) {
+        } else if (req.query.maxLng) {
             where.Lng = { [Op.lte]: req.query.maxLng }
         }
 
         //Price
         if (req.query.minPrice && req.query.maxPrice) {
             where.Price = { [Op.between]: [req.query.minPrice, req.query.maxPrice] }
-        }
-        if (req.query.minPice) {
+        } else if (req.query.minPice) {
             where.Price = { [Op.gte]: req.query.minPrice }
-        }
-        if (req.query.maxPice) {
+        } else if (req.query.maxPice) {
             where.Price = { [Op.lte]: req.query.maxPrice }
         }
 
