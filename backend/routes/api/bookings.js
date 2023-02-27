@@ -172,21 +172,32 @@ router.put(
             const bookingStartDateInteger = bookingStartDate.getTime();
             const bookingEndDateInteger = bookingEndDate.getTime();
 
+
             if (bookingStartDateInteger === startDateInteger) {
-                forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
-                forbiddenErrorsLength++;
-            } if (bookingEndDateInteger === startDateInteger) {
-                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
-                forbiddenErrorsLength++;
-            } if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
-                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
             } if (bookingEndDateInteger === endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } if (bookingStartDateInteger > startDateInteger && startDateInteger < bookingEndDateInteger) {
+            } if (startDateInteger >= bookingStartDateInteger && endDateInteger <= bookingEndDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
+                forbiddenErrorsLength++;
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+            } if (startDateInteger <= bookingStartDateInteger && endDateInteger >= bookingEndDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+                forbiddenErrorsLength++;
+            } if (startDateInteger <= bookingStartDateInteger && endDateInteger <= bookingEndDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+                forbiddenErrorsLength++;
+            } if (startDateInteger >= bookingStartDateInteger && endDateInteger >= bookingEndDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
                 forbiddenErrorsLength++;
             }
         }
