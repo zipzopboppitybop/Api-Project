@@ -445,7 +445,8 @@ router.get(
             const reviewImages = await ReviewImage.findAll({
                 where: {
                     reviewId: review.id
-                }
+                },
+                attributes: ["id", "url"]
             })
             if (reviewImages.length > 0) review.ReviewImages = reviewImages
             else review.ReviewImages = "No Review Images Yet";
