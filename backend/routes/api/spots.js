@@ -345,13 +345,19 @@ router.get(
             return res.json(err);
         }
 
-        if (!user) {
+        if (user.id !== currentSpot.ownerId) {
             const currentSpotBookings = await Booking.findAll({
                 where: {
                     spotId: currentSpot.id
                 },
                 attributes: ["spotId", "startDate", "endDate"]
             })
+
+            if (currentSpotBookings < 1) {
+                return res.json({
+                    Bookings: "No Bookings Yet"
+                });
+            }
 
             return res.json({
                 Bookings: currentSpotBookings
