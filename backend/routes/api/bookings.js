@@ -161,6 +161,7 @@ router.put(
             forbiddenError.message = "Past bookings can't be modified";
             forbiddenErrorsLength++;
             delete forbiddenError.errors
+            res.status(403)
             return res.json(forbiddenError)
         }
         console.log(todayInteger, endDateInteger)

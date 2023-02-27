@@ -59,7 +59,6 @@ const validateReview = [
     check('stars')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage("Stars must be an integer from 1 to 5")
         .isInt({ min: 1, max: 5 })
         .withMessage("Stars must be an integer from 1 to 5"),
 
@@ -69,28 +68,12 @@ const validateSpotImage = [
     check('url')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Url is required')
-        .isString()
-        .withMessage("Url must be a string"),
+        .withMessage('Url is required'),
     check('preview')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Preview is required')
-        .isBoolean({ loose: true })
-        .withMessage("Preview must be string of true or false"),
-
-    handleValidationErrors
-];
-const validateBooking = [
-    check('startDate')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('Start Date is required'),
-    check('endDate')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('End Date is required'),
-
+        .isBoolean()
+        .withMessage('Preview must be true or false'),
     handleValidationErrors
 ];
 //Work on errors
@@ -132,8 +115,7 @@ router.get("/", async (req, res) => {
                 spotId: spot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
-
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
             ]
         })
         let reviewAvg = ratings.toJSON().avgRating
@@ -202,7 +184,7 @@ router.get(
                     spotId: spot.id
                 },
                 attributes: [
-                    [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
+                    [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
                 ]
             })
             let reviewAvg = ratings.toJSON().avgRating
@@ -253,7 +235,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgStarRating']
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
             ]
         })
 
@@ -262,7 +244,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn('COUNT', sequelize.cast(sequelize.col('id'), 'integer')), 'numReviews']
+                [sequelize.fn("COUNT", sequelize.col("id")), 'numReviews']
             ]
         })
 
@@ -323,7 +305,7 @@ router.get(
             ]
         })
 
-        let reviewData = [];
+        const reviewData = [];
 
         for (let i = 0; i < spotReviews.length; i++) {
             const review = spotReviews[i];
@@ -335,14 +317,11 @@ router.get(
             const reviewImages = await ReviewImage.findAll({
                 where: {
                     reviewId: review.id
-                },
-                attributes: ["id", "url"]
+                }
             })
             if (reviewImages.length > 0) review.ReviewImages = reviewImages
             else review.ReviewImages = "No Review Images Yet";
         }
-
-        if (reviewData.length < 1) reviewData = "No Reviews Yet"
 
         res.json({
             Reviews: reviewData
@@ -356,15 +335,6 @@ router.get(
     restoreUser,
     async (req, res) => {
         const { user } = req;
-
-        if (!user) {
-            const err = new Error();
-            err.message = "Authentication required";
-            err.statusCode = 401;
-            res.status(401);
-            return res.json(err);
-        }
-
         const currentSpot = await Spot.findByPk(req.params.spotId);
 
         if (!currentSpot) {
@@ -375,19 +345,13 @@ router.get(
             return res.json(err);
         }
 
-        if (user.id !== currentSpot.ownerId) {
+        if (!user) {
             const currentSpotBookings = await Booking.findAll({
                 where: {
                     spotId: currentSpot.id
                 },
                 attributes: ["spotId", "startDate", "endDate"]
             })
-
-            if (currentSpotBookings.length < 1) {
-                return res.json({
-                    Bookings: "No Bookings Yet"
-                })
-            }
 
             return res.json({
                 Bookings: currentSpotBookings
@@ -403,13 +367,6 @@ router.get(
                 attributes: ["id", "firstName", "lastName"]
             }
         })
-
-        if (currentSpotBookings.length < 1) {
-            return res.json({
-                Bookings: "No Bookings Yet"
-            })
-        }
-
 
         res.json({
             Bookings: currentSpotBookings
@@ -526,6 +483,14 @@ router.post(
             }
         })
 
+        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
+            const err = new Error();
+            err.message = "User already has a review for this spot";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
+
         if (!reviews) {
             const { review, stars } = req.body;
 
@@ -533,21 +498,17 @@ router.post(
                 userId: user.id, spotId: currentSpot.id, review, stars
             })
 
-            return res.json(newReview);
-        } else {
-            const err = new Error();
-            err.message = "User already has a review for this spot";
-            err.statusCode = 403;
-            res.status(403);
-            return res.json(err);
+
+            res.json(newReview);
         }
+
+
     }
 )
 
 //Create Booking For Spot From Id
 router.post(
     '/:spotId/bookings',
-    validateBooking,
     restoreUser,
     async (req, res) => {
         const { user } = req;
@@ -600,9 +561,17 @@ router.post(
         const startDateInteger = startDateResult.getTime();
         const endDateResult = new Date(endDate);
         const endDateInteger = endDateResult.getTime();
+        const today = new Date();
+        const todayInteger = today.getTime();
 
-        if (endDateInteger <= startDateInteger) {
-            validationError.errors.endDate = "End Date cannot be on or before start Date";
+        if (todayInteger > startDateInteger) {
+            forbiddenError.message = "Forbidden"
+            forbiddenError.errors.startDate = "Start Date cannot be before today";
+            forbiddenErrorsLength++;
+        }
+
+        if (endDateInteger === startDateInteger) {
+            validationError.errors.endDate = "endDate cannot be on or before startDate";
             errorsLength++;
         }
 
@@ -622,20 +591,18 @@ router.post(
             if (bookingStartDateInteger === startDateInteger) {
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingEndDateInteger === endDateInteger) {
+            } else if (bookingEndDateInteger === startDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
             } else if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingStartDateInteger < startDateInteger && endDateInteger < bookingEndDateInteger) {
+            } else if (bookingEndDateInteger === endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
             }
         }
-
-
 
         if (errorsLength > 0) {
             res.status(400)
@@ -648,6 +615,7 @@ router.post(
         const newBooking = await Booking.create({
             spotId: currentSpot.id, userId: user.id, startDate: startDateResult, endDate: endDateResult
         })
+
 
         res.json(newBooking)
     }
@@ -718,12 +686,12 @@ router.put(
             errorsLength++;
         }
 
-        if (lat && typeof lat === "string" || lat && lat > 90 || lat && lat < -90 || lat && lat === true || lat && lat === false || lat === "") {
+        if (lat && lat > 90 || lat && lat < -90 || lat && lat === true || lat === false || lat && isNaN(lat)) {
             validationError.errors.lat = "Latitude is not valid";
             errorsLength++;
         } else if (lat && lat !== "") currentSpot.lat = lat;
 
-        if (lng && typeof lng === "string" || lng && lng > 180 || lng && lng < -180 || lng && lng === true || lng && lng === false || lng === "") {
+        if (lng && lng > 180 || lng && lng < -180 || lng && lng === true || lng && lng === false || lng && isNaN(lng)) {
             validationError.errors.lng = "Longitude is not valid";
             errorsLength++;
         } else if (lng && lng !== "") currentSpot.lng = lng;
