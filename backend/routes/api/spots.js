@@ -633,14 +633,6 @@ router.post(
             }
         })
 
-        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
-            const err = new Error();
-            err.message = "User already has a review for this spot";
-            err.statusCode = 403;
-            res.status(403);
-            return res.json(err);
-        }
-
         if (!reviews) {
             const { review, stars } = req.body;
 
@@ -648,10 +640,16 @@ router.post(
                 userId: user.id, spotId: currentSpot.id, review, stars
             })
 
-
             res.json(newReview);
         }
 
+        if (reviews.userId === user.id && currentSpot.id === reviews.spotId) {
+            const err = new Error();
+            err.message = "User already has a review for this spot";
+            err.statusCode = 403;
+            res.status(403);
+            return res.json(err);
+        }
 
     }
 )

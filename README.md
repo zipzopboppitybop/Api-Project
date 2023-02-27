@@ -2,7 +2,7 @@
 
 https://brian-airbnb-clone.onrender.com
 
-[airbnb-dbdiagram]: /frontend//images/airbnb_dbdiagram.png
+<img>
 
 ### Quick Summary
 
