@@ -374,6 +374,12 @@ router.get(
             }
         })
 
+        if (currentSpotBookings < 1) {
+            return res.json({
+                Bookings: "No Bookings Yet"
+            });
+        }
+
         res.json({
             Bookings: currentSpotBookings
         })
