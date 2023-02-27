@@ -241,7 +241,7 @@ router.get(
                 spotId: currentSpot.id
             },
             attributes: [
-                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgRating']
+                [sequelize.fn('AVG', sequelize.cast(sequelize.col('stars'), 'integer')), 'avgStarRating']
             ]
         })
 
