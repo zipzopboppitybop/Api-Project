@@ -188,7 +188,12 @@ router.put(
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
                 forbiddenErrorsLength++;
-            } else if (startDateInteger <= bookingStartDateInteger && endDateInteger <= bookingEndDateInteger) {
+            } else if (startDateInteger <= bookingStartDateInteger && endDateInteger <= bookingEndDateInteger && endDateInteger >= bookingStartDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
+                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+                forbiddenErrorsLength++;
+                forbiddenErrorsLength++;
+            } else if (startDateInteger >= bookingStartDateInteger && endDateInteger >= bookingEndDateInteger && startDateInteger <= bookingEndDateInteger) {
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
