@@ -184,9 +184,9 @@ router.get(
         //Price
         if (req.query.minPrice && req.query.maxPrice) {
             where.price = { [Op.between]: [req.query.minPrice, req.query.maxPrice] }
-        } else if (req.query.minPice) {
+        } else if (req.query.minPrice) {
             where.price = { [Op.gte]: req.query.minPrice }
-        } else if (req.query.maxPice) {
+        } else if (req.query.maxPrice) {
             where.price = { [Op.lte]: req.query.maxPrice }
         }
 
