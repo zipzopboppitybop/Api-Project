@@ -337,6 +337,14 @@ router.get(
         const { user } = req;
         const currentSpot = await Spot.findByPk(req.params.spotId);
 
+        if (!user) {
+            const err = new Error();
+            err.message = "Authentication required";
+            err.statusCode = 401;
+            res.status(401);
+            return res.json(err);
+        }
+
         if (!currentSpot) {
             const err = Error();
             err.message = "Spot couldn't be found";
@@ -357,11 +365,11 @@ router.get(
                 return res.json({
                     Bookings: "No Bookings Yet"
                 });
+            } else {
+                return res.json({
+                    Bookings: currentSpotBookings
+                });
             }
-
-            return res.json({
-                Bookings: currentSpotBookings
-            });
         }
 
         const currentSpotBookings = await Booking.findAll({
@@ -378,11 +386,13 @@ router.get(
             return res.json({
                 Bookings: "No Bookings Yet"
             });
+        } else {
+
+            res.json({
+                Bookings: currentSpotBookings
+            })
         }
 
-        res.json({
-            Bookings: currentSpotBookings
-        })
     }
 )
 
