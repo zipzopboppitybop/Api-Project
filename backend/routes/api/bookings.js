@@ -65,11 +65,18 @@ router.get(
 
             if (!previewImage) booking.Spot.previewImage = "No Preview Image Yet"
             else booking.Spot.previewImage = previewImage.url;
+
+            if (userBookingsData.length === 0) {
+                return res.json({
+                    Bookings: "No Bookings Yet"
+                })
+            }
+
         }
 
         if (userBookingsData.length < 1) {
             return res.json({
-                Bookings: "No Bookings Yet"
+                Bookings: "No Bookings Yets"
             })
         }
 

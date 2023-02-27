@@ -81,6 +81,18 @@ const validateSpotImage = [
 
     handleValidationErrors
 ];
+const validateBooking = [
+    check('startDate')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Start Date is required'),
+    check('endDate')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('End Date is required'),
+
+    handleValidationErrors
+];
 //Work on errors
 const router = express.Router();
 
@@ -535,6 +547,7 @@ router.post(
 //Create Booking For Spot From Id
 router.post(
     '/:spotId/bookings',
+    validateBooking,
     restoreUser,
     async (req, res) => {
         const { user } = req;
@@ -609,27 +622,20 @@ router.post(
             if (bookingStartDateInteger === startDateInteger) {
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } if (bookingEndDateInteger === startDateInteger) {
+            } else if (bookingEndDateInteger === endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
+            } else if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } if (bookingEndDateInteger === endDateInteger) {
-                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
-                forbiddenErrorsLength++;
-            } if (bookingStartDateInteger > startDateInteger && startDateInteger < bookingEndDateInteger) {
+            } else if (bookingStartDateInteger < startDateInteger && endDateInteger < bookingEndDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
             }
         }
 
 
-
-        const newBooking = await Booking.create({
-            spotId: currentSpot.id, userId: user.id, startDate: startDateResult, endDate: endDateResult
-        })
 
         if (errorsLength > 0) {
             res.status(400)
@@ -638,6 +644,10 @@ router.post(
             res.status(403)
             return res.json(forbiddenError);
         }
+
+        const newBooking = await Booking.create({
+            spotId: currentSpot.id, userId: user.id, startDate: startDateResult, endDate: endDateResult
+        })
 
         res.json(newBooking)
     }
