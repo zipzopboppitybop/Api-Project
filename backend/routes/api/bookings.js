@@ -209,10 +209,12 @@ router.put(
             return res.json(forbiddenError);
         }
 
-
-        currentBooking.startDate = startDate;
-        currentBooking.endDate = endDate;
-
+        if (!startDate) currentBooking.startDate = currentBooking.startDate;
+        else if (!endDate) currentBooking.endDate = currentBooking.endDateendDate;
+        else {
+            currentBooking.startDate = startDate;
+            currentBooking.endDate = endDate;
+        }
 
         await currentBooking.save();
 
