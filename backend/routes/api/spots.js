@@ -4,6 +4,7 @@ const { Spot, Review, User, sequelize, SpotImage, ReviewImage, Booking } = requi
 const { restoreUser } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const e = require('express');
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
@@ -79,58 +80,191 @@ const validateSpotImage = [
 //Work on errors
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    const allSpots = await Spot.findAll({
-        include: [
-            {
-                model: Review
-            },
-            {
-                model: SpotImage
+router.get(
+    "/",
+    async (req, res) => {
+        let errorResult = new Error();
+        let errorLength = 0;
+        errorResult.message = "Validation error";
+        errorResult.statusCode = 400;
+        errorResult.errors = {};
+        let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+        let pagination = {};
+
+        if (!page) page = 1;
+        if (!size) size = 20;
+
+        if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+            pagination.limit = size;
+            pagination.offset = size * (page - 1);
+        } if (parseInt(page) < 1 || isNaN(size)) {
+            errorResult.errors.page = "Page must be greater than or equal to 1"
+            errorLength++;
+        } if (parseInt(size) < 1 || isNaN(size)) {
+            errorResult.errors.size = "Size must be greater than or equal to 1"
+            errorLength++;
+        }
+
+        const where = {};
+
+        //Errors
+        if (typeof req.query.minLat === "string") {
+            if (isNaN(req.query.minLat) || req.query.minLat < -90 || req.query.minLat > 90 || req.query.minLat === "") {
+                errorResult.errors.minLat = "Minimum latitude is invalid"
+                errorLength++;
+                //return res.json(errorResult)
             }
-        ]
-    });
+        }
 
-    const spotData = [];
-
-    for (let i = 0; i < allSpots.length; i++) {
-        const spot = allSpots[i];
-
-        spotData.push(spot.toJSON());
-    }
-
-    for (let i = 0; i < spotData.length; i++) {
-        const spot = spotData[i];
-        if (spot.SpotImages.length > 0) {
-            for (let j = 0; j < spot.SpotImages.length; j++) {
-                const image = spot.SpotImages[j];
-
-                if (image.preview === true) spot.previewImage = image.url;
+        if (typeof req.query.maxLat === "string") {
+            if (isNaN(req.query.maxLat) || req.query.maxLat < -90 || req.query.maxLat > 90 || req.query.maxLat === "") {
+                errorResult.errors.maxLat = "Maximum latitude is invalid"
+                errorLength++;
+                //return res.json(errorResult)
             }
-            if (!spot.previewImage) spot.previewImage = "No Preview Image";
-        } else spot.previewImage = "No Preview Image";
+        }
 
-        const ratings = await Review.findOne({
-            where: {
-                spotId: spot.id
-            },
-            attributes: [
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
-            ]
-        })
-        let reviewAvg = ratings.toJSON().avgRating
-        if (reviewAvg) spot.avgRating = reviewAvg;
-        else spot.avgRating = "No Review Yet"
+        if (typeof req.query.minLng === "string") {
+            if (isNaN(req.query.minLng) || req.query.minLng < -180 || req.query.minLng > 180 || req.query.minLng === "") {
+                errorResult.errors.minLng = "Minimum longitude is invalid"
+                errorLength++;
+                //return res.json(errorResult)
+            }
+        }
+
+        if (typeof req.query.maxLng === "string") {
+            if (isNaN(req.query.maxLng) || req.query.maxLng < -180 || req.query.maxLng > 180 || req.query.maxLng === "") {
+                errorResult.errors.maxLng = "Maximum latitude is invalid"
+                errorLength++;
+                //return res.json(errorResult)
+            }
+        }
+
+        if (typeof req.query.minPrice === "string") {
+            if (isNaN(req.query.minPrice) || req.query.minPrice === "") {
+                errorResult.errors.minPrice = "Minimum price is invalid"
+                errorLength++;
+                //return res.json(errorResult)
+            } else if (req.query.minPrice < 0) {
+                errorResult.errors.minPrice = "Minimum price must be greater than or equal to 0"
+                errorLength++;
+            }
+        }
+
+        if (typeof req.query.maxPrice === "string") {
+            if (isNaN(req.query.maxPrice) || req.query.maxPrice === "") {
+                errorResult.errors.maxPrice = "Maximum price is invalid"
+                errorLength++;
+                //return res.json(errorResult)
+            } else if (req.query.maxPrice < 0) {
+                errorResult.errors.minPrice = "Maximum price must be greater than or equal to 0"
+                errorLength++;
+            }
+        }
 
 
-        delete spot.SpotImages;
-        delete spot.Reviews;
-    }
+        //Lat
+        if (req.query.minLat && req.query.maxLat) {
+            where.lat = { [Op.between]: [req.query.minLat, req.query.maxLat] }
+        }
+        if (req.query.minLat) {
+            where.lat = { [Op.gte]: req.query.minLat }
+        }
+        if (req.query.maxLat) {
+            where.lat = { [Op.lte]: req.query.maxLat }
+        }
 
-    res.json({
-        Spots: spotData
-    });
-})
+        //Lng
+        if (req.query.minLng && req.query.maxLng) {
+            where.lng = { [Op.between]: [req.query.minLng, req.query.maxLng] }
+        }
+        if (req.query.minLng) {
+            where.Lng = { [Op.gte]: req.query.minLng }
+        }
+        if (req.query.maxLng) {
+            where.Lng = { [Op.lte]: req.query.maxLng }
+        }
+
+        //Price
+        if (req.query.minPrice && req.query.maxPrice) {
+            where.Price = { [Op.between]: [req.query.minPrice, req.query.maxPrice] }
+        }
+        if (req.query.minPice) {
+            where.Price = { [Op.gte]: req.query.minPrice }
+        }
+        if (req.query.maxPice) {
+            where.Price = { [Op.lte]: req.query.maxPrice }
+        }
+
+
+
+        let result = {};
+
+        const allSpots = await Spot.findAll({
+            ...pagination,
+            include: [
+                {
+                    model: Review
+                },
+                {
+                    model: SpotImage
+                }
+            ],
+            where
+        });
+
+
+
+        const spotData = [];
+
+        for (let i = 0; i < allSpots.length; i++) {
+            const spot = allSpots[i];
+
+            spotData.push(spot.toJSON());
+        }
+
+        for (let i = 0; i < spotData.length; i++) {
+            const spot = spotData[i];
+            if (spot.SpotImages.length > 0) {
+                for (let j = 0; j < spot.SpotImages.length; j++) {
+                    const image = spot.SpotImages[j];
+
+                    if (image.preview === true) spot.previewImage = image.url;
+                }
+                if (!spot.previewImage) spot.previewImage = "No Preview Image";
+            } else spot.previewImage = "No Preview Image";
+
+            const ratings = await Review.findOne({
+                where: {
+                    spotId: spot.id
+                },
+                attributes: [
+                    [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+                ]
+            })
+            let reviewAvg = ratings.toJSON().avgRating
+            if (reviewAvg) spot.avgRating = reviewAvg;
+            else spot.avgRating = "No Review Yet"
+
+
+            delete spot.SpotImages;
+            delete spot.Reviews;
+        }
+
+        let count = await Spot.count({ where });
+        result.Spots = spotData;
+        result.page = parseInt(page);
+        result.size = spotData.length
+
+        if (errorLength > 0) {
+            res.status(400);
+            return res.json(errorResult);
+        }
+
+        res.json(
+            result
+        );
+    })
 
 //Get Current User's Spots
 router.get(
