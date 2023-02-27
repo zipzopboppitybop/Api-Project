@@ -224,7 +224,7 @@ router.put(
         }
 
         if (!startDate) currentBooking.startDate = currentBooking.startDate;
-        else if (!endDate) currentBooking.endDate = currentBooking.endDateendDate;
+        else if (!endDate) currentBooking.endDate = currentBooking.endDate;
         else {
             currentBooking.startDate = startDate;
             currentBooking.endDate = endDate;
