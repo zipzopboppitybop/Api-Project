@@ -157,14 +157,28 @@ router.put(
             res.status(403)
             return res.json(forbiddenError)
         }
-        console.log(todayInteger, endDateInteger)
 
         const dates = [];
+
         for (let i = 0; i < currentSpot.Bookings.length; i++) {
             const booking = currentSpot.Bookings[i];
 
             dates.push(booking.toJSON());
         }
+
+        function removeValue(value, index, arr) {
+            // If the value at the current array index matches the specified value (2)
+            if (value.id === currentBooking.id) {
+                // Removes the value from the original array
+                arr.splice(index, 1);
+                return true;
+            }
+            return false;
+        }
+
+        dates.filter(removeValue)
+        console.log(dates)
+
         for (let i = 0; i < dates.length; i++) {
             const booking = dates[i];
             const bookingStartDate = new Date(booking.startDate)
