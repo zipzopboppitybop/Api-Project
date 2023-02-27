@@ -56,7 +56,11 @@ router.post(
         const userData = user.toJSON();
         delete userData.createdAt
         delete userData.updatedAt
-        userData.token = token
+
+        if (token) {
+            userData.token = token;
+        } else userData.token = "";
+
 
         return res.json(userData);
     }
