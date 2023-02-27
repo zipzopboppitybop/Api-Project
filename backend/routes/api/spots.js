@@ -613,15 +613,14 @@ router.post(
             if (bookingStartDateInteger === startDateInteger) {
                 forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingEndDateInteger === startDateInteger) {
+            } if (bookingEndDateInteger === endDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingStartDateInteger > startDateInteger && bookingEndDateInteger < endDateInteger) {
+            } if (startDateInteger >= bookingStartDateInteger && endDateInteger <= bookingEndDateInteger) {
                 forbiddenError.errors.endDate = "End date conflicts with an existing booking"
-                forbiddenError.errors.startDate = "Start date conflicts with an existing booking"
                 forbiddenErrorsLength++;
-            } else if (bookingEndDateInteger === endDateInteger) {
-                forbiddenError.errors.endDate = "End date conflicts with an existing booking"
+            } if (startDateInteger <= bookingStartDateInteger && endDateInteger >= bookingEndDateInteger) {
+                forbiddenError.errors.startDate = "Start date conflicts with an existing booking";
                 forbiddenErrorsLength++;
             }
         }
