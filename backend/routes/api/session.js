@@ -67,7 +67,7 @@ router.get(
         }
 
         return res.json({
-            user: user.toSafeObject()
+            user: user
         });
 
     }
