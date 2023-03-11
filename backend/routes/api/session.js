@@ -26,13 +26,13 @@ router.post(
 
         const user = await User.login({ credential, password });
 
-        if (!user) {
-            const err = new Error();
-            err.message = "Invalid credentials"
-            err.statusCode = 401;
-            res.status(401)
-            return res.json(err);
-        }
+        // if (!user) {
+        //     const err = new Error();
+        //     err.message = "Invalid credentials"
+        //     err.statusCode = 401;
+        //     res.status(401)
+        //     return res.json(err);
+        // }
 
         await setTokenCookie(res, user);
 
@@ -58,13 +58,13 @@ router.get(
     (req, res) => {
         const { user } = req;
 
-        if (!user) {
-            const err = new Error();
-            err.message = "Authentication required";
-            err.statusCode = 401;
-            res.status(401);
-            res.json(err);
-        }
+        // if (!user) {
+        //     const err = new Error();
+        //     err.message = "Authentication required";
+        //     err.statusCode = 401;
+        //     res.status(401);
+        //     res.json(err);
+        // }
 
         return res.json({
             user: user
