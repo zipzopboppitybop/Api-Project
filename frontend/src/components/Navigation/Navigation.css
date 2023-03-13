@@ -45,3 +45,11 @@
 .title {
     margin-top: 100px;
 }
+
+.bruh {
+    border-top: 1px solid black;
+}
+
+.spots {
+    list-style: none;
+}

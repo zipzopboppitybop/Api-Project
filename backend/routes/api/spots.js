@@ -226,7 +226,7 @@ router.get(
             })
             let reviewAvg = ratings.toJSON().avgRating
             if (reviewAvg) spot.avgRating = reviewAvg;
-            else spot.avgRating = "No Review Yet"
+            else spot.avgRating = "No Reviews Yet"
 
 
             delete spot.SpotImages;
