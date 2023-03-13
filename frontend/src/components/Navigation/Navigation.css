@@ -58,7 +58,6 @@
 }
 
 .spot {
-    width: 270px;
     height: 300px;
     margin-top: 10px;
 }
@@ -66,4 +65,10 @@
 .spot-image {
     width: 270px;
     height: 250px;
+}
+
+.spot,
+.spot-image {
+    width: 270px;
+
 }

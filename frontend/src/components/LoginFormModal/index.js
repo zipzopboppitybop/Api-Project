@@ -24,15 +24,13 @@ function LoginFormModal() {
                     async (res) => {
                         const data = await res.json();
                         if (res.status === 403) {
-                            return setErrors(['Invalid Credentials'])
+                            return setErrors(['Invalid Credentials Or Password'])
                         }
-                        if (data && data.errors) setErrors(data.errors);
+                        if (data && data.errors) setErrors(Object.values(data.errors));
                     }
                 );
         }
         return setErrors(['Password must be longer than 5 characters'])
-
-
     };
 
     const demoUser = (e) => {
