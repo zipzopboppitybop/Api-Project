@@ -22,7 +22,6 @@ function App() {
         <Switch>
           <Route exact path="/" component={SpotList} />
           <Route exact path='/spots/:id' component={SingleSpot} />
-
         </Switch>
       )}
     </>

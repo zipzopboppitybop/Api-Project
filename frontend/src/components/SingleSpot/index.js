@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
-    const spot = useSelector(state => state.spots[id]);
+    const spot = useSelector(state => state.spots.singleSpot);
+    console.log(spot)
 
     useEffect(() => {
         dispatch(getOneSpot(id));

@@ -31,16 +31,16 @@ export const getOneSpot = (id) => async dispatch => {
     }
 };
 
-const initialState = { entries: [], isLoading: true };
+const initialState = { allSpots: {}, singleSpot: {} };
 const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_SPOTS:
-            return { ...state, entries: { ...action.spots } };
+            return { ...state, allSpots: { ...action.spots } };
         case DETAILS_SPOT:
-            newState = { ...state };
-            newState[action.spot.id] = action.spot;
-            return newState
+            return {
+                ...state, singleSpot: { ...action.spot }
+            };
         default:
             return state;
     }
