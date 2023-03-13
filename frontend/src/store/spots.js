@@ -11,7 +11,7 @@ export const loadSpots = (spots) => {
     }
 }
 
-const getDetailsOfSpot = spot => ({
+export const getDetailsOfSpot = spot => ({
     type: DETAILS_SPOT,
     spot
 });
@@ -23,7 +23,7 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const getOneSpot = (id) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`);
+    const response = await csrfFetch(`/api/spots/${id}`);
 
     if (response.ok) {
         const spot = await response.json();
@@ -31,16 +31,16 @@ export const getOneSpot = (id) => async dispatch => {
     }
 };
 
-const initialState = { entries: [] };
+const initialState = { entries: [], isLoading: true };
 const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_SPOTS:
-            newState = { ...state };
-            newState[action.spots.id] = action.spots;
-            return newState.undefined
+            return { ...state, entries: { ...action.spots } };
         case DETAILS_SPOT:
-            return { ...state, [action.spot.id]: action.spot };
+            newState = { ...state };
+            newState[action.spot.id] = action.spot;
+            return newState
         default:
             return state;
     }
