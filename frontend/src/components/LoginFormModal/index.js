@@ -1,5 +1,5 @@
 // frontend/src/components/LoginFormModal/index.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -13,6 +13,7 @@ function LoginFormModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const history = useHistory();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,6 +46,14 @@ function LoginFormModal() {
             );
     }
 
+    useEffect(() => {
+        if (credential.length < 4 || password.length < 6) {
+            setIsButtonDisabled(true);
+        } else setIsButtonDisabled(false);
+    }, [credential, password]);
+
+    const buttonClassName = "login-button" + (isButtonDisabled ? "" : "disabled");
+
     return (
         <>
             <h1>Log In</h1>
@@ -72,7 +81,7 @@ function LoginFormModal() {
                         required
                     />
                 </label>
-                <button type="submit">Log In</button>
+                <button className={buttonClassName} disabled={isButtonDisabled} type="submit">Log In</button>
                 <button onClick={demoUser}>Demo User</button>
             </form>
         </>
