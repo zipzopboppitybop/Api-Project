@@ -1,7 +1,8 @@
 // frontend/src/store/spots.js
 import { csrfFetch } from './csrf';
 
-const LOAD_SPOTS = 'spots/loadSpots';
+const LOAD_SPOTS = 'spots/LOAD_SPOTS';
+const DETAILS_SPOT = 'spots/DETAILS_SPOT'
 
 export const loadSpots = (spots) => {
     return {
@@ -10,11 +11,25 @@ export const loadSpots = (spots) => {
     }
 }
 
+const getDetailsOfSpot = spot => ({
+    type: DETAILS_SPOT,
+    spot
+});
+
 export const getAllSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
     const spots = await response.json();
     dispatch(loadSpots(spots));
 }
+
+export const getOneSpot = (id) => async dispatch => {
+    const response = await fetch(`/api/spots/${id}`);
+
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(getDetailsOfSpot(spot));
+    }
+};
 
 const initialState = { entries: [] };
 const spotReducer = (state = initialState, action) => {
@@ -24,6 +39,8 @@ const spotReducer = (state = initialState, action) => {
             newState = { ...state };
             newState[action.spots.id] = action.spots;
             return newState.undefined
+        case DETAILS_SPOT:
+            return { ...state, [action.spot.id]: action.spot };
         default:
             return state;
     }

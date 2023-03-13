@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList/index.";
+import SingleSpot from "./components/SingleSpot";
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={SpotList} />
+          <Route exact path='/spots/:id' component={SingleSpot} />
+
         </Switch>
       )}
     </>

@@ -16,18 +16,11 @@ const SpotList = () => {
 
     return (
         <div className='bruh'>
-            <h1>Spot List</h1>
             <ul className='spots'>
                 {spots[0].map(({ id, name, previewImg, price, avgRating }) => (
-                    <li key={id}><NavLink to={`/spots/${id}`}><img src={`${previewImg}`} />{name}, {price}, {avgRating}</NavLink></li>
+                    <li className='spot' key={id}><NavLink to={`/spots/${id}`}><img className='spot-image' src={`${previewImg}`} />{name}, {price}, {avgRating}</NavLink></li>
                 ))}
             </ul>
-
-            <Switch>
-                <Route path='/spots/:id'>
-                    <SingleSpot spots={spots} />
-                </Route>
-            </Switch>
         </div>
     )
 }
