@@ -17,6 +17,7 @@ function SignupFormModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const history = useHistory();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const handleSubmit = (e) => {
         e.preventDefault();
