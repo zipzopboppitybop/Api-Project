@@ -16,17 +16,23 @@ function LoginFormModal() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
+        if (password.length > 6) {
+            setErrors([]);
+            return dispatch(sessionActions.login({ credential, password }))
+                .then(closeModal, history.push("/"))
+                .catch(
+                    async (res) => {
+                        const data = await res.json();
+                        if (res.status === 403) {
+                            return setErrors(['Invalid Credentials'])
+                        }
+                        if (data && data.errors) setErrors(data.errors);
+                    }
+                );
+        }
+        return setErrors(['Password must be longer than 5 characters'])
 
-        return dispatch(sessionActions.login({ credential, password }))
 
-            .then(closeModal, history.push("/"))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
     };
 
     const demoUser = (e) => {
