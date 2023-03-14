@@ -12,6 +12,10 @@ const SingleSpot = () => {
     const spot = useSelector(state => state.spots.singleSpot);
     console.log("owner: ", spot.Owner)
 
+    const reserve = (e) => {
+        e.preventDefault();
+        alert('Feature Coming Soon...');
+    };
 
     useEffect(() => {
         dispatch(getOneSpot(id));
@@ -33,9 +37,23 @@ const SingleSpot = () => {
                 </ul>
             </div>
 
-            <h1 className='content'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h1>
+            <div className='flex-container'>
+                <h1 className='content'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h1>
+                <div className='reserve'>
+                    <p className='description'>${spot.price} night </p>
+                    <p className='description'>
+                        <i className='fas fa-star' />
+                        {spot.avgStarRating}  &middot;  {spot.numReviews} reviews
+                    </p>
+                    <button onClick={reserve} className='reserve-button'>Reserve</button>
+                </div>
+            </div>
+            <p className='content description move-up'>
+                {spot.description}
+            </p>
 
-            <p className='content description'>{spot.description}</p>
+            <h1 className='content review-title'><i className='fas fa-star' />
+                {spot.avgStarRating} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews</h1>
 
         </div>
     );
