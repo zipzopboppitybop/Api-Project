@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
             </>
             {isLoaded && (
                 <>
-                    <li className={createSpotClassName}>hello</li>
+                    <li className={createSpotClassName}>Create a New Spot</li>
                     <li className='profile-dropdown-list-item'>
 
                         <ProfileButton user={sessionUser} />

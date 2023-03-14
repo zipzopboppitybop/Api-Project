@@ -30,7 +30,8 @@
 }
 
 .menu-item:hover,
-.profile-button:hover {
+.profile-button:hover,
+.create-spot:hover {
     cursor: pointer;
 }
 
@@ -72,7 +73,6 @@
 .spot,
 .spot-image {
     width: 270px;
-
 }
 
 .login-button {
@@ -85,4 +85,5 @@
     margin-top: -4.5%;
     margin-left: auto;
     font-size: 25px;
+    color: blue;
 }
