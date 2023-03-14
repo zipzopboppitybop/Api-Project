@@ -1,16 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, NavLink } from 'react-router-dom';
-import { getAllSpots } from '../../store/spots';
 import { getOneSpot } from '../../store/spots';
 import { useEffect } from 'react';
+import { getReviewsSpot } from '../../store/reviews';
 
 
 const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    console.log("owner: ", spot.Owner)
 
     const reserve = (e) => {
         e.preventDefault();
@@ -19,6 +17,10 @@ const SingleSpot = () => {
 
     useEffect(() => {
         dispatch(getOneSpot(id));
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(getReviewsSpot(id));
     }, [dispatch]);
 
     if (!spot) return null;
@@ -38,7 +40,7 @@ const SingleSpot = () => {
             </div>
 
             <div className='flex-container'>
-                <h1 className='content'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h1>
+                <h1 className='content'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h1>
                 <div className='reserve'>
                     <p className='description'>${spot.price} night </p>
                     <p className='description'>
