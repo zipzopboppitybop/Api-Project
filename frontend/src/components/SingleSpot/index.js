@@ -24,7 +24,7 @@ const SingleSpot = () => {
             <h3>{spot.city}, {spot.state}, {spot.country} </h3>
 
             <div className='image-container'>
-                <ul className='grid'>
+                <ul className='images'>
                     {spot.SpotImages?.map(({ url, id }) => (
                         <li key={id}>
                             <img src={url} ></img>

@@ -91,17 +91,30 @@
 }
 
 .image-container {
-    width: 75%;
+    width: 94%;
     margin-left: 3%;
     margin-right: 3%;
 }
 
-.grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 50% 25% 25% 25%;
+.images {
+    display: flex;
 }
 
-.grid li img {
-    height: 1200px;
+.images li:first-child {
+    width: 50%;
+}
+
+.images li:first-child img {
+    width: 100%;
+    height: 824px;
+}
+
+.images li {
+    width: 25%;
+    height: 412px;
+}
+
+.images li img {
+    height: 412px;
+    width: 100%;
 }
