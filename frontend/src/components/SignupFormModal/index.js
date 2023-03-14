@@ -1,5 +1,5 @@
 // frontend/src/components/SignupFormModal/index.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -33,6 +33,14 @@ function SignupFormModal() {
         return setErrors(['Confirm Password field must be the same as the Password field']);
 
     };
+
+    useEffect(() => {
+        if (!username || !password || !confirmPassword || !email || !firstName || !lastName || username.length < 4 || password.length < 6 || password !== confirmPassword) {
+            setIsButtonDisabled(true);
+        } else setIsButtonDisabled(false);
+    }, [username, password, confirmPassword, email, firstName, lastName]);
+
+    const buttonClassName = "login-button" + (isButtonDisabled ? "" : "disabled");
 
     return (
         <>
@@ -95,7 +103,7 @@ function SignupFormModal() {
                         required
                     />
                 </label>
-                <button type="submit">Sign Up</button>
+                <button className={buttonClassName} disabled={isButtonDisabled} type="submit">Sign Up</button>
             </form>
         </>
     );

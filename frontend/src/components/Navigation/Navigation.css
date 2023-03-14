@@ -7,6 +7,8 @@
     display: flex;
     list-style: none;
     border-bottom: 1px solid black;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .profile-dropdown-list-item {
@@ -24,7 +26,6 @@
 
 .profile-button {
     width: 100px;
-    margin-top: -1%;
     border-radius: 40px;
 }
 
@@ -43,6 +44,7 @@
     font-weight: bold;
     text-decoration: none;
     font-family: 'Geometric Sans Serif v1', sans-serif;
+    margin-top: -2.5%;
 }
 
 .title {
@@ -77,4 +79,10 @@
     border: 1px solid #999999;
     background-color: #cccccc;
     color: #666666;
+}
+
+.create-spot {
+    margin-top: -4.5%;
+    margin-left: auto;
+    font-size: 25px;
 }

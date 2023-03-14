@@ -8,16 +8,21 @@ import logo from './images/ABNB-4aaade0f.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
+    const createSpotClassName = "create-spot" + (sessionUser ? "" : " hidden");
 
     return (
         <ul className='profile-dropdown-list '>
             <>
                 <NavLink exact to="/" className='logo'><img style={{ width: 50 }} src={logo} />  <span className='title'>briarbnb</span></NavLink>
-            </ >
+            </>
             {isLoaded && (
-                <li className='profile-dropdown-list-item'>
-                    <ProfileButton user={sessionUser} />
-                </li>
+                <>
+                    <li className={createSpotClassName}>hello</li>
+                    <li className='profile-dropdown-list-item'>
+
+                        <ProfileButton user={sessionUser} />
+                    </li>
+                </>
             )}
         </ul>
     );
