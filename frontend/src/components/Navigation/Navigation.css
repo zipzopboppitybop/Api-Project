@@ -90,14 +90,20 @@
     color: blue;
 }
 
+.content {
+    margin-left: 3.5%;
+}
+
 .image-container {
     width: 94%;
-    margin-left: 3%;
+    margin-left: 2%;
     margin-right: 3%;
 }
 
 .images {
     display: flex;
+    flex-wrap: wrap;
+    list-style: none;
 }
 
 .images li:first-child {
@@ -117,4 +123,12 @@
 .images li img {
     height: 412px;
     width: 100%;
+}
+
+.images li:nth-child(4) {
+    margin-left: 50%;
+}
+
+.description {
+    font-size: 20px;
 }

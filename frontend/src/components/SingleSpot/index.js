@@ -10,7 +10,7 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-
+    console.log("owner: ", spot.Owner)
 
 
     useEffect(() => {
@@ -20,8 +20,8 @@ const SingleSpot = () => {
     if (!spot) return null;
     return (
         <div className='singleSpot'>
-            <h1>{spot.name}</h1>
-            <h3>{spot.city}, {spot.state}, {spot.country} </h3>
+            <h1 className='content'>{spot.name}</h1>
+            <h3 className='content'>{spot.city}, {spot.state}, {spot.country} </h3>
 
             <div className='image-container'>
                 <ul className='images'>
@@ -31,8 +31,11 @@ const SingleSpot = () => {
                         </li>
                     ))}
                 </ul>
-
             </div>
+
+            <h1 className='content'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h1>
+
+            <p className='content description'>{spot.description}</p>
 
         </div>
     );
