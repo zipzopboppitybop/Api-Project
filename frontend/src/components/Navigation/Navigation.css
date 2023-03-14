@@ -87,3 +87,14 @@
     font-size: 25px;
     color: blue;
 }
+
+.image-container {
+    width: 75%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.first-image {
+    width: 50%;
+    height: 600px;
+}

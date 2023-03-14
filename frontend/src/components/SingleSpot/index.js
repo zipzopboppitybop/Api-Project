@@ -10,7 +10,6 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    console.log(spot)
 
     useEffect(() => {
         dispatch(getOneSpot(id));
@@ -20,6 +19,11 @@ const SingleSpot = () => {
     return (
         <div className='singleSpot'>
             <h1>{spot.name}</h1>
+            <h3>{spot.city}, {spot.state}, {spot.country} </h3>
+
+            <div className='image-container'>
+                <img className='first-image' src={spot.SpotImages[0].url} />
+            </div>
 
         </div>
     );
