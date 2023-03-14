@@ -54,9 +54,9 @@
 
 .spots {
     list-style: none;
-    margin-left: 10%;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 
 }
 
@@ -82,7 +82,7 @@
 }
 
 .create-spot {
-    margin-top: -4.5%;
+    margin-top: -3.5%;
     margin-left: auto;
     font-size: 25px;
     color: blue;
