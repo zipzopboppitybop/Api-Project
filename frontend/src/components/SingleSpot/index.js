@@ -11,6 +11,8 @@ const SingleSpot = () => {
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
 
+
+
     useEffect(() => {
         dispatch(getOneSpot(id));
     }, [dispatch]);
@@ -22,7 +24,14 @@ const SingleSpot = () => {
             <h3>{spot.city}, {spot.state}, {spot.country} </h3>
 
             <div className='image-container'>
-                <img className='first-image' src={spot.SpotImages[0].url} />
+                <ul className='grid'>
+                    {spot.SpotImages?.map(({ url, id }) => (
+                        <li key={id}>
+                            <img src={url} ></img>
+                        </li>
+                    ))}
+                </ul>
+
             </div>
 
         </div>

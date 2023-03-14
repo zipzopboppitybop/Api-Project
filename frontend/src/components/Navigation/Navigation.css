@@ -9,6 +9,9 @@
     border-bottom: 1px solid black;
     align-items: center;
     margin: 0 auto;
+    position: sticky;
+    top: 0;
+    background-color: white;
 }
 
 .profile-dropdown-list-item {
@@ -57,7 +60,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-
 }
 
 .spot {
@@ -94,7 +96,12 @@
     margin-right: 3%;
 }
 
-.first-image {
-    width: 50%;
-    height: 600px;
+.grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 50% 25% 25% 25%;
+}
+
+.grid li img {
+    height: 1200px;
 }
