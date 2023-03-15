@@ -10,6 +10,8 @@ const SingleSpot = () => {
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot.Reviews)
+    const sessionUser = useSelector(state => state.session.user);
+    const createReviewClassName = "create-review" + (sessionUser ? "" : " hidden");
 
     const reserve = (e) => {
         e.preventDefault();
@@ -57,6 +59,7 @@ const SingleSpot = () => {
 
             <h1 className='content review-title'><i className='fas fa-star' />
                 {spot.avgStarRating} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
+                <button className={createReviewClassName} onClick={reserve} >Post your review</button>
             </h1>
 
             <ul className='reviews'>
