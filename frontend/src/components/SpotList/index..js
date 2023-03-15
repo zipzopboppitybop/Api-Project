@@ -17,7 +17,7 @@ const SpotList = () => {
         <div className='bruh'>
             <ul className='spots'>
                 {spots?.map(({ id, name, previewImage, price, avgRating }) => (
-                    <li className='spot' key={id}><NavLink to={`/spots/${id}`}><img className='spot-image' src={`${previewImage}`} />{name}, {price}, {avgRating}</NavLink></li>
+                    <li className='spot' key={id}><NavLink to={`/spots/${id}`}><img className='spot-image' src={`${previewImage}`} />{name}, {price}, {avgRating.toFixed(2)}</NavLink></li>
                 ))}
             </ul>
         </div>
