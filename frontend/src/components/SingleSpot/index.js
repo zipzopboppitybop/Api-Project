@@ -9,6 +9,9 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
+    const reviews = useSelector(state => state.reviews.spot.Reviews)
+
+    console.log(reviews[1].id)
 
     const reserve = (e) => {
         e.preventDefault();
@@ -55,7 +58,16 @@ const SingleSpot = () => {
             </p>
 
             <h1 className='content review-title'><i className='fas fa-star' />
-                {spot.avgStarRating} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews</h1>
+                {spot.avgStarRating} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
+            </h1>
+
+            <ul className='reviews'>
+                {reviews?.map(({ review, id, User, createdAt }) => (
+                    <li key={id}>
+                        <h3>{User.firstName} <br /> {createdAt.slice(0, 10)} <br />  {review}</h3>
+                    </li>
+                ))}
+            </ul>
 
         </div>
     );

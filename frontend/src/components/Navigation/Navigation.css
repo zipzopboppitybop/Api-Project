@@ -170,3 +170,8 @@
 .review-title {
     margin-top: 70px;
 }
+
+.reviews {
+    list-style: none;
+    margin-left: 2%;
+}
