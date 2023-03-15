@@ -176,3 +176,35 @@
     list-style: none;
     margin-left: 2%;
 }
+
+.spot-form {
+    width: 25%;
+    margin: 0 auto;
+}
+
+.form-content {
+    inline-size: 90%;
+    overflow-wrap: break-word;
+    margin-top: 1%;
+}
+
+.form {
+    border: 0px;
+    padding: 0px;
+    margin-left: 0px;
+    margin-top: 30px;
+}
+
+.spot-form-label {
+    font-weight: bold;
+}
+
+.line {
+    border-top: 1px solid black;
+    padding-top: 10px;
+    margin-bottom: 1%;
+}
+
+.bottom-border {
+    margin-bottom: 20px;
+}

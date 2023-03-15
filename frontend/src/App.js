@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList/index.";
 import SingleSpot from "./components/SingleSpot";
+import SpotInput from "./components/SpotForm";
 
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={SpotList} />
-          <Route exact path='/spots/:id' component={SingleSpot} />
+          <Route path='/spots/new' component={SpotInput} />
+          <Route path='/spots/:id' component={SingleSpot} />
         </Switch>
       )}
     </>
