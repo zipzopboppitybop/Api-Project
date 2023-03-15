@@ -11,8 +11,6 @@ const SingleSpot = () => {
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot.Reviews)
 
-    console.log(reviews[1].id)
-
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
