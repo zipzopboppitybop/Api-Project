@@ -47,7 +47,7 @@ const SingleSpot = () => {
                     <p className='description'>${spot.price} night </p>
                     <p className='description'>
                         <i className='fas fa-star' />
-                        {spot.avgStarRating?.toFixed(2)}  &middot;  {spot.numReviews} reviews
+                        {Number.parseFloat(spot.avgStarRating).toFixed(2)}  &middot;  {spot.numReviews} reviews
                     </p>
                     <button onClick={reserve} className='reserve-button'>Reserve</button>
                 </div>
@@ -57,7 +57,7 @@ const SingleSpot = () => {
             </p>
 
             <h1 className='content review-title'><i className='fas fa-star' />
-                {spot.avgStarRating?.toFixed(2)} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
+                {Number.parseFloat(spot.avgStarRating).toFixed(2)} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
                 <button className={createReviewClassName} onClick={reserve} >Post your review</button>
             </h1>
 

@@ -33,7 +33,7 @@ const CurrentSpots = () => {
                             <img className='spot-image' src={`${previewImage}`} />
                             <div className='spot-description'>
                                 <div>{city}, {state}</div>
-                                <div>{avgRating}</div>
+                                <div>{Number.parseFloat(avgRating).toFixed(2)}</div>
                             </div>
                             <div className='spot-description little'>
                                 ${price} night
