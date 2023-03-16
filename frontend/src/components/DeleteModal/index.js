@@ -10,11 +10,12 @@ function DeleteForm({ id }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const spot = useSelector(state => state.spots.singleSpot);
-    console.log(spot)
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         closeModal()
+        history.push('/spots/current')
         return dispatch(spotActions.deleteSpot(spot.id))
     };
 

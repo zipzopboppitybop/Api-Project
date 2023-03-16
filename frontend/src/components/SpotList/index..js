@@ -5,7 +5,6 @@ import { getAllSpots } from '../../store/spots';
 
 const SpotList = () => {
     const dispatch = useDispatch();
-
     const spots = useSelector(state => state.spots.allSpots.Spots);
 
     useEffect(() => {

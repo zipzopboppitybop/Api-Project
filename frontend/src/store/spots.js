@@ -82,13 +82,15 @@ export const createSpot = (payload) => async (dispatch) => {
 }
 
 export const deleteSpot = (id) => async (dispatch) => {
-    const response = await csrfFetch(`api/spots/${id}`, {
+
+    const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
     })
 
     if (response.ok) {
         const spot = await response.json();
+        console.log(spot)
         dispatch(DeleteASpot(spot));
         return spot
     }

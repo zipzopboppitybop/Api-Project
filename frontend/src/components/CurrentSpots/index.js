@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams, useHistory } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import DeleteForm from '../DeleteModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
@@ -9,19 +9,27 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 const CurrentSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.allSpots.Spots);
-    const { id } = useParams();
+    const user = useSelector(state => state.session.user);
+    const history = useHistory();
+    let spotsArr;
+
+    if (!user) history.push('/');
+
+    if (spots) {
+        spotsArr = Object.values(spots);
+    }
+
 
     const updateSpot = (e) => {
-        e.preventDefault()
-        alert("Function Coming Soon")
+        e.preventDefault();
+        alert("Function Coming Soon");
     }
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
-    }, [dispatch,]);
+    }, [dispatch, spotsArr]);
 
-
-
+    if (!spotsArr) return null;
     return (
 
         <div className='bruh'>
@@ -32,7 +40,7 @@ const CurrentSpots = () => {
                 </NavLink>
             </h3>
             <ul className='spots'>
-                {spots?.map(({ id, previewImage, city, state, price, avgRating }) => (
+                {spotsArr?.map(({ id, previewImage, city, state, price, avgRating }) => (
                     <li className='spot' key={id}>
                         <NavLink to={`/spots/${id}`}>
                             <img className='spot-image' src={`${previewImage}`} />
