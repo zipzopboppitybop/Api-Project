@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { getUserSpots } from '../../store/spots';
+import { NavLink, useParams } from 'react-router-dom';
+import * as spotActions from '../../store/spots';
 
 
 const CurrentSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.allSpots.Spots);
+    const spot = useSelector(state => state.spots.singleSpot);
+    const { id } = useParams();
 
     const updateSpot = (e) => {
         e.stopPropagation();
@@ -17,15 +19,28 @@ const CurrentSpots = () => {
     const deleteSpot = (e) => {
         e.stopPropagation();
         e.preventDefault()
-        alert("Function Coming Soon")
+        return dispatch(spotActions.deleteSpot(id));
     }
 
     useEffect(() => {
-        dispatch(getUserSpots());
+        dispatch(spotActions.getOneSpot(id));
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(spotActions.getUserSpots());
     }, [dispatch,]);
 
+
+
     return (
+
         <div className='bruh'>
+            <h1 className='user-title'>Manage Your Spots</h1>
+            <h3 className='user-title create'>
+                <NavLink className={"white"} to={"/spots/new"}>
+                    Create a New Spot
+                </NavLink>
+            </h3>
             <ul className='spots'>
                 {spots?.map(({ id, previewImage, city, state, price, avgRating }) => (
                     <li className='spot' key={id}>

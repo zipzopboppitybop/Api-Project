@@ -49,8 +49,6 @@ function ProfileButton({ user }) {
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-    let currentSpotsUrl = 'spots/current';
-    if (window.location.href.endsWith(currentSpotsUrl)) console.log("hello")
 
     return (
         <>

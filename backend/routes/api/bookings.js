@@ -177,7 +177,6 @@ router.put(
         }
 
         dates.filter(removeValue)
-        console.log(dates)
 
         for (let i = 0; i < dates.length; i++) {
             const booking = dates[i];

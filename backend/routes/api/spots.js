@@ -226,7 +226,7 @@ router.get(
             })
             let reviewAvg = ratings.toJSON().avgRating
             if (reviewAvg) spot.avgRating = reviewAvg;
-            else spot.avgRating = "No Reviews Yet"
+            else spot.avgRating = []
 
 
             delete spot.SpotImages;
@@ -305,14 +305,14 @@ router.get(
             })
             let reviewAvg = ratings.toJSON().avgRating
             if (reviewAvg) spot.avgRating = reviewAvg;
-            else spot.avgRating = "No Review Yet"
+            else spot.avgRating = []
 
 
             delete spot.SpotImages;
             delete spot.Reviews;
         }
 
-        if (spotData.length < 1) spotData = "No Spots Yet";
+        if (spotData.length < 1) spotData = [];
 
         return res.json({
             Spots: spotData
@@ -375,11 +375,11 @@ router.get(
         let reviewCount = count.toJSON().numReviews
 
         if (reviewCount) currentSpotData.numReviews = reviewCount;
-        else currentSpotData.numReviews = "No Reviews Yet"
+        else currentSpotData.numReviews = []
         if (reviewAvg) currentSpotData.avgStarRating = reviewAvg;
-        else currentSpotData.avgStarRating = "No Reviews Yet"
+        else currentSpotData.avgStarRating = []
         if (currentSpotImages.length > 0) currentSpotData.SpotImages = currentSpotImages
-        else currentSpotData.SpotImages = "No Images Yet"
+        else currentSpotData.SpotImages = []
 
 
         currentSpotData.Owner = currentSpotData.User
@@ -437,7 +437,7 @@ router.get(
                 attributes: ["id", "url"]
             })
             if (reviewImages.length > 0) review.ReviewImages = reviewImages
-            else review.ReviewImages = "No Review Images Yet";
+            else review.ReviewImages = [];
         }
 
         res.json({
@@ -480,7 +480,7 @@ router.get(
 
             if (currentSpotBookings < 1) {
                 return res.json({
-                    Bookings: "No Bookings Yet"
+                    Bookings: []
                 });
             } else {
                 return res.json({
@@ -501,7 +501,7 @@ router.get(
 
         if (currentSpotBookings < 1) {
             return res.json({
-                Bookings: "No Bookings Yet"
+                Bookings: []
             });
         } else {
 

@@ -64,12 +64,34 @@
     margin-top: 100px;
 }
 
+.user-title {
+    margin-left: 8.5%;
+}
+
+.create,
+.end {
+    border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
+    background-color: #666666;
+    color: white;
+    text-align: center;
+}
+
+.white {
+    color: white;
+}
+
+.create {
+    width: 7%;
+}
+
 .spots,
 .user-spots {
     list-style: none;
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .spot {
@@ -79,6 +101,8 @@
     text-decoration: none;
 }
 
+
+
 .spot-description,
 .spot {
     display: flex;
@@ -87,17 +111,13 @@
 
 .spot-description {
     margin-top: 2%;
+    color: black;
 }
 
 .end {
     order: 1;
     align-self: flex-end;
-    background-color: #666666;
-    color: white;
     width: 70px;
-    text-align: center;
-    border: 1px solid black;
-    box-shadow: 5px 5px 5px black;
 }
 
 a {
