@@ -35,6 +35,10 @@ function ProfileButton({ user }) {
 
     const closeMenu = () => setShowMenu(false);
 
+    const manageSpots = (e) => {
+        e.preventDefault();
+        history.push("/spots/current");
+    }
 
 
     const logout = (e) => {
@@ -46,7 +50,7 @@ function ProfileButton({ user }) {
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
     let currentSpotsUrl = 'spots/current';
-    if (window.location.href.endsWith(currentSpotsUrl)) currentSpotsUrl = "#"
+    if (window.location.href.endsWith(currentSpotsUrl)) console.log("hello")
 
     return (
         <>
@@ -59,8 +63,8 @@ function ProfileButton({ user }) {
                     <>
                         <li>Hello, {user.firstName}</li>
                         <li className="email">{user.email}</li>
-                        <li className="menu-item email">
-                            <NavLink className='link black' to={currentSpotsUrl}>Manage Spots</NavLink>
+                        <li className="menu-item email link black" onClick={manageSpots}>
+                            Manage Spots
                         </li>
                         <li className="menu-item" onClick={logout}>Log Out</li>
                     </>
