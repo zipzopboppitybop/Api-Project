@@ -22,10 +22,10 @@ const SpotInput = () => {
     const history = useHistory();
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(spotActions.createSpot({ country, address, city, state, description, name, price, previewImage, imageTwo, imageThree, imageFour, imageFive }))
+        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price }))
             .then(history.push("/"))
             .catch(
                 async (res) => {

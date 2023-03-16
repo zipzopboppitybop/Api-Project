@@ -10,6 +10,7 @@ function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const createSpotClassName = "create-spot" + (sessionUser ? "" : " hidden");
 
+
     return (
         <ul className='profile-dropdown-list '>
             <>
@@ -17,7 +18,7 @@ function Navigation({ isLoaded }) {
             </>
             {isLoaded && (
                 <>
-                    <li className={createSpotClassName}><NavLink to={"/spots/new"}>Create a New Spot</NavLink></li>
+                    <li className={createSpotClassName}><NavLink className="link" to={"/spots/new"}>Create a New Spot</NavLink></li>
                     <li className='profile-dropdown-list-item'>
 
                         <ProfileButton user={sessionUser} />

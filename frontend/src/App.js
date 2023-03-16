@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList/index.";
 import SingleSpot from "./components/SingleSpot";
 import SpotInput from "./components/SpotForm";
+import CurrentSpots from "./components/CurrentSpots";
 
 
 function App() {
@@ -23,7 +24,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={SpotList} />
           <Route path='/spots/new' component={SpotInput} />
+          <Route path='/spots/current' component={CurrentSpots} />
           <Route path='/spots/:id' component={SingleSpot} />
+
         </Switch>
       )}
     </>

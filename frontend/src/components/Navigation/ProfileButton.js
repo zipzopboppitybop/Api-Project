@@ -5,7 +5,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 //import './ProfuleButton.css'
 
 function ProfileButton({ user }) {
@@ -45,6 +45,8 @@ function ProfileButton({ user }) {
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+    let currentSpotsUrl = 'spots/current';
+    if (window.location.href.endsWith(currentSpotsUrl)) currentSpotsUrl = "#"
 
     return (
         <>
@@ -56,8 +58,10 @@ function ProfileButton({ user }) {
                 {user ? (
                     <>
                         <li>Hello, {user.firstName}</li>
-                        <li>{user.email}</li>
-                        <li className="menu-item">Manage Spots</li>
+                        <li className="email">{user.email}</li>
+                        <li className="menu-item email">
+                            <NavLink className='link black' to={currentSpotsUrl}>Manage Spots</NavLink>
+                        </li>
                         <li className="menu-item" onClick={logout}>Log Out</li>
                     </>
                 ) : (

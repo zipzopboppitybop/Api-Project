@@ -12,6 +12,8 @@
     position: sticky;
     top: 0;
     background-color: white;
+    height: 5%;
+
 }
 
 .profile-dropdown-list-item {
@@ -25,11 +27,18 @@
     margin-top: 10px;
     margin-left: 10%;
     padding: 10px;
+
 }
 
 .profile-button {
     width: 100px;
     border-radius: 40px;
+}
+
+.email {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 5px 0;
 }
 
 .menu-item:hover,
@@ -55,16 +64,44 @@
     margin-top: 100px;
 }
 
-.spots {
+.spots,
+.user-spots {
     list-style: none;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
+    justify-content: space-around;
 }
 
 .spot {
     height: 300px;
-    margin-top: 10px;
+    margin-top: .5%;
+    flex-wrap: wrap;
+    text-decoration: none;
+}
+
+.spot-description,
+.spot {
+    display: flex;
+    justify-content: space-between;
+}
+
+.spot-description {
+    margin-top: 2%;
+}
+
+.end {
+    order: 1;
+    align-self: flex-end;
+    background-color: #666666;
+    color: white;
+    width: 70px;
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
+}
+
+a {
+    text-decoration: none;
 }
 
 .spot-image {
@@ -207,4 +244,10 @@
 
 .bottom-border {
     margin-bottom: 20px;
+}
+
+
+
+.black {
+    color: black;
 }
