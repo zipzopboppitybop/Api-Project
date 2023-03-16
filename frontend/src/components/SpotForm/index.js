@@ -25,7 +25,7 @@ const SpotInput = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price }))
+        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price, SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive] }))
             .then(history.push("/"))
             .catch(
                 async (res) => {

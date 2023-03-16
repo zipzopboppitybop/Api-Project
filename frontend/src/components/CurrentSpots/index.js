@@ -2,29 +2,19 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
+import DeleteForm from '../DeleteModal';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 
 const CurrentSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.allSpots.Spots);
-    const spot = useSelector(state => state.spots.singleSpot);
     const { id } = useParams();
 
     const updateSpot = (e) => {
-        e.stopPropagation();
         e.preventDefault()
         alert("Function Coming Soon")
     }
-
-    const deleteSpot = (e) => {
-        e.stopPropagation();
-        e.preventDefault()
-        return dispatch(spotActions.deleteSpot(id));
-    }
-
-    useEffect(() => {
-        dispatch(spotActions.getOneSpot(id));
-    }, [dispatch])
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
@@ -52,14 +42,22 @@ const CurrentSpots = () => {
                             </div>
                             <div className='spot-description little'>
                                 ${price} night
-                                <span className='end' onClick={updateSpot}>Update</span>
-                                <span onClick={deleteSpot} className='end'>Delete</span>
                             </div>
                         </NavLink>
+                        <div className='flex spot-description'>
+                            <span className='end' onClick={updateSpot}>Update</span>
+                            <OpenModalMenuItem
+                                onClick={(e) => e.preventDefault()}
+                                itemText={"Delete"}
+                                modalComponent={<DeleteForm id={id} />}
+                            />
+                        </div>
                     </li>
                 ))}
             </ul>
+
         </div>
+
     )
 }
 

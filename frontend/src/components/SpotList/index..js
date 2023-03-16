@@ -15,7 +15,7 @@ const SpotList = () => {
     return (
         <div className='bruh'>
             <ul className='spots'>
-                {spots?.map(({ id, name, previewImage, price, avgRating, city, state }) => (
+                {spots?.map(({ id, previewImage, price, avgRating, city, state }) => (
                     <li className='spot' key={id}>
                         <NavLink to={`/spots/${id}`}>
                             <img className='spot-image' src={`${previewImage}`} />

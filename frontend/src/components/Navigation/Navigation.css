@@ -118,6 +118,18 @@
     order: 1;
     align-self: flex-end;
     width: 70px;
+
+}
+
+.flex {
+    display: flex;
+    justify-content: flex-end;
+    width: 105%;
+    margin-top: -8%;
+}
+
+.delete-header {
+    text-align: center;
 }
 
 a {
