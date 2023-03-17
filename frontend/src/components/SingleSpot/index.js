@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneSpot } from '../../store/spots';
 import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import ReviewForm from '../ReviewModal';
+import ReviewFormModal from '../ReviewModal/ReviewFormModal';
 
 const SingleSpot = () => {
     const dispatch = useDispatch();
@@ -10,8 +13,7 @@ const SingleSpot = () => {
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot.Reviews)
     const sessionUser = useSelector(state => state.session.user);
-    const createReviewClassName = "create-review" + (sessionUser ? "" : " hidden");
-
+    let createReviewClassName = "hidden";
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -24,6 +26,19 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getReviewsSpot(id));
     }, [dispatch]);
+
+    if (sessionUser) {
+        if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
+        else createReviewClassName = "";
+
+
+        for (let i = 0; i < reviews?.length; i++) {
+            const review = reviews[i];
+            if (review.userId === sessionUser.id) createReviewClassName = "hidden";
+        }
+    }
+
+    console.log(createReviewClassName)
 
     if (!spot) return null;
     return (
@@ -58,13 +73,19 @@ const SingleSpot = () => {
 
             <h1 className='content review-title'><i className='fas fa-star' />
                 {Number.parseFloat(spot.avgStarRating).toFixed(2)} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
-                <button className={createReviewClassName} onClick={reserve} >Post your review</button>
             </h1>
+            <div className={createReviewClassName}>
+                <ReviewFormModal
+                    itemText={"Post Your Review"}
+                    modalComponent={<ReviewForm />}
+                />
+            </div>
+
 
             <ul className='reviews'>
                 {reviews?.map(({ review, id, User, createdAt }) => (
                     <li key={id}>
-                        <h3>{User.firstName} <br /> {createdAt.slice(0, 10)} <br />  {review}</h3>
+                        <h3>{User.firstName} <br /> {createdAt.slice(0, 7)} <br />  {review}</h3>
                     </li>
                 ))}
             </ul>

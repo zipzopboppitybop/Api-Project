@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spots';
 import { useHistory } from "react-router-dom";
 import * as spotActions from '../../store/spots'
@@ -20,7 +20,9 @@ const SpotInput = () => {
     const [imageFive, setImageFive] = useState("");
     const [errors, setErrors] = useState([]);
     const history = useHistory();
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const user = useSelector(state => state.session.user);
+
+    if (!user) history.push('/');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +57,7 @@ const SpotInput = () => {
                     <input
                         type="text"
                         value={country}
+                        placeholder="Country"
                         onChange={(e) => setCountry(e.target.value)}
                         required
                     />
@@ -64,6 +67,7 @@ const SpotInput = () => {
                     <input
                         type="text"
                         value={address}
+                        placeholder="Street Address"
                         onChange={(e) => setAddress(e.target.value)}
                         required
                     />
@@ -73,6 +77,7 @@ const SpotInput = () => {
                     <input
                         type="text"
                         value={city}
+                        placeholder="City"
                         onChange={(e) => setCity(e.target.value)}
                         required
                     />
@@ -82,6 +87,7 @@ const SpotInput = () => {
                     <input
                         type="text"
                         value={state}
+                        placeholder="State"
                         onChange={(e) => setState(e.target.value)}
                         required
                     />
@@ -93,7 +99,7 @@ const SpotInput = () => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         name='description'
-                        placeholder='Description'
+                        placeholder='Please write at least 30 characters'
                         rows='10'
                         cols='80'
                         required
@@ -114,7 +120,7 @@ const SpotInput = () => {
                     <h2 className='line'>Set a base price for your spot</h2>
                     <h4 className='form-content'>Competitive pricing can help your listing stand out and rank higher in search results</h4>
                     <input
-                        type="text"
+                        type="number"
                         value={price}
                         placeholder="$Price per night (USD)"
                         onChange={(e) => setPrice(e.target.value)}

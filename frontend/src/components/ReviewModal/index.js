@@ -4,31 +4,25 @@ import { useModal } from "../../context/Modal";
 import * as spotActions from "../../store/spots"
 
 
-function DeleteForm({ id }) {
+function ReviewForm() {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const spot = useSelector(state => state.spots.singleSpot);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         closeModal()
-        return dispatch(spotActions.deleteSpot(spot.id))
     };
 
-    useEffect(() => {
-        dispatch(spotActions.getOneSpot(id));
-    }, [dispatch]);
+
 
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <h1 className="delete-header">Confirm Delete</h1>
-                <h3 className="delete-header">Are you sure you want to remove this spot from the listings?</h3>
-                <button type="submit">Yes (Delete Spot) </button>
+                <h1 >Confirm Delete</h1>
                 <button onClick={closeModal}>No (Keep Spot)</button>
             </form>
         </>
     );
 }
 
-export default DeleteForm;
+export default ReviewForm;

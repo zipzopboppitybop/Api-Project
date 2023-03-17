@@ -8,7 +8,7 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 const CurrentSpots = () => {
     const dispatch = useDispatch();
-    const spots = useSelector(state => state.spots.allSpots.Spots);
+    const spots = useSelector(state => state.spots.userSpots?.Spots);
     const user = useSelector(state => state.session.user);
     const history = useHistory();
     let spotsArr;
@@ -19,23 +19,26 @@ const CurrentSpots = () => {
         spotsArr = Object.values(spots);
     }
 
+    const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
+    const createhiddenClassName = spotsArr?.length < 1 ? "create user-title" : "hidden";
 
     const updateSpot = (e) => {
         e.preventDefault();
         alert("Function Coming Soon");
     }
+    console.log(spotsArr)
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
-    }, [dispatch, spotsArr]);
+    }, [dispatch,]);
 
-    if (!spotsArr) return null;
+    if (!spots) return null
     return (
 
         <div className='bruh'>
             <h1 className='user-title'>Manage Your Spots</h1>
-            <h3 className='user-title create'>
-                <NavLink className={"white"} to={"/spots/new"}>
+            <h3 className={createhiddenClassName}>
+                <NavLink className={hiddenClassName} to={"/spots/new"}>
                     Create a New Spot
                 </NavLink>
             </h3>
@@ -46,7 +49,7 @@ const CurrentSpots = () => {
                             <img className='spot-image' src={`${previewImage}`} />
                             <div className='spot-description'>
                                 <div>{city}, {state}</div>
-                                <div>{Number.parseFloat(avgRating).toFixed(2)}</div>
+                                <div><i className='fas fa-star' />{Number.parseFloat(avgRating).toFixed(2)}</div>
                             </div>
                             <div className='spot-description little'>
                                 ${price} night

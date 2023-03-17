@@ -43,7 +43,8 @@
 
 .menu-item:hover,
 .profile-button:hover,
-.create-spot:hover {
+.create-spot:hover,
+.hello:hover {
     cursor: pointer;
 }
 
@@ -278,8 +279,25 @@ a {
     margin-bottom: 20px;
 }
 
+.create-review {
+    width: 150px;
+    text-decoration: none;
+    list-style: none;
+    background-color: #666666;
+    color: white;
+    margin-left: 3%;
+    height: 30px;
+    border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
+}
 
+.hello {
+    width: 150px;
 
-.black {
-    color: black;
+    margin-left: 3.5%;
+    margin-top: 1.05%;
+    height: 20px;
+    text-align: center;
+    list-style: none;
+    color: white;
 }
