@@ -14,6 +14,7 @@ const SingleSpot = () => {
     const reviews = useSelector(state => state.reviews.spot.Reviews)
     const sessionUser = useSelector(state => state.session.user);
     let createReviewClassName = "hidden";
+    let numReviews = "reviews";
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -38,7 +39,13 @@ const SingleSpot = () => {
         }
     }
 
+    if (spot.numReviews === 1) numReviews = "review"
+    else if (spot.numReviews < 1) numReviews = ""
 
+    const dot = () => {
+        if (spot.numReviews < 1) return (<span>&middot;</span>)
+        else return ""
+    }
 
     if (!spot) return null;
     return (
@@ -62,7 +69,7 @@ const SingleSpot = () => {
                     <p className='description'>${spot.price} night </p>
                     <p className='description'>
                         <i className='fas fa-star' />
-                        {Number.parseFloat(spot.avgStarRating).toFixed(2)}  &middot;  {spot.numReviews} reviews
+                        {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot} {spot.numReviews} {numReviews}
                     </p>
                     <button onClick={reserve} className='reserve-button'>Reserve</button>
                 </div>
@@ -72,7 +79,12 @@ const SingleSpot = () => {
             </p>
 
             <h1 className='content review-title'><i className='fas fa-star' />
-                {Number.parseFloat(spot.avgStarRating).toFixed(2)} &nbsp; &middot; &nbsp; {spot.numReviews}  reviews
+                {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}
+                &nbsp;
+                {dot}
+                &nbsp;
+                {spot.numReviews}
+                {numReviews}
             </h1>
             <div className={createReviewClassName}>
                 <ReviewFormModal
@@ -83,11 +95,11 @@ const SingleSpot = () => {
 
 
             <ul className='reviews'>
-                {reviews?.map(({ review, id, User, createdAt }) => (
+                {reviews.length > 0 ? (reviews?.map(({ review, id, User, createdAt }) => (
                     <li key={id}>
                         <h3>{User.firstName} <br /> {createdAt.slice(0, 7)} <br />  {review}</h3>
                     </li>
-                ))}
+                ))) : "Be the first to post a review!"}
             </ul>
 
         </div>
