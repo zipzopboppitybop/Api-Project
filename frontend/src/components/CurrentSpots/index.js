@@ -9,14 +9,20 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 const CurrentSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.userSpots?.Spots);
+    const allSpots = useSelector(state => state.spots.allSpots?.Spots)
     const user = useSelector(state => state.session.user);
     const history = useHistory();
     let spotsArr;
+    let allSpotsArr;
 
     if (!user) history.push('/');
 
     if (spots) {
         spotsArr = Object.values(spots);
+    }
+
+    if (allSpots) {
+        allSpotsArr = Object.values(allSpots);
     }
 
     const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
@@ -26,11 +32,10 @@ const CurrentSpots = () => {
         e.preventDefault();
         alert("Function Coming Soon");
     }
-    console.log(spotsArr)
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
-    }, [dispatch,]);
+    }, [dispatch, spotsArr]);
 
     if (!spots) return null
     return (

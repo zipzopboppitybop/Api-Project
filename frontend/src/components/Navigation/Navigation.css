@@ -41,10 +41,12 @@
     padding: 5px 0;
 }
 
+
 .menu-item:hover,
 .profile-button:hover,
 .create-spot:hover,
-.hello:hover {
+.hello:hover,
+.star:hover {
     cursor: pointer;
 }
 
@@ -293,11 +295,34 @@ a {
 
 .hello {
     width: 150px;
-
     margin-left: 3.5%;
     margin-top: 1.05%;
     height: 20px;
     text-align: center;
     list-style: none;
     color: white;
+}
+
+.review-form {
+    text-align: center;
+}
+
+.review-submit {
+    margin: 0 auto;
+}
+
+.rating-input {
+    display: flex;
+    text-align: center;
+    margin-left: 33%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.filled {
+    color: black;
+}
+
+.empty {
+    color: gray;
 }

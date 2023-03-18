@@ -38,7 +38,7 @@ const SingleSpot = () => {
         }
     }
 
-    console.log(createReviewClassName)
+
 
     if (!spot) return null;
     return (

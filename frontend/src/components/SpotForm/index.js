@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot } from '../../store/spots';
 import { useHistory } from "react-router-dom";
 import * as spotActions from '../../store/spots'
 
@@ -27,7 +26,7 @@ const SpotInput = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price, SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive] }))
+        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price, previewImage }))
             .then(history.push("/"))
             .catch(
                 async (res) => {

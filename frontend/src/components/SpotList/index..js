@@ -22,13 +22,17 @@ const SpotList = () => {
         <div className='bruh'>
             <ul className='spots'>
                 {spotsArr?.map(({ id, previewImage, price, avgRating, city, state, name }) => (
+
                     <tooltip title={name} key={id}>
                         <li className='spot' key={id}>
                             <NavLink to={`/spots/${id}`}>
                                 <img className='spot-image' src={`${previewImage}`} />
                                 <div className='spot-description'>
                                     <div>{city}, {state}</div>
-                                    <div><i className='fas fa-star' />{Number.parseFloat(avgRating).toFixed(2)}</div>
+                                    <div>
+                                        <i className='fas fa-star' />
+                                        {avgRating > 0 ? (Number.parseFloat(avgRating).toFixed(2)) : ("New")}
+                                    </div>
                                 </div>
                                 <div className='spot-description little'>
                                     ${price} night
