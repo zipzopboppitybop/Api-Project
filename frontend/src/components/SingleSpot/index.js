@@ -75,7 +75,7 @@ const SingleSpot = () => {
                     <p className='reserve-description'>${spot.price} night </p>
                     <p className='reserve-description'>
                         <i className='fas fa-star' />
-                        {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot()} {spot.numReviews} {numReviews}
+                        {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot()} {spot.numReviews > 0 ? spot.numReviews : ""} {numReviews}
                     </p>
                     <button onClick={reserve} className='reserve-button'>Reserve</button>
                 </div>

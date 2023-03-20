@@ -19,7 +19,7 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 
 ![Sign-Up-User]
 
-[Sign-Up-User]: ./frontend/images/Screenshot&2023-03-20&085006.png
+[Sign-Up-User]: ./frontend/images/Screenshot%2023-03-20%085006.png
 
 
 #### Login User
@@ -115,6 +115,7 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 ## Techs/Languages Used
 
 I coded the clone in javascript while using sequelize to work with the database and express to make the api. Both sequelize and express are node based and work very well together. Node is a javascript runtime environment and library for running web app outside of browsers and backend API services. I also used npm which stands for node package manager which means its a library of javascript packages that made coding the API much easier. One thing it helped with was installing dotenv-cli and sequelize-cli which made it so I could use the commands for those tools in the command line.
+The front end is using React and Redux, javascript libraries that streamline the html,css process while also making the website more dynamic. React uses jsx which is just html elements with some javascript functionality. Redux helps maintain the "state" of the site keeping data and features more consistent.
 
 ## Technical Problems
 
@@ -240,3 +241,5 @@ const routes = require('./routes');
 app.use(routes);
 
 to connect the routes to the app.js file.
+
+For the front we will need to install react and redux and create an app for the website.
