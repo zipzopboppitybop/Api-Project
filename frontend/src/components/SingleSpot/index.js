@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneSpot } from '../../store/spots';
 import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
+
 
 const SingleSpot = () => {
     const dispatch = useDispatch();
@@ -28,6 +28,11 @@ const SingleSpot = () => {
         dispatch(getReviewsSpot(id));
     }, [dispatch]);
 
+    if (reviews) {
+        let reviewsArr = Object.values(reviews)
+        reviewsArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
+    }
+
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
@@ -43,14 +48,14 @@ const SingleSpot = () => {
     else if (spot.numReviews < 1) numReviews = ""
 
     const dot = () => {
-        if (spot.numReviews < 1) return (<span>&middot;</span>)
+        if (spot.numReviews > 0) return (<span>&middot;</span>)
         else return ""
     }
 
     if (!spot) return null;
     return (
         <div className='singleSpot'>
-            <h1 className='content'>{spot.name}</h1>
+            <h1 className='content content-title'>{spot.name}</h1>
             <h3 className='content'>{spot.city}, {spot.state}, {spot.country} </h3>
 
             <div className='image-container'>
@@ -66,10 +71,10 @@ const SingleSpot = () => {
             <div className='flex-container'>
                 <h1 className='content'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h1>
                 <div className='reserve'>
-                    <p className='description'>${spot.price} night </p>
-                    <p className='description'>
+                    <p className='reserve-description'>${spot.price} night </p>
+                    <p className='reserve-description'>
                         <i className='fas fa-star' />
-                        {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot} {spot.numReviews} {numReviews}
+                        {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot()} {spot.numReviews} {numReviews}
                     </p>
                     <button onClick={reserve} className='reserve-button'>Reserve</button>
                 </div>
@@ -81,9 +86,10 @@ const SingleSpot = () => {
             <h1 className='content review-title'><i className='fas fa-star' />
                 {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}
                 &nbsp;
-                {dot}
+                {dot()}
                 &nbsp;
                 {spot.numReviews}
+                &nbsp;
                 {numReviews}
             </h1>
             <div className={createReviewClassName}>
@@ -95,9 +101,15 @@ const SingleSpot = () => {
 
 
             <ul className='reviews'>
-                {reviews.length > 0 ? (reviews?.map(({ review, id, User, createdAt }) => (
-                    <li key={id}>
-                        <h3>{User.firstName} <br /> {createdAt.slice(0, 7)} <br />  {review}</h3>
+                {reviews?.length > 0 ? (reviews?.map(({ review, id, User, createdAt }) => (
+                    <li
+                        key={id}>
+                        <h3>{User.firstName}
+                            <br />
+                            {createdAt.slice(0, 7)}
+                            <br />
+                            {review}
+                        </h3>
                     </li>
                 ))) : "Be the first to post a review!"}
             </ul>

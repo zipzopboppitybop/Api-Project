@@ -13,12 +13,13 @@
     top: 0;
     background-color: white;
     height: 5%;
-
 }
 
 .profile-dropdown-list-item {
     width: 200px;
 }
+
+
 
 .profile-dropdown {
     list-style: none;
@@ -104,8 +105,6 @@
     text-decoration: none;
 }
 
-
-
 .spot-description,
 .spot {
     display: flex;
@@ -166,6 +165,17 @@ a {
     margin-left: 3.5%;
 }
 
+.content-title {
+    width: 300px;
+    margin-left: 3.4%;
+    text-align: left;
+}
+
+.review-title {
+    width: 300px;
+    margin-left: 2.3%;
+}
+
 .image-container {
     width: 94%;
     margin-left: 2%;
@@ -219,7 +229,6 @@ a {
     border-radius: 5%;
     padding: 15px;
     flex-wrap: wrap;
-    justify-content: space-around;
 }
 
 .reserve-button {
@@ -230,12 +239,17 @@ a {
     color: white;
 }
 
-.description {
+.description,
+.reserve-description {
     font-size: 20px;
 }
 
+.reserve-description {
+    margin-left: 6%;
+}
+
 .move-up {
-    margin-top: -87px;
+    margin-top: -2.5%;
     inline-size: 50%;
     overflow-wrap: break-word;
 }
@@ -247,6 +261,7 @@ a {
 .reviews {
     list-style: none;
     margin-left: 2%;
+    margin-top: 1%;
 }
 
 .spot-form {
@@ -269,6 +284,11 @@ a {
 
 .spot-form-label {
     font-weight: bold;
+    display: block;
+}
+
+.create-spot-input {
+    display: inline-block;
 }
 
 .line {
@@ -325,4 +345,25 @@ a {
 
 .empty {
     color: gray;
+}
+
+.stars {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.disabled {
+    background-color: lightgray;
+}
+
+.sign-up-form {
+    height: 650px;
+}
+
+ul {
+    list-style: none;
+}
+
+.spot-form-title {
+    text-align: left;
 }

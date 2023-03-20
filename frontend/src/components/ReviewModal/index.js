@@ -26,12 +26,12 @@ function ReviewForm({ disabled }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal();
-        return await dispatch(reviewActions.writeReview(user.id, spot.id, review, rating));
+        return await dispatch(reviewActions.writeReview(spot.id, user.id, review, rating));
     };
 
     if (review.length < 10 || rating < 1) buttonClassName = "review-submit disabled"
 
-    if (buttonClassName === "review-submit disabled") buttonDisabled = true
+    if (buttonClassName === "review-submit disabled") buttonDisabled = true;
 
     const starsIcon = (number) => {
         const props = {};
@@ -66,7 +66,7 @@ function ReviewForm({ disabled }) {
                 />
                 <div className="rating-input">
                     {[1, 2, 3, 4, 5].map((number) => starsIcon(number))}
-                    Stars
+                    <span className="stars">Stars</span>
                 </div>
 
                 <button disabled={buttonDisabled} className={buttonClassName} type="submit">Sumbit Your Review</button>

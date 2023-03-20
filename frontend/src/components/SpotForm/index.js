@@ -41,7 +41,7 @@ const SpotInput = () => {
 
     return (
         <div className='spot-form'>
-            <h1>Create A Spot</h1>
+            <h1 className='spot-form-title'>Create A Spot</h1>
             <h2>Where's your place located?</h2>
             <h3 className='form-content'>Guests will only get your exact address once they booked a reservation.</h3>
 
@@ -52,8 +52,9 @@ const SpotInput = () => {
                     ))}
                 </ul>
                 <label className='spot-form-label'>
-                    Country
+                    <p>Country</p>
                     <input
+                        className='create-spot-input'
                         type="text"
                         value={country}
                         placeholder="Country"
@@ -62,7 +63,7 @@ const SpotInput = () => {
                     />
                 </label>
                 <label className='spot-form-label'>
-                    Street Address
+                    <p>Street Address</p>
                     <input
                         type="text"
                         value={address}
@@ -72,7 +73,7 @@ const SpotInput = () => {
                     />
                 </label>
                 <label className='spot-form-label'>
-                    City
+                    <p>City</p>
                     <input
                         type="text"
                         value={city}
@@ -82,7 +83,7 @@ const SpotInput = () => {
                     />
                 </label>
                 <label className='spot-form-label'>
-                    State
+                    <p>State</p>
                     <input
                         type="text"
                         value={state}

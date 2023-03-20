@@ -44,13 +44,15 @@ function SignupFormModal() {
 
     return (
         <>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
+
+            <form className="sign-up-form" onSubmit={handleSubmit}>
+                <h1>Sign Up</h1>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
+                <p>Email</p>
                 <label>
-                    Email
+
                     <input
                         type="text"
                         value={email}
@@ -58,8 +60,8 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>Username</p>
                 <label>
-                    Username
                     <input
                         type="text"
                         value={username}
@@ -67,8 +69,8 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>First Name</p>
                 <label>
-                    First Name
                     <input
                         type="text"
                         value={firstName}
@@ -76,8 +78,8 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>Last Name</p>
                 <label>
-                    Last Name
                     <input
                         type="text"
                         value={lastName}
@@ -85,8 +87,8 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>Password</p>
                 <label>
-                    Password
                     <input
                         type="password"
                         value={password}
@@ -94,8 +96,8 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>Confirm Password</p>
                 <label>
-                    Confirm Password
                     <input
                         type="password"
                         value={confirmPassword}
