@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import DeleteForm from '../DeleteModal';
 
 
 const SingleSpot = () => {
@@ -101,15 +103,25 @@ const SingleSpot = () => {
 
 
             <ul className='reviews'>
-                {reviews?.length > 0 ? (reviews?.map(({ review, id, User, createdAt }) => (
+                {reviews?.length > 0 ? (reviews?.map(({ review, id, User, createdAt, userId }) => (
                     <li
                         key={id}>
-                        <h3>{User.firstName}
+
+                        <h3 className='review'>{User.firstName}
                             <br />
                             {createdAt.slice(0, 7)}
                             <br />
                             {review}
+                            {sessionUser.id === userId ?
+                                (<OpenModalMenuItem
+                                    onClick={(e) => e.preventDefault()}
+                                    itemText={"Delete"}
+                                    modalComponent={<DeleteForm id={id} />}
+                                />)
+                                :
+                                ("")}
                         </h3>
+
                     </li>
                 ))) : "Be the first to post a review!"}
             </ul>
