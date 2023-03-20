@@ -6,18 +6,19 @@ import * as reviewActions from '../../store/reviews';
 function ReviewForm({ disabled }) {
     const user = (useSelector(state => state.session.user))
     const spot = useSelector(state => state.spots.singleSpot);
-    const reviews = useSelector(state => state.reviews.spot.Reviews)
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const [rating, setRating] = useState(0);
-    const [activeRating, setActiveRating] = useState(rating);
+    const [stars, setRating] = useState(0);
+    const [activeRating, setActiveRating] = useState(stars);
     const [review, setReview] = useState("");
     let buttonClassName = "review-submit";
     let buttonDisabled = false;
 
+    const vals = { userId: user.id, spotId: spot.id, review, stars };
+
     useEffect(() => {
-        setActiveRating(rating);
-    }, [rating]);
+        setActiveRating(stars);
+    }, [stars]);
 
     const onChange = (number) => {
         setRating(parseInt(number));
@@ -26,10 +27,12 @@ function ReviewForm({ disabled }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal();
-        return await dispatch(reviewActions.writeReview(spot.id, user.id, review, rating));
+        return await dispatch(reviewActions.writeReview({ spotId: spot.id, vals }));
     };
 
-    if (review.length < 10 || rating < 1) buttonClassName = "review-submit disabled"
+    //console.log(spot.id)
+
+    if (review.length < 10 || stars < 1) buttonClassName = "review-submit disabled"
 
     if (buttonClassName === "review-submit disabled") buttonDisabled = true;
 
@@ -37,7 +40,7 @@ function ReviewForm({ disabled }) {
         const props = {};
         if (!disabled) {
             props.onMouseEnter = () => setActiveRating(number);
-            props.onMouseLeave = () => setActiveRating(rating);
+            props.onMouseLeave = () => setActiveRating(stars);
             props.onClick = () => onChange(number);
         }
         return (

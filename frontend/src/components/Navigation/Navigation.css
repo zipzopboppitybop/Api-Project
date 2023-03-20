@@ -104,10 +104,11 @@
 
 .spot {
     height: 300px;
-    margin-top: .5%;
+    margin-top: 5%;
     flex-wrap: wrap;
     text-decoration: none;
     justify-content: center;
+    margin-bottom: 10%;
 }
 
 .spot-description,
@@ -404,4 +405,19 @@ ul {
 
 .bottom-review {
     margin-bottom: 3%;
+}
+
+.disabled {
+    background-color: #666666;
+    color: white
+}
+
+.joke {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px;
+}
+
+.please {
+    margin-top: 1px;
 }

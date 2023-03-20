@@ -16,9 +16,9 @@ export const userReviews = reviews => ({
     reviews
 })
 
-export const createReview = review => ({
+export const createReview = (spotId, review) => ({
     type: CREATE_REVIEW,
-    review
+    payload: { spotId, review }
 });
 
 export const deleteReview = review => ({
@@ -46,11 +46,12 @@ export const getCurrentUserReviews = () => async dispatch => {
 }
 
 export const writeReview = (payload) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${payload}/reviews`, {
+    const response = await csrfFetch(`/api/spots/${payload.spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload.vals)
     })
+
     const review = await response.json();
     dispatch(createReview(review));
 }
@@ -71,6 +72,7 @@ export const deleteAReview = (id) => async dispatch => {
 const initialState = { spot: {} };
 
 const reviewReducer = (state = initialState, action) => {
+    let newState;
     switch (action.type) {
         case DETAILS_SPOT_REVIEWS:
             return {
@@ -82,17 +84,25 @@ const reviewReducer = (state = initialState, action) => {
             return {
                 ...state,
                 spot: {
-                    ...state.spot,
-                    [action.spot.id]: action.review
+                    [action.review]: action.review
                 }
             };
         case DELETE_REVIEW:
-            const newState = { ...state };
-            delete newState.reviews[action.review.id];
+            newState = { ...state };
+            delete newState.review[action.review];
             return newState;
         default:
             return state;
     }
+}
+
+function normalizeData(dataArr) {
+    let newObj = {};
+    dataArr.forEach(element => {
+        newObj[element.id] = element;
+    });
+
+    return newObj;
 }
 
 export default reviewReducer;

@@ -4,7 +4,7 @@ import { NavLink, useParams, useHistory } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import DeleteForm from '../DeleteModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-
+import UpdateSpot from '../UpdateSpot';
 
 const CurrentSpots = () => {
     const dispatch = useDispatch();
@@ -61,12 +61,17 @@ const CurrentSpots = () => {
                             </div>
                         </NavLink>
                         <div className='flex spot-description'>
-                            <span className='end' onClick={updateSpot}>Update</span>
-                            <OpenModalMenuItem
-                                onClick={(e) => e.preventDefault()}
-                                itemText={"Delete"}
-                                modalComponent={<DeleteForm id={id} />}
-                            />
+                            <span className='please'>                                            <NavLink id={id} className={"menu-item end joke"} to={`/spots/${id}/edit`}>
+                                Update
+                            </NavLink></span>
+                            <span>
+                                <OpenModalMenuItem
+                                    onClick={(e) => e.preventDefault()}
+                                    itemText={"Delete"}
+                                    modalComponent={<DeleteForm id={id} />}
+                                />
+                            </span>
+
                         </div>
                     </li>
                 ))}

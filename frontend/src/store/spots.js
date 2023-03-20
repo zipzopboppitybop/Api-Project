@@ -4,8 +4,9 @@ import { csrfFetch } from './csrf';
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const DETAILS_SPOT = 'spots/DETAILS_SPOT';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
-const USERS_SPOTS = 'USERS_SPOTS';
-const DELETE_SPOT = 'DELETE_SPOT';
+const USERS_SPOTS = 'spots/USERS_SPOTS';
+const DELETE_SPOT = 'spots/DELETE_SPOT';
+const EDIT_SPOT = 'spots/EDIT_SPOT';
 
 export const loadSpots = (spots) => {
     return {
@@ -29,6 +30,11 @@ export const getDetailsOfSpot = spot => ({
 export const CreateASpot = newSpot => ({
     type: CREATE_SPOT,
     newSpot
+})
+
+export const editASpot = (id, updatedSpot) => ({
+    type: EDIT_SPOT,
+    payload: { id, updatedSpot }
 })
 
 export const DeleteASpot = spot => ({
@@ -81,6 +87,18 @@ export const createSpot = (payload) => async (dispatch) => {
     }
 }
 
+export const editSpot = (payload) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${payload.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload.vals)
+    })
+
+    const spot = response.json();
+    dispatch(createSpot(spot));
+    return spot
+}
+
 export const deleteSpot = (id) => async (dispatch) => {
 
     const response = await csrfFetch(`/api/spots/${id}`, {
@@ -115,6 +133,8 @@ const spotReducer = (state = initialState, action) => {
             return {
                 ...state, singleSpot: { ...action.spot }
             };
+        case EDIT_SPOT:
+            return { ...state, [action.singleSpot.id]: action.updatedSpot };
         case DELETE_SPOT:
             const newState = { ...state };
             delete newState.allSpots[action.spot.id];
@@ -123,6 +143,15 @@ const spotReducer = (state = initialState, action) => {
         default:
             return state;
     }
+}
+
+function normalizeData(dataArr) {
+    let newObj = {};
+    dataArr.forEach(element => {
+        newObj[element.id] = element;
+    });
+
+    return newObj;
 }
 
 

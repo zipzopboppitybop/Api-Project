@@ -17,23 +17,23 @@ const SingleSpot = () => {
     const sessionUser = useSelector(state => state.session.user);
     let createReviewClassName = "hidden";
     let numReviews = "reviews";
+    let reviewsArr;
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
     };
 
+    if (reviews) {
+        reviewsArr = Object.values(reviews)
+        reviewsArr?.sort((a, b) => (a.id < b.id) ? 1 : -1)
+    }
+
+    console.log(reviewsArr)
+
     useEffect(() => {
         dispatch(getOneSpot(id));
-    }, [dispatch, reviews]);
-
-    useEffect(() => {
         dispatch(getReviewsSpot(id));
     }, [dispatch, reviews]);
-
-    if (reviews) {
-        let reviewsArr = Object.values(reviews)
-        reviewsArr.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
-    }
 
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
@@ -109,7 +109,7 @@ const SingleSpot = () => {
 
 
             <ul className='reviews'>
-                {reviews?.length > 0 ? (reviews?.map(({ review, id, User, createdAt, userId }) => (
+                {reviewsArr?.length > 0 ? (reviewsArr?.map(({ review, id, User, createdAt, userId }) => (
                     <li
                         key={id}>
 
