@@ -12,23 +12,27 @@
     position: sticky;
     top: 0;
     background-color: white;
-    height: 5%;
+    height: 100px;
 }
 
 .profile-dropdown-list-item {
     width: 200px;
+    margin-top: 1.5%;
 }
 
-
+.up {
+    width: 200px;
+    margin-top: 3.5%;
+}
 
 .profile-dropdown {
     list-style: none;
     border: 2px solid black;
     width: 95px;
-    margin-top: 10px;
+    margin-top: 1%;
     margin-left: 10%;
     padding: 10px;
-
+    background-color: white;
 }
 
 .profile-button {
@@ -61,8 +65,9 @@
     font-weight: bold;
     text-decoration: none;
     font-family: 'Geometric Sans Serif v1', sans-serif;
-    margin-top: -2.5%;
+    margin-top: -1%;
 }
+
 
 .title {
     margin-top: 100px;
@@ -136,6 +141,10 @@
 
 a {
     text-decoration: none;
+}
+
+.create-spot {
+    padding-top: 3%;
 }
 
 .spot-image {
@@ -370,4 +379,14 @@ ul {
 
 .review {
     margin-bottom: 2%;
+}
+
+.delete-button {
+    background-color: #FF385C;
+    color: white;
+}
+
+.dont-delete-button {
+    background-color: #666666;
+    color: white;
 }

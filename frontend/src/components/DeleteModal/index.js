@@ -21,11 +21,11 @@ function DeleteForm({ id }) {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form className="delete-form" onSubmit={handleSubmit}>
                 <h1 className="delete-header">Confirm Delete</h1>
                 <h3 className="delete-header">Are you sure you want to remove this spot from the listings?</h3>
-                <button type="submit">Yes (Delete Spot) </button>
-                <button onClick={closeModal}>No (Keep Spot)</button>
+                <button className="delete-button" type="submit">Yes (Delete Spot) </button>
+                <button className="dont-delete-button" onClick={closeModal}>No (Keep Spot)</button>
             </form>
         </>
     );

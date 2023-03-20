@@ -6,7 +6,7 @@ import { getReviewsSpot } from '../../store/reviews';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import DeleteForm from '../DeleteModal';
+import DeleteReview from '../DeleteReviewModal';
 
 
 const SingleSpot = () => {
@@ -24,11 +24,11 @@ const SingleSpot = () => {
 
     useEffect(() => {
         dispatch(getOneSpot(id));
-    }, [dispatch]);
+    }, [dispatch, reviews]);
 
     useEffect(() => {
         dispatch(getReviewsSpot(id));
-    }, [dispatch]);
+    }, [dispatch, reviews]);
 
     if (reviews) {
         let reviewsArr = Object.values(reviews)
@@ -116,7 +116,7 @@ const SingleSpot = () => {
                                 (<OpenModalMenuItem
                                     onClick={(e) => e.preventDefault()}
                                     itemText={"Delete"}
-                                    modalComponent={<DeleteForm id={id} />}
+                                    modalComponent={<DeleteReview id={id} />}
                                 />)
                                 :
                                 ("")}

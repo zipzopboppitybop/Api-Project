@@ -9,7 +9,8 @@ import logo from './images/ABNB-4aaade0f.png'
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const createSpotClassName = "create-spot" + (sessionUser ? "" : " hidden");
-
+    const dropdownListItem = 'profile-dropdown-list-item' + (createSpotClassName === "create-spot hidden" ? "" : " up")
+    console.log(dropdownListItem)
 
     return (
         <ul className='profile-dropdown-list '>
@@ -19,7 +20,7 @@ function Navigation({ isLoaded }) {
             {isLoaded && (
                 <>
                     <li className={createSpotClassName}><NavLink className="link" to={"/spots/new"}>Create a New Spot</NavLink></li>
-                    <li className='profile-dropdown-list-item'>
+                    <li className={dropdownListItem}>
 
                         <ProfileButton user={sessionUser} />
                     </li>
