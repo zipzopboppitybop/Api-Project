@@ -46,6 +46,7 @@ const SingleSpot = () => {
 
     if (spot.numReviews === 1) numReviews = "review"
     else if (spot.numReviews < 1) numReviews = ""
+    else if (spot.numReviews === 0) spot.numReviews = ""
 
     const dot = () => {
         if (spot.numReviews > 0) return (<span>&middot;</span>)

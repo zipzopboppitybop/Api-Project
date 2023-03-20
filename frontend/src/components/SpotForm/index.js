@@ -25,6 +25,7 @@ const SpotInput = () => {
 
     if (!user) history.push('/');
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
