@@ -95,7 +95,7 @@ const SingleSpot = () => {
                 &nbsp;
                 {dot()}
                 &nbsp;
-                {spot.numReviews}
+                {spot.numReviews > 0 ? spot.numReviews : ""}
                 &nbsp;
                 {numReviews}
             </h1>
