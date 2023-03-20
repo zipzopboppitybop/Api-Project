@@ -76,7 +76,6 @@ export const createSpot = (payload) => async (dispatch) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(images)
         })
-        console.log(spotImage)
         newSpot.previewImage = "hello"
         dispatch(CreateASpot(newSpot));
     }

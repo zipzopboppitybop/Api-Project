@@ -29,7 +29,6 @@ export const writeReview = (payload) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-    console.log(response)
     const review = await response.json();
     dispatch(createReview(review));
 }

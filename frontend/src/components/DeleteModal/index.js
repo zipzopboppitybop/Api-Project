@@ -8,8 +8,6 @@ function DeleteForm({ id }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const spot = useSelector(state => state.spots.singleSpot);
-    const user = useSelector(state => state)
-    console.log(spot)
 
     const handleSubmit = (e) => {
         e.preventDefault();
