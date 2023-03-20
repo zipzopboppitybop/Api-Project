@@ -30,8 +30,6 @@ function ReviewForm({ disabled }) {
         return await dispatch(reviewActions.writeReview({ spotId: spot.id, vals }));
     };
 
-    //console.log(spot.id)
-
     if (review.length < 10 || stars < 1) buttonClassName = "review-submit disabled"
 
     if (buttonClassName === "review-submit disabled") buttonDisabled = true;

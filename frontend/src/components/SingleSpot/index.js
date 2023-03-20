@@ -28,8 +28,6 @@ const SingleSpot = () => {
         reviewsArr?.sort((a, b) => (a.id < b.id) ? 1 : -1)
     }
 
-    console.log(reviewsArr)
-
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
@@ -118,7 +116,7 @@ const SingleSpot = () => {
                             {createdAt.slice(0, 7)}
                             <br />
                             {review}
-                            {sessionUser.id === userId ?
+                            {sessionUser?.id === userId ?
                                 (<OpenModalMenuItem
                                     onClick={(e) => e.preventDefault()}
                                     itemText={"Delete"}
