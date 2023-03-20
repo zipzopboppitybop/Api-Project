@@ -4,11 +4,17 @@ import { csrfFetch } from './csrf';
 const DETAILS_SPOT_REVIEWS = 'spots/DETAILS_SPOT_REVIEWS';
 const CREATE_REVIEW = 'spots/CREATE_REVIEW'
 const DELETE_REVIEW = 'reviews/DELETE_REVIEW';
+const CURRENT_USER_REVIEWS = 'reviews/CURRENT_USER_REVIEWS';
 
 export const getSpotReviews = spot => ({
     type: DETAILS_SPOT_REVIEWS,
     spot
 });
+
+export const userReviews = reviews => ({
+    type: CURRENT_USER_REVIEWS,
+    reviews
+})
 
 export const createReview = review => ({
     type: CREATE_REVIEW,
@@ -26,6 +32,16 @@ export const getReviewsSpot = (id) => async dispatch => {
     if (response.ok) {
         const spot = await response.json();
         dispatch(getSpotReviews(spot));
+    }
+}
+
+export const getCurrentUserReviews = () => async dispatch => {
+    const response = await csrfFetch('/api/reviews/current');
+
+    if (response.ok) {
+        const reviews = await response.json();
+        dispatch(userReviews(reviews));
+        return reviews;
     }
 }
 
@@ -60,6 +76,8 @@ const reviewReducer = (state = initialState, action) => {
             return {
                 ...state, spot: { ...action.spot }
             };
+        case CURRENT_USER_REVIEWS:
+            return { ...state, userReviews: { ...action.reviews } };
         case CREATE_REVIEW:
             return {
                 ...state,

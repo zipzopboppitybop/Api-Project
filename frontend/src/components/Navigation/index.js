@@ -10,7 +10,6 @@ function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const createSpotClassName = "create-spot" + (sessionUser ? "" : " hidden");
     const dropdownListItem = 'profile-dropdown-list-item' + (createSpotClassName === "create-spot hidden" ? "" : " up")
-    console.log(dropdownListItem)
 
     return (
         <ul className='profile-dropdown-list '>

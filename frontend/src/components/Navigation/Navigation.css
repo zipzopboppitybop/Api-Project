@@ -22,13 +22,13 @@
 
 .up {
     width: 200px;
-    margin-top: 3.5%;
+    margin-top: 5%;
 }
 
 .profile-dropdown {
     list-style: none;
     border: 2px solid black;
-    width: 95px;
+    width: 150px;
     margin-top: 1%;
     margin-left: 10%;
     padding: 10px;
@@ -51,7 +51,8 @@
 .profile-button:hover,
 .create-spot:hover,
 .hello:hover,
-.star:hover {
+.star:hover,
+.end:hover {
     cursor: pointer;
 }
 
@@ -71,10 +72,6 @@
 
 .title {
     margin-top: 100px;
-}
-
-.user-title {
-    margin-left: 8.5%;
 }
 
 .create,
@@ -101,6 +98,8 @@
     align-items: flex-end;
     justify-content: space-around;
     flex-wrap: wrap;
+    margin: 0 auto;
+    width: 50%;
 }
 
 .spot {
@@ -108,6 +107,7 @@
     margin-top: .5%;
     flex-wrap: wrap;
     text-decoration: none;
+    justify-content: center;
 }
 
 .spot-description,
@@ -120,6 +120,8 @@
     margin-top: 2%;
     color: black;
 }
+
+
 
 .end {
     order: 1;
@@ -223,7 +225,6 @@ a {
 .flex-container {
     padding-right: 100px;
     padding-bottom: 10px;
-    border-bottom: 1px solid black;
     justify-content: space-between;
 }
 
@@ -264,7 +265,7 @@ a {
 }
 
 .review-title {
-    margin-top: 70px;
+    margin-top: 1%;
 }
 
 .reviews {
@@ -389,4 +390,18 @@ ul {
 .dont-delete-button {
     background-color: #666666;
     color: white;
+}
+
+.user-reviews {
+    margin-left: -10%;
+}
+
+.user-reviews-title {
+    text-align: left;
+    width: 20%;
+    margin-left: 7.8%;
+}
+
+.bottom-review {
+    margin-bottom: 3%;
 }

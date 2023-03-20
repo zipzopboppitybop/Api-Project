@@ -81,9 +81,15 @@ const SingleSpot = () => {
                     <button onClick={reserve} className='reserve-button'>Reserve</button>
                 </div>
             </div>
-            <p className='content description move-up'>
-                {spot.description}
-            </p>
+            <div>
+                <p className='content description move-up'>
+                    {spot.description}
+                </p>
+
+            </div>
+            <br />
+            <br />
+            <hr></hr>
 
             <h1 className='content review-title'><i className='fas fa-star' />
                 {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}
