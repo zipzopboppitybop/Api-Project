@@ -19,7 +19,8 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 
 ![Sign-Up-User]
 
-[Sign-Up-User]: ./frontend/images/Screenshot 2023-03-20 085006.png
+[Sign-Up-User]: ./frontend/images/Screenshot&2023-03-20&085006.png
+
 
 #### Login User
 
