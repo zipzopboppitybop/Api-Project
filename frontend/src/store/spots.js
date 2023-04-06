@@ -11,9 +11,9 @@ const EDIT_SPOT = 'spots/EDIT_SPOT';
 export const loadSpots = (spots) => {
     return {
         type: LOAD_SPOTS,
-        spots
-    }
-}
+        spots,
+    };
+};
 
 export const userSpots = (spots) => {
     return {
@@ -114,32 +114,43 @@ export const deleteSpot = (id) => async (dispatch) => {
 
 }
 
-const initialState = { allSpots: {}, singleSpot: {} };
+const initialState = { allSpots: {}, hello: {} };
 const spotReducer = (state = initialState, action) => {
+    //const newState = { ...state }
     switch (action.type) {
-        case CREATE_SPOT:
-            return {
-                ...state,
-                singleSpot: {
-                    ...state.singleSpot,
-                    [action.newSpot.id]: action.newSpot,
-                },
-            };
         case LOAD_SPOTS:
-            return { ...state, allSpots: { ...action.spots } };
-        case USERS_SPOTS:
-            return { ...state, userSpots: { ...action.spots } };
-        case DETAILS_SPOT:
-            return {
-                ...state, singleSpot: { ...action.spot }
+            const newState = { ...state, allSpots: { ...state.allSpots } };
+            const spotsObj = Object.values(action.spots);
+            for (let i = 0; i < spotsObj.length; i++) {
+                const spots = spotsObj[i];
+                for (let j = 0; j < spots.length; j++) {
+                    const spot = spots[j];
+                    newState.allSpots[spot.id] = spot;
+                };
             };
-        case EDIT_SPOT:
-            return { ...state, [action.singleSpot.id]: action.updatedSpot };
-        case DELETE_SPOT:
-            const newState = { ...state };
-            delete newState.allSpots[action.spot.id];
-            delete newState.userSpots[action.spots];
+
             return newState;
+        // case CREATE_SPOT:
+        //     return {
+        //         ...state,
+        //         singleSpot: {
+        //             ...state.singleSpot,
+        //             [action.newSpot.id]: action.newSpot,
+        //         },
+        //     };
+
+        // case USERS_SPOTS:
+        //     return { ...state, userSpots: { ...action.spots } };
+        // case DETAILS_SPOT:
+        //     return {
+        //         ...state, singleSpot: { ...action.spot }
+        //     };
+        // case EDIT_SPOT:
+        //     return { ...state, [action.singleSpot.id]: action.updatedSpot };
+        // case DELETE_SPOT:
+        //     delete newState.allSpots[action.spot.id];
+        //     delete newState.userSpots[action.spots];
+        //     return newState;
         default:
             return state;
     }

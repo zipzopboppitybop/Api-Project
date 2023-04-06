@@ -5,23 +5,16 @@ import { getAllSpots } from '../../store/spots';
 
 const SpotList = () => {
     const dispatch = useDispatch();
-    const spots = useSelector(state => state.spots.allSpots.Spots);
-    let spotsArr;
+    const spots = useSelector(state => state.spots.allSpots);
 
     useEffect(() => {
         dispatch(getAllSpots());
     }, [dispatch,]);
 
-    if (spots) {
-        spotsArr = Object.values(spots);
-    }
-
-    if (!spots) return null
-
     return (
         <div className='bruh'>
             <ul className='spots'>
-                {spotsArr?.map(({ id, previewImage, price, avgRating, city, state, name }) => (
+                {Object.values(spots).map(({ id, previewImage, price, avgRating, city, state, name }) => (
 
                     <tooltip title={name} key={id}>
                         <li className='spot' key={id}>
