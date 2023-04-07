@@ -11,9 +11,14 @@ const EDIT_SPOT = 'spots/EDIT_SPOT';
 export const loadSpots = (spots) => {
     return {
         type: LOAD_SPOTS,
-        spots,
+        spots
     };
 };
+
+export const getDetailsOfSpot = spot => ({
+    type: DETAILS_SPOT,
+    spot
+});
 
 export const userSpots = (spots) => {
     return {
@@ -21,11 +26,6 @@ export const userSpots = (spots) => {
         spots
     }
 }
-
-export const getDetailsOfSpot = spot => ({
-    type: DETAILS_SPOT,
-    spot
-});
 
 export const CreateASpot = newSpot => ({
     type: CREATE_SPOT,
@@ -48,6 +48,15 @@ export const getAllSpots = () => async (dispatch) => {
     dispatch(loadSpots(spots));
 }
 
+export const getOneSpot = (id) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${id}`);
+
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(getDetailsOfSpot(spot));
+    }
+};
+
 export const getUserSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots/current');
 
@@ -57,15 +66,6 @@ export const getUserSpots = () => async (dispatch) => {
         return spots;
     }
 }
-
-export const getOneSpot = (id) => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${id}`);
-
-    if (response.ok) {
-        const spot = await response.json();
-        dispatch(getDetailsOfSpot(spot));
-    }
-};
 
 export const createSpot = (payload) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
@@ -114,22 +114,21 @@ export const deleteSpot = (id) => async (dispatch) => {
 
 }
 
-const initialState = { allSpots: {} };
+const initialState = { allSpots: {}, singleSpot: {} };
 const spotReducer = (state = initialState, action) => {
-    //const newState = { ...state }
+    let newState;
     switch (action.type) {
         case LOAD_SPOTS:
-            const newState = { ...state, allSpots: { ...state.allSpots } };
-            const spotsObj = Object.values(action.spots);
-            for (let i = 0; i < spotsObj.length; i++) {
-                const spots = spotsObj[i];
-                for (let j = 0; j < spots.length; j++) {
-                    const spot = spots[j];
-                    newState.allSpots[spot.id] = spot;
-                };
-            };
-
+            newState = { ...state, allSpots: { ...state.allSpots } };
+            action.spots.Spots.forEach((spot) => (newState.allSpots[spot.id] = spot));
             return newState;
+        case DETAILS_SPOT:
+            newState = { ...state, singleSpot: { ...state.singleSpot } };
+            newState.singleSpot = action.spot;
+            let newImages = {};
+            newState.singleSpot.SpotImages.forEach((image) => (newImages[image.id] = image));
+            newState.singleSpot.SpotImages = newImages
+            return newState
         // case CREATE_SPOT:
         //     return {
         //         ...state,
@@ -141,10 +140,6 @@ const spotReducer = (state = initialState, action) => {
 
         // case USERS_SPOTS:
         //     return { ...state, userSpots: { ...action.spots } };
-        // case DETAILS_SPOT:
-        //     return {
-        //         ...state, singleSpot: { ...action.spot }
-        //     };
         // case EDIT_SPOT:
         //     return { ...state, [action.singleSpot.id]: action.updatedSpot };
         // case DELETE_SPOT:
@@ -155,16 +150,5 @@ const spotReducer = (state = initialState, action) => {
             return state;
     }
 }
-
-function normalizeData(dataArr) {
-    let newObj = {};
-    dataArr.forEach(element => {
-        newObj[element.id] = element;
-    });
-
-    return newObj;
-}
-
-
 
 export default spotReducer;

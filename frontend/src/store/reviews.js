@@ -75,6 +75,9 @@ const reviewReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case DETAILS_SPOT_REVIEWS:
+            newState = { ...state, spot: { ...state.spot } };
+            const reviews = action.spot
+            console.log(reviews)
             return {
                 ...state, spot: { ...action.spot }
             };
