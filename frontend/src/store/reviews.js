@@ -59,13 +59,10 @@ export const writeReview = (payload) => async (dispatch) => {
 export const deleteAReview = (id) => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
     })
 
     if (response.ok) {
-        const review = await response.json();
-        dispatch(deleteReview(review));
-        return review
+        dispatch(deleteReview(id));
     }
 }
 
@@ -89,7 +86,7 @@ const reviewReducer = (state = initialState, action) => {
             };
         case DELETE_REVIEW:
             newState = { ...state };
-            delete newState.review[action.review];
+            delete newState.spot[action.review];
             return newState;
         default:
             return state;

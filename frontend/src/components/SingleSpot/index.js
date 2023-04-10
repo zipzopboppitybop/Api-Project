@@ -31,18 +31,16 @@ const SingleSpot = () => {
         reviewsArr?.sort((a, b) => (a.id < b.id) ? 1 : -1)
     }
 
-    console.log(spot.SpotImages)
-
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
-    }, [dispatch]);
+    }, [dispatch,]);
 
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
 
-        for (let i = 0; i < reviews?.length; i++) {
+        for (const i in reviews) {
             const review = reviews[i];
             if (review.userId === sessionUser.id) createReviewClassName = "hidden";
         }

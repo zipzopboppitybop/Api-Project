@@ -4,7 +4,6 @@ import { NavLink, useParams, useHistory } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import DeleteForm from '../DeleteModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import UpdateSpot from '../UpdateSpot';
 import SpotItem from '../SpotItem/SpotItem';
 
 const CurrentSpots = () => {
