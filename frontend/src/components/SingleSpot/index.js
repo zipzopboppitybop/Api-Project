@@ -13,25 +13,30 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    const reviews = useSelector(state => state.reviews.spot.Reviews)
-    const sessionUser = useSelector(state => state.session.user);
+    const reviews = useSelector(state => state.reviews.spot)
+    const sessionUser = useSelector(state => state.session.user)
     let createReviewClassName = "hidden";
     let numReviews = "reviews";
-    let reviewsArr;
+    let reviewsArr = []
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
     };
 
+
+
     if (reviews) {
-        reviewsArr = Object.values(reviews)
+        for (const i in reviews) {
+            let review = reviews[i]
+            if (review.spotId === spot.id) reviewsArr.push(review);
+        }
         reviewsArr?.sort((a, b) => (a.id < b.id) ? 1 : -1)
     }
 
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
-    }, [dispatch, reviews]);
+    }, [dispatch]);
 
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
@@ -61,7 +66,7 @@ const SingleSpot = () => {
 
             <div className='image-container'>
                 <ul className='images'>
-                    {spot.SpotImages?.map(({ url, id }) => (
+                    {Object.values(spot.SpotImages).map(({ url, id }) => (
                         <li key={id}>
                             <img src={url} ></img>
                         </li>
