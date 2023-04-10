@@ -23,8 +23,6 @@ const SingleSpot = () => {
         alert('Feature Coming Soon...');
     };
 
-
-
     if (reviews) {
         for (const i in reviews) {
             let review = reviews[i]
@@ -41,7 +39,6 @@ const SingleSpot = () => {
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
-
 
         for (let i = 0; i < reviews?.length; i++) {
             const review = reviews[i];

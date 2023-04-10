@@ -76,7 +76,6 @@ const reviewReducer = (state = initialState, action) => {
     switch (action.type) {
         case DETAILS_SPOT_REVIEWS:
             newState = { ...state, spot: { ...state.spot } };
-            console.log(action.spot)
             action.spot.Reviews.forEach((review) => newState.spot[review.id] = review);
             return newState;
         case CURRENT_USER_REVIEWS:

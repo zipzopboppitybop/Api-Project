@@ -114,7 +114,7 @@ export const deleteSpot = (id) => async (dispatch) => {
 
 }
 
-const initialState = { allSpots: {}, singleSpot: { SpotImages: {} } };
+const initialState = { allSpots: {}, singleSpot: { SpotImages: {} }, userSpots: {} };
 const spotReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
@@ -129,6 +129,10 @@ const spotReducer = (state = initialState, action) => {
             action.spot.SpotImages.forEach((image) => (images[image.id] = image));
             newState.singleSpot.SpotImages = images;
             return newState;
+        case USERS_SPOTS:
+            newState = { ...state, userSpots: { ...state.userSpots } };
+            action.spots.Spots.forEach((spot) => newState.userSpots[spot.id] = spot);
+            return newState;
         // case CREATE_SPOT:
         //     return {
         //         ...state,
@@ -137,16 +141,12 @@ const spotReducer = (state = initialState, action) => {
         //             [action.newSpot.id]: action.newSpot,
         //         },
         //     };
-
-        // case USERS_SPOTS:
-        //     return { ...state, userSpots: { ...action.spots } };
-
         // case EDIT_SPOT:
         //     return { ...state, [action.singleSpot.id]: action.updatedSpot };
-        // case DELETE_SPOT:
-        //     delete newState.allSpots[action.spot.id];
-        //     delete newState.userSpots[action.spots];
-        //     return newState;
+        case DELETE_SPOT:
+            delete newState.allSpots[action.spot.id];
+            delete newState.userSpots[action.spots];
+            return newState;
         default:
             return state;
     }
