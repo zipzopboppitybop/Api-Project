@@ -31,6 +31,8 @@ const SingleSpot = () => {
         reviewsArr?.sort((a, b) => (a.id < b.id) ? 1 : -1)
     }
 
+    console.log(spot.SpotImages)
+
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
@@ -63,7 +65,7 @@ const SingleSpot = () => {
 
             <div className='image-container'>
                 <ul className='images'>
-                    {Object.values(spot.SpotImages).map(({ url, id }) => (
+                    {spot.SpotImages.map(({ url, id }) => (
                         <li key={id}>
                             <img src={url} ></img>
                         </li>
