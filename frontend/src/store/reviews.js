@@ -90,13 +90,4 @@ const reviewReducer = (state = initialState, action) => {
     }
 }
 
-function normalizeData(dataArr) {
-    let newObj = {};
-    dataArr.forEach(element => {
-        newObj[element.id] = element;
-    });
-
-    return newObj;
-}
-
 export default reviewReducer;

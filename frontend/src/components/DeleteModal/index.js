@@ -7,17 +7,13 @@ import * as spotActions from "../../store/spots"
 function DeleteForm({ id }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const spot = useSelector(state => state.spots.singleSpot);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal()
-        return await dispatch(spotActions.deleteSpot(spot.id))
+        await dispatch(spotActions.deleteSpot(id))
+        return await dispatch(spotActions.getUserSpots());
     };
-
-    useEffect(() => {
-        dispatch(spotActions.getOneSpot(id));
-    }, [dispatch]);
 
     return (
         <>

@@ -21,14 +21,11 @@ const CurrentSpots = () => {
     const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
     const createhiddenClassName = spotsArr?.length < 1 ? "create user-title" : "hidden";
 
-    const updateSpot = (e) => {
-        e.preventDefault();
-        alert("Function Coming Soon");
-    }
-
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
-    }, [dispatch, spots]);
+    }, [dispatch]);
+
+    console.log(spotsArr.length)
 
     if (!spots) return null
     return (
