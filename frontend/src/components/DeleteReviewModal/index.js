@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { deleteAReview } from "../../store/reviews";
-
+import * as reviewActions from "../../store/reviews";
+import * as spotActions from "../../store/spots"
 
 function DeleteReview({ id }) {
     const dispatch = useDispatch();
+    const spot = useSelector(state => state.spots.singleSpot);
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal()
-        return await dispatch(deleteAReview(id));
+        await dispatch(reviewActions.deleteAReview(id));
+        await dispatch(spotActions.getOneSpot(spot.id));
+        return await dispatch(reviewActions.getReviewsSpot(spot.id));
     };
 
     return (

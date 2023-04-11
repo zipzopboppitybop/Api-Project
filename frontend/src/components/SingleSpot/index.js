@@ -13,7 +13,7 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    const reviews = useSelector(state => state.reviews.spot)
+    const reviews = useSelector(state => state.reviews.spot);
     const sessionUser = useSelector(state => state.session.user)
     let createReviewClassName = "hidden";
     let numReviews = "reviews";
@@ -34,7 +34,7 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
-    }, [dispatch, reviews]);
+    }, [dispatch]);
 
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";

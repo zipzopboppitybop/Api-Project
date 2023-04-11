@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as reviewActions from '../../store/reviews';
+import * as spotActions from "../../store/spots"
 
 function ReviewForm({ disabled }) {
     const user = (useSelector(state => state.session.user))
@@ -27,7 +28,9 @@ function ReviewForm({ disabled }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal();
-        return await dispatch(reviewActions.writeReview({ vals }));
+        await dispatch(reviewActions.writeReview({ vals }));
+        await dispatch(spotActions.getOneSpot(spot.id));
+        return await dispatch(reviewActions.getReviewsSpot(spot.id));
     };
 
     if (review.length < 10 || stars < 1) buttonClassName = "review-submit disabled"
