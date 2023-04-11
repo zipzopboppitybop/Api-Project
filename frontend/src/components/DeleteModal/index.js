@@ -9,10 +9,10 @@ function DeleteForm({ id }) {
     const { closeModal } = useModal();
     const spot = useSelector(state => state.spots.singleSpot);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal()
-        return dispatch(spotActions.deleteSpot(spot.id))
+        return await dispatch(spotActions.deleteSpot(spot.id))
     };
 
     useEffect(() => {

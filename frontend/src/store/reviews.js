@@ -16,9 +16,9 @@ export const userReviews = reviews => ({
     reviews
 })
 
-export const createReview = (spotId, review) => ({
+export const createReview = (payload) => ({
     type: CREATE_REVIEW,
-    payload: { spotId, review }
+    payload
 });
 
 export const deleteReview = review => ({
@@ -46,7 +46,7 @@ export const getCurrentUserReviews = () => async dispatch => {
 }
 
 export const writeReview = (payload) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${payload.spotId}/reviews`, {
+    const response = await csrfFetch(`/api/spots/${payload.vals.spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload.vals)
@@ -78,12 +78,9 @@ const reviewReducer = (state = initialState, action) => {
         case CURRENT_USER_REVIEWS:
             return { ...state, userReviews: { ...action.reviews } };
         case CREATE_REVIEW:
-            return {
-                ...state,
-                spot: {
-                    [action.review]: action.review
-                }
-            };
+            newState = { ...state };
+            newState.spot[action.payload.id] = action.payload;
+            return newState;
         case DELETE_REVIEW:
             newState = { ...state };
             delete newState.spot[action.review];

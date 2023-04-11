@@ -8,10 +8,10 @@ function DeleteReview({ id }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal()
-        return dispatch(deleteAReview(id));
+        return await dispatch(deleteAReview(id));
     };
 
     return (

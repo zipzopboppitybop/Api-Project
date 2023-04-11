@@ -27,7 +27,7 @@ function ReviewForm({ disabled }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal();
-        return await dispatch(reviewActions.writeReview({ spotId: spot.id, vals }));
+        return await dispatch(reviewActions.writeReview({ vals }));
     };
 
     if (review.length < 10 || stars < 1) buttonClassName = "review-submit disabled"
