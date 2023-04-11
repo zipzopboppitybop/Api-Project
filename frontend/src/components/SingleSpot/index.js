@@ -34,7 +34,7 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
-    }, [dispatch,]);
+    }, [dispatch, reviews]);
 
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
@@ -114,7 +114,7 @@ const SingleSpot = () => {
                     <li
                         key={id}>
 
-                        <h3 className='review'>{User.firstName}
+                        <h3 className='review'>{User?.firstName}
                             <br />
                             {createdAt.slice(0, 7)}
                             <br />

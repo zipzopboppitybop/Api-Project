@@ -9,7 +9,6 @@ import SpotItem from '../SpotItem/SpotItem';
 const CurrentSpots = () => {
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.userSpots);
-    const spot = useSelector(state => state.spots.singleSpot);
     const user = useSelector(state => state.session.user);
     const history = useHistory();
     let spotsArr;
@@ -29,7 +28,7 @@ const CurrentSpots = () => {
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
-    }, [dispatch, spot]);
+    }, [dispatch, spots]);
 
     if (!spots) return null
     return (

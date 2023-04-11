@@ -83,12 +83,12 @@ export const createSpot = (payload) => async (dispatch) => {
     if (response.ok) {
         const spot = await response.json();
         dispatch(CreateASpot(spot));
-        const image = await csrfFetch(`/api/spots/${spot.id}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload.previewImage)
-        })
-        dispatch(CreateSpotImage(image))
+        // const image = await csrfFetch(`/api/spots/${spot.id}`, {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(payload.previewImage)
+        // })
+        // dispatch(CreateSpotImage(image))
     }
 }
 
@@ -146,22 +146,10 @@ const spotReducer = (state = initialState, action) => {
             newState = { ...state };
             delete newState.allSpots[action.spot];
             delete newState.userSpots[action.spot];
-            delete newState.singleSpot;
             return newState;
         default:
             return state;
     }
 }
-
-function normalizeData(dataArr) {
-    let newObj = {};
-    dataArr.forEach(element => {
-        newObj[element.id] = element;
-    });
-
-    return newObj;
-}
-
-
 
 export default spotReducer;
