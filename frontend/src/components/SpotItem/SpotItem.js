@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const SpotItem = ({ spot }) => {
     return (
-        <NavLink to={`/spots/${spot.id}`}>
+        <NavLink title={spot.name} to={`/spots/${spot.id}`}>
             <img className='spot-image' src={`${spot.previewImage}`} />
             <div className='spot-description'>
                 <div>{spot.city}, {spot.state}</div>

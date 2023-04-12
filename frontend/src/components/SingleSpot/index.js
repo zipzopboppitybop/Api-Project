@@ -36,6 +36,8 @@ const SingleSpot = () => {
         dispatch(getReviewsSpot(id));
     }, [dispatch]);
 
+    console.log(spot.SpotImages)
+
     if (sessionUser) {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
@@ -63,11 +65,14 @@ const SingleSpot = () => {
 
             <div className='image-container'>
                 <ul className='images'>
-                    {spot.SpotImages.map(({ url, id }) => (
-                        <li key={id}>
-                            <img src={url} ></img>
+                    {spot.SpotImages?.length < 1 ? spot.SpotImages?.map((image) => (
+                        <li key={image.id}>
+                            <img src={image.url} ></img>
                         </li>
-                    ))}
+                    )) : spot.SpotImages?.map((image) =>
+                        <li key={image.id}>
+                            <img src={image.url}></img>
+                        </li>)}
                 </ul>
             </div>
 

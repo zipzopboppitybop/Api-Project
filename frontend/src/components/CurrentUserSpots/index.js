@@ -25,11 +25,8 @@ const CurrentSpots = () => {
         dispatch(spotActions.getUserSpots());
     }, [dispatch]);
 
-    console.log(spotsArr.length)
-
     if (!spots) return null
     return (
-
         <div className='bruh'>
             <h1 className='user-title'>Manage Your Spots</h1>
             <h3 className={createhiddenClassName}>
@@ -42,9 +39,10 @@ const CurrentSpots = () => {
                     <li key={spot.id}>
                         <SpotItem spot={spot}></SpotItem>
                         <div className='flex spot-description'>
-                            <span className='please'>                                            <NavLink id={spot.id} className={"menu-item end joke"} to={`/spots/${spot.id}/edit`}>
-                                Update
-                            </NavLink></span>
+                            <span className='please'>
+                                <NavLink id={spot.id} className={"menu-item end joke"} to={`/spots/${spot.id}/edit`}>
+                                    Update
+                                </NavLink></span>
                             <span>
                                 <OpenModalMenuItem
                                     onClick={(e) => e.preventDefault()}
@@ -52,7 +50,6 @@ const CurrentSpots = () => {
                                     modalComponent={<DeleteForm id={spot.id} />}
                                 />
                             </span>
-
                         </div>
                     </li>
                 ))}

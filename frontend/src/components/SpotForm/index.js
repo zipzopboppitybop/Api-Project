@@ -25,21 +25,26 @@ const SpotInput = () => {
 
     if (!user) history.push('/');
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors([]);
-        return await dispatch(spotActions.createSpot({ country, address, city, state, description, name, price, previewImage }))
-            .then(history.push("/"))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (res.status === 403) {
-                        return setErrors(['Invalid Data'])
-                    }
-                    if (data && data.errors) setErrors(Object.values(data.errors));
-                }
-            );
+
+
+        const spot = {
+            country,
+            address,
+            city,
+            state,
+            description,
+            name,
+            price,
+            SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive]
+
+        }
+
+        let newSpot = await dispatch(spotActions.createSpot(spot));
+        if (newSpot) {
+            history.push(`/spots/${newSpot.id}`);
+        }
     };
 
     useEffect(() => {
@@ -147,7 +152,6 @@ const SpotInput = () => {
                         onChange={(e) => setPreviewImage(e.target.value)}
                         required
                     />
-
                     <input
                         className='bottom-border'
                         type="text"
@@ -185,9 +189,7 @@ const SpotInput = () => {
                         Create Spot
                     </button>
                 </div>
-
             </form>
-
         </div>
     )
 }

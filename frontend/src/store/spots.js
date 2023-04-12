@@ -74,6 +74,7 @@ export const getOneSpot = (id) => async dispatch => {
 };
 
 export const createSpot = (payload) => async (dispatch) => {
+    const images = payload.SpotImages;
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -83,12 +84,30 @@ export const createSpot = (payload) => async (dispatch) => {
     if (response.ok) {
         const spot = await response.json();
         dispatch(CreateASpot(spot));
-        // const image = await csrfFetch(`/api/spots/${spot.id}`, {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(payload.previewImage)
-        // })
-        // dispatch(CreateSpotImage(image))
+        console.log(images.length)
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+            if (i === 0) {
+                console.log("yes", image)
+                const newImage = { url: image, preview: true }
+                await csrfFetch(`/api/spots/${spot.id}/images`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newImage)
+                })
+            }
+            else {
+                console.log("no", image)
+                const newImage = { url: image, preview: "false" }
+                await csrfFetch(`/api/spots/${spot.id}/images`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newImage)
+                })
+
+            }
+        }
+
     }
 }
 
@@ -136,7 +155,7 @@ const spotReducer = (state = initialState, action) => {
             return newState;
         case CREATE_SPOT:
             newState = { ...state };
-            newState.singleSpot[action.spot.id] = action.spot;
+            newState.singleSpot = action.spot;
             newState.allSpots[action.spot.id] = action.spot;
             newState.userSpots[action.spot.id] = action.spot;
             return newState;
