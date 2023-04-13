@@ -29,15 +29,15 @@ const UpdateSpot = () => {
         setErrors([]);
         return await dispatch(spotActions.editSpot({ id, vals }))
             .then(history.push(`/spots/${spot.id}`))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (res.status === 403) {
-                        return setErrors(['Invalid Data'])
-                    }
-                    if (data && data.errors) setErrors(Object.values(data.errors));
-                }
-            );
+        // .catch(
+        //     async (res) => {
+        //         const data = await res.json();
+        //         if (res.status === 403) {
+        //             return setErrors(['Invalid Data'])
+        //         }
+        //         if (data && data.errors) setErrors(Object.values(data.errors));
+        //     }
+        // );
     };
 
     useEffect(() => {

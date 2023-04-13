@@ -109,7 +109,6 @@ export const createSpot = (payload) => async (dispatch) => {
     }
 }
 
-
 export const editSpot = (payload) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${payload.id}`, {
         method: 'PUT',
