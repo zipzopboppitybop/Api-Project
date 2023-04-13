@@ -42,7 +42,6 @@ const SpotInput = () => {
         }
 
         const createdSpot = await dispatch(createSpot(spot))
-        console.log(createdSpot)
         history.push(`/spots/${createdSpot.id}`);
     };
 

@@ -42,7 +42,6 @@ const UpdateSpot = () => {
 
     useEffect(() => {
         dispatch(spotActions.getOneSpot(id));
-
     }, [country, address, city, state, description, name, price, dispatch]);
 
     return (
@@ -126,12 +125,11 @@ const UpdateSpot = () => {
                         required
                     />
                 </label>
-                <div className='line long'>
-                    <button
-                        type='submit'>
-                        Update Spot
-                    </button>
-                </div>
+                <button
+                    type='submit'>
+                    Update Spot
+                </button>
+
             </form>
         </div>
     )
