@@ -426,3 +426,8 @@ ul {
 .logo-image {
     width: 50px;
 }
+
+.resize {
+    resize: none;
+    width: 100%;
+}

@@ -60,6 +60,7 @@ function ReviewForm({ disabled }) {
             <form className="review-form" onSubmit={handleSubmit}>
                 <h1 >How was your stay?</h1>
                 <textarea
+                    className="resize"
                     name='description'
                     placeholder='Leave your review here...'
                     rows='10'
