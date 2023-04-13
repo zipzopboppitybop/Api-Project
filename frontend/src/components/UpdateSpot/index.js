@@ -5,35 +5,30 @@ import * as spotActions from '../../store/spots'
 
 const UpdateSpot = () => {
     const dispatch = useDispatch();
-    const [country, setCountry] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [description, setDescription] = useState("");
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [previewImage, setPreviewImage] = useState("");
-    const [imageTwo, setImageTwo] = useState("");
-    const [imageThree, setImageThree] = useState("");
-    const [imageFour, setImageFour] = useState("");
-    const [imageFive, setImageFive] = useState("");
+    const spot = useSelector(state => state.spots.singleSpot);
+    const user = useSelector(state => state.session.user);
+    const [country, setCountry] = useState(spot.country);
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [description, setDescription] = useState(spot.description);
+    const [name, setName] = useState(spot.name);
+    const [price, setPrice] = useState(spot.price);
     const [errors, setErrors] = useState([]);
     const history = useHistory();
-    const user = useSelector(state => state.session.user);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const buttonClassName = isButtonDisabled ? "disabled" : "";
-    const spot = useSelector(state => state.spots.singleSpot);
     const { id } = useParams();
 
     if (!user || user.id !== spot.ownerId) history.push('/');
 
-    const vals = { country, address, city, state, description, name, price, previewImage }
+    const vals = { country, address, city, state, description, name, price }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
         return await dispatch(spotActions.editSpot({ id, vals }))
-            .then(history.push("/"))
+            .then(history.push(`/spots/${spot.id}`))
             .catch(
                 async (res) => {
                     const data = await res.json();
@@ -46,12 +41,9 @@ const UpdateSpot = () => {
     };
 
     useEffect(() => {
-        // if (!country || !address || !city || !state || !description || !name || !price || !previewImage || description.length < 30) {
-        //     setIsButtonDisabled(true);
-        // } else setIsButtonDisabled(false);
         dispatch(spotActions.getOneSpot(id));
 
-    }, [country, address, city, state, description, name, price, previewImage, dispatch]);
+    }, [country, address, city, state, description, name, price, dispatch]);
 
     return (
         <div className='spot-form'>
@@ -71,7 +63,6 @@ const UpdateSpot = () => {
                         defaultValue={spot.country}
                         className='create-spot-input'
                         type="text"
-                        value={spot.country}
                         onChange={(e) => setCountry(e.target.value)}
                         required
                     />
@@ -135,57 +126,13 @@ const UpdateSpot = () => {
                         required
                     />
                 </label>
-                <label className='spot-form-label'>
-                    <h2 className='line'>Liven up your spot with photos</h2>
-                    <h4 className='form-content'>Submit a link to at least one photo to publish your spot.</h4>
-                    <input
-                        defaultValue={spot.previewImage}
-                        className='bottom-border'
-                        type="text"
-                        placeholder="Preview Image Url"
-                        onChange={(e) => setPreviewImage(e.target.value)}
-                        required
-                    />
-
-                    <input
-                        className='bottom-border'
-                        type="text"
-                        value={imageTwo}
-                        placeholder="Image URL"
-                        onChange={(e) => setImageTwo(e.target.value)}
-                    />
-                    <input
-                        className='bottom-border'
-                        type="text"
-                        value={imageThree}
-                        placeholder="Image URL"
-                        onChange={(e) => setImageThree(e.target.value)}
-                    />
-                    <input
-                        className='bottom-border'
-                        type="text"
-                        value={imageFour}
-                        placeholder="Image URL"
-                        onChange={(e) => setImageFour(e.target.value)}
-                    />
-                    <input
-                        className='bottom-border'
-                        type="text"
-                        value={imageFive}
-                        placeholder="Image URL"
-                        onChange={(e) => setImageFive(e.target.value)}
-                    />
-                </label>
                 <div className='line long'>
                     <button
-
                         type='submit'>
                         Update Spot
                     </button>
                 </div>
-
             </form>
-
         </div>
     )
 }
