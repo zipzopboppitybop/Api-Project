@@ -2,6 +2,8 @@
     visibility: hidden;
 }
 
+
+
 .profile-dropdown-list {
     justify-content: space-between;
     display: flex;
@@ -122,8 +124,6 @@
     color: black;
 }
 
-
-
 .end {
     order: 1;
     align-self: flex-end;
@@ -192,6 +192,7 @@ a {
     width: 94%;
     margin-left: 2%;
     margin-right: 3%;
+    height: 824px;
 }
 
 .images {

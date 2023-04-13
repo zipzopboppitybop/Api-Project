@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import * as spotActions from '../../store/spots'
+import { createSpot } from '../../store/spots';
 
 const SpotInput = () => {
     const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const SpotInput = () => {
     const [errors, setErrors] = useState([]);
     const history = useHistory();
     const user = useSelector(state => state.session.user);
+    const spotRoute = useSelector(state => state.spots.singleSpot)
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const buttonClassName = isButtonDisabled ? "disabled" : "";
 
@@ -27,7 +28,6 @@ const SpotInput = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         const spot = {
             country,
@@ -41,10 +41,9 @@ const SpotInput = () => {
 
         }
 
-        let newSpot = await dispatch(spotActions.createSpot(spot));
-        if (newSpot) {
-            history.push(`/spots/${newSpot.id}`);
-        }
+        const createdSpot = await dispatch(createSpot(spot))
+        console.log(createdSpot)
+        history.push(`/spots/${createdSpot.id}`);
     };
 
     useEffect(() => {

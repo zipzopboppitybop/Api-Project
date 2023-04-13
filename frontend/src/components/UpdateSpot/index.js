@@ -25,7 +25,7 @@ const UpdateSpot = () => {
     const spot = useSelector(state => state.spots.singleSpot);
     const { id } = useParams();
 
-    if (!user) history.push('/');
+    if (!user || user.id !== spot.ownerId) history.push('/');
 
     const vals = { country, address, city, state, description, name, price, previewImage }
 

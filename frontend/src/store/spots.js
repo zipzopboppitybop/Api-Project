@@ -84,11 +84,9 @@ export const createSpot = (payload) => async (dispatch) => {
     if (response.ok) {
         const spot = await response.json();
         dispatch(CreateASpot(spot));
-        console.log(images.length)
         for (let i = 0; i < images.length; i++) {
             const image = images[i];
             if (i === 0) {
-                console.log("yes", image)
                 const newImage = { url: image, preview: true }
                 await csrfFetch(`/api/spots/${spot.id}/images`, {
                     method: 'POST',
@@ -97,17 +95,17 @@ export const createSpot = (payload) => async (dispatch) => {
                 })
             }
             else {
-                console.log("no", image)
-                const newImage = { url: image, preview: "false" }
-                await csrfFetch(`/api/spots/${spot.id}/images`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newImage)
-                })
-
+                if (image.length > 0) {
+                    const newImage = { url: image, preview: "false" }
+                    await csrfFetch(`/api/spots/${spot.id}/images`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newImage)
+                    })
+                } else continue;
             }
         }
-
+        return spot;
     }
 }
 
