@@ -8,7 +8,6 @@ import SpotList from "./components/SpotList/index.";
 import SingleSpot from "./components/SingleSpot";
 import SpotInput from "./components/SpotForm";
 import CurrentUserSpots from "./components/CurrentUserSpots";
-import CurrentReviews from "./components/CurrentReviews";
 import UpdateSpot from "./components/UpdateSpot";
 
 
@@ -29,8 +28,6 @@ function App() {
           <Route exact path='/spots/current' component={CurrentUserSpots} />
           <Route path='/spots/:id/edit' component={UpdateSpot} />
           <Route path='/spots/:id' component={SingleSpot} />
-          <Route exact path='/reviews/current' component={CurrentReviews} />
-
         </Switch>
       )}
     </>

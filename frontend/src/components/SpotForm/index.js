@@ -17,7 +17,7 @@ const SpotInput = () => {
     const [imageThree, setImageThree] = useState("");
     const [imageFour, setImageFour] = useState("");
     const [imageFive, setImageFive] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState({});
     const history = useHistory();
     const user = useSelector(state => state.session.user);
     const spotRoute = useSelector(state => state.spots.singleSpot)

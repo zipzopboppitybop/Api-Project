@@ -2,8 +2,6 @@
     visibility: hidden;
 }
 
-
-
 .profile-dropdown-list {
     justify-content: space-between;
     display: flex;
@@ -48,7 +46,6 @@
     padding: 5px 0;
 }
 
-
 .menu-item:hover,
 .profile-button:hover,
 .create-spot:hover,
@@ -70,7 +67,6 @@
     font-family: 'Geometric Sans Serif v1', sans-serif;
     margin-top: -1%;
 }
-
 
 .title {
     margin-top: 100px;
@@ -98,10 +94,10 @@
     list-style: none;
     display: flex;
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     margin: 0 auto;
-    width: 50%;
+    width: 52%;
 }
 
 .spot {
@@ -111,6 +107,10 @@
     text-decoration: none;
     justify-content: center;
     margin-bottom: 10%;
+}
+
+.spot-item {
+    margin-bottom: 4%;
 }
 
 .spot-description,
@@ -151,8 +151,8 @@ a {
 }
 
 .spot-image {
-    width: 270px;
-    height: 250px;
+    width: 500px;
+    height: 300px;
 }
 
 .spot,
