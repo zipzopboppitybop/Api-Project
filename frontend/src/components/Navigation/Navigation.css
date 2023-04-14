@@ -29,7 +29,7 @@
     list-style: none;
     border: 2px solid black;
     width: 150px;
-    margin-top: 1%;
+    margin-top: 5%;
     margin-left: 10%;
     padding: 10px;
     background-color: white;
@@ -38,6 +38,7 @@
 .profile-button {
     width: 100px;
     border-radius: 40px;
+    margin-top: 1%;
 }
 
 .email {
