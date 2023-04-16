@@ -38,7 +38,6 @@ const SpotInput = () => {
             name,
             price,
             SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive]
-
         }
 
         const createdSpot = await dispatch(createSpot(spot))

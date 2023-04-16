@@ -116,9 +116,9 @@ export const editSpot = (payload) => async (dispatch) => {
         body: JSON.stringify(payload.vals)
     })
 
-    const spot = response.json();
-    dispatch(editASpot(spot));
-    return spot
+    const updatedSpot = response.json();
+    dispatch(editASpot(updatedSpot));
+    return updatedSpot
 }
 
 export const deleteSpot = (id) => async (dispatch) => {

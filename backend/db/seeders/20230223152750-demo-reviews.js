@@ -11,33 +11,9 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        userId: 1,
-        review: "bad",
-        stars: 1
-      },
-      {
-        spotId: 1,
-        userId: 2,
-        review: "ok",
-        stars: 2
-      },
-      {
-        spotId: 1,
         userId: 2,
         review: "bad",
         stars: 1
-      },
-      {
-        spotId: 1,
-        userId: 3,
-        review: "bad",
-        stars: 1
-      },
-      {
-        spotId: 2,
-        userId: 1,
-        review: "ok",
-        stars: 2
       },
       {
         spotId: 2,
@@ -46,44 +22,14 @@ module.exports = {
         stars: 2
       },
       {
-        spotId: 2,
-        userId: 3,
-        review: "ok",
-        stars: 2
-      },
-      {
-        spotId: 3,
-        userId: 1,
-        review: "good",
-        stars: 3
-      },
-      {
         spotId: 3,
         userId: 2,
         review: "good",
         stars: 3
       },
       {
-        spotId: 3,
-        userId: 3,
-        review: "good",
-        stars: 3
-      },
-      {
-        spotId: 4,
-        userId: 1,
-        review: "great",
-        stars: 4
-      },
-      {
         spotId: 4,
         userId: 2,
-        review: "great",
-        stars: 4
-      },
-      {
-        spotId: 4,
-        userId: 3,
         review: "great",
         stars: 4
       },
@@ -94,17 +40,95 @@ module.exports = {
         stars: 5
       },
       {
-        spotId: 5,
-        userId: 2,
+        spotId: 6,
+        userId: 1,
         review: "perfect",
         stars: 5
       },
       {
-        spotId: 5,
+        spotId: 7,
+        userId: 3,
+        review: "bad",
+        stars: 1
+      },
+      {
+        spotId: 8,
+        userId: 4,
+        review: "ok",
+        stars: 2
+      },
+      {
+        spotId: 9,
+        userId: 1,
+        review: "good",
+        stars: 3
+      },
+      {
+        spotId: 10,
+        userId: 2,
+        review: "great",
+        stars: 5
+      },
+      {
+        spotId: 11,
+        userId: 4,
+        review: "perfect",
+        stars: 5
+      },
+      {
+        spotId: 12,
+        userId: 5,
+        review: "bad",
+        stars: 1
+      },
+      {
+        spotId: 13,
+        userId: 1,
+        review: "ok",
+        stars: 2
+      },
+      {
+        spotId: 14,
+        userId: 2,
+        review: "good",
+        stars: 3
+      },
+      {
+        spotId: 15,
+        userId: 3,
+        review: "great",
+        stars: 4
+      },
+      {
+        spotId: 16,
+        userId: 5,
+        review: "perfect",
+        stars: 5
+      },
+      {
+        spotId: 17,
+        userId: 1,
+        review: "perfect",
+        stars: 5
+      },
+      {
+        spotId: 18,
+        userId: 2,
+        review: "great",
+        stars: 4
+      },
+      {
+        spotId: 19,
         userId: 3,
         review: "perfect",
         stars: 5
       },
+      {
+        spotId: 20,
+        userId: 4,
+        review: "good",
+        stars: 3
+      }
 
     ], {});
   },

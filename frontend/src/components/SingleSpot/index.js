@@ -40,11 +40,16 @@ const SingleSpot = () => {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
 
-        for (const i in reviews) {
-            const review = reviews[i];
-            if (review.userId === sessionUser.id) createReviewClassName = "hidden";
+
+        for (let i = 0; i < reviewsArr.length; i++) {
+            const review = reviewsArr[i];
+            if (review.userId === sessionUser.id) {
+                createReviewClassName = "hidden";
+            }
         }
     }
+
+
 
     if (spot.numReviews === 1) numReviews = "review"
     else if (spot.numReviews < 1) numReviews = ""
