@@ -54,7 +54,7 @@ module.exports = {
         lat: 20.7645358,
         lng: -90.4730327,
         name: "The Carriage House Near the Shore",
-        description: "Newly built, beautifully appointed, private carriage house next to Federalist style home on half acre in quiet community on the shores of Galveston Bay. Very clean, 2 bedrooms, 2 full baths, living and kitchenette in 2nd floor apartment. Outdoors oasis with pool, deck, and grill under mature trees with private off-street parking. Safe community conveniently near many attractions and employers in Houston, Clear Lake, NASA and Galveston. Ideal for long-term stays as well as short-term vacationers.",
+        description: "Newly built, beautifully appointed, private carriage house next to Federalist style home on half acre in quiet community on the shores of Galveston Bay.",
         price: 139,
       },
       {
@@ -78,7 +78,7 @@ module.exports = {
         lat: 30.227855,
         lng: -95.6732331,
         name: "Cardinal's Nest of Magnolia Tiny House Village",
-        description: "WELCOME to the beautiful Cardinal's Nest tiny house of Magnolia Tiny House Village. The space has 250+ sqft on 2 stories. 1 loft bedroom plus a living room. This home was PROFESSIONALLY decorated and furnished by West Elm. From the moment you walk in you will be in AWE and be mesmerized! Come enjoy the outdoors and experience the world of GLAMPING from a Bird's eye view. Adults and children of all ages will feel the adventure awaiting as soon as you walk in! Great for couples and family getaway",
+        description: "WELCOME to the beautiful Cardinal's Nest tiny house of Magnolia Tiny House Village.",
         price: 105,
       },
       {
@@ -90,7 +90,7 @@ module.exports = {
         lat: 30.254912,
         lng: 97.715268,
         name: "Tiny House in the Heart of the East Side",
-        description: "Welcome to our Tiny House! Enjoy a little slice of privacy in the middle of vibrant East Austin. Walking distance to top restaurants (Kemuri & Juniper are only a block away) and bars (the original Lustre Pearl is down the street from us).",
+        description: "Welcome to our Tiny House!",
         price: 126,
       },
       {
@@ -102,7 +102,7 @@ module.exports = {
         lat: 31.587199,
         lng: -96.5295358,
         name: "Cozy Grand Lodge on the River: Hot Tub & Fire Pit!",
-        description: "Escape the noise of the city and head to this quiet, 3-bedroom, 2-bathroom countryside retreat! Less than a mile from Fort Parker Lake and situated on the shores of the river, this vacation rental is an ideal outdoor getaway. Relax with a book in the hammock, enjoy a meal cooked in the charcoal smoker, or soak up the sun while the kids jump on the trampoline and swim in the pool! Guests of all ages will love this cabin only a few miles from Groesbeck and Mexia, where delicious local fare awaits!",
+        description: "Escape the noise of the city and head to this quiet, 3-bedroom, 2-bathroom countryside retreat!",
         price: 369,
       },
       {
@@ -114,7 +114,7 @@ module.exports = {
         lat: 37.5270526,
         lng: -82.7917978,
         name: "The Bluegrass Palace",
-        description: "There is a special place, nestled amidst the rolling hills of Kentucky bluegrass, where 29,000 square feet of unmitigated luxury welcomes you. Where the private gates open to a 9 acre idyllic paradise all your own.Where a splendid southern grandeur unfolds inside four levels of 12 bedroom suites & a ballroom, 2 modern kitchens, 15 spacious bathrooms, a performance stage, a movie theatre & an indoor pool.The Bluegrass Palace your dreams await",
+        description: "There is a special place, nestled amidst the rolling hills of Kentucky bluegrass, where 29,000 square feet of unmitigated luxury welcomes you. Where the private gates open to a 9 acre idyllic paradise all your own.",
         price: 778,
       },
       {
@@ -126,7 +126,7 @@ module.exports = {
         lat: 30.7023371,
         lng: -98.3642322,
         name: "Falkenstein Castle",
-        description: "Falkenstein Castle awaits. Just minutes from several Highland Lakes and conveniently located 45 minutes NW of Austin, TX, resides a 14000 square foot Bavarian inspired castle where you can be a King or a Queen for the night. Whether it's the majestic scenic view of 3 counties from the balcony, the oversized living areas, or the 113 acres of State Park worthy hiking on site. We look forward to hosting you.",
+        description: "Falkenstein Castle awaits.",
         price: 1363,
       },
       {
@@ -138,7 +138,7 @@ module.exports = {
         lat: 26.6864885,
         lng: -81.9960197,
         name: "The Cape Coral Mansion",
-        description: "The Cape Coral Mansion is a perfect retreat for large families/groups of friends! 8 bedrooms total, incl 2 master beds. Kitchen on the 2nd floor is fully equipped with viking stove & 3 sinks. 1 washing machine & 2 dryers. Elevator goes to all 3 floors. Billiard table on 3rd Fl. The heated pool has a swim up bar and table. Fantastic views of the water from all balconies. Dolphins can be spotted most days.",
+        description: "The Cape Coral Mansion is a perfect retreat for large families/groups of friends!",
         price: 1233,
       },
       {
@@ -150,7 +150,7 @@ module.exports = {
         lat: 34.8367523,
         lng: -84.319979,
         name: "The Lodge at Deer Crest",
-        description: "The Lodge at Deer Crest is the ultimate luxury retreat for your next special occasion, family reunion, couples getaway, or retreat. Featuring 12,000 sq.ft of beautiful living space, 9 bedrooms (5K, 2Q, 2 bunk rooms), 8 full bathrooms, and 3 half bathrooms this home offers both ample gathering space and plenty of privacy for quieter times. This home has every amenity you could ever hope for to make your stay a relaxing and memorable one.",
+        description: "The Lodge at Deer Crest is the ultimate luxury retreat for your next special occasion.",
         price: 1376,
       },
       {
@@ -162,7 +162,7 @@ module.exports = {
         lat: 34.8488644,
         lng: -85.5499366,
         name: "Whippoorwill Retreat Treehouse",
-        description: "Whippoorwill Retreat is nestled in treetops on Sand Mountain, 20 min. from Chattanooga, Tn. A private, romantic two-story getaway with floor to ceiling views, sun/moon rise perch, large outdoor porch w/fireplace, & fire pit for lazy long nights. Enjoy nature with 2 outdoor soaking tubs that includes the Whippoorwill scent bath salts, Alexa, and even a chandelier! Sleep in a suspended bed, or the Canopy Suite with large overhead views. It will make you want to write your own fairytale!",
+        description: "Whippoorwill Retreat is nestled in treetops on Sand Mountain, 20 min. from Chattanooga, Tn.",
         price: 366,
       },
       {
@@ -174,7 +174,7 @@ module.exports = {
         lat: 34.8488644,
         lng: -85.5499366,
         name: "Wooded Bliss",
-        description: "Wooded Bliss is a brand new, romantic, pond-side treehouse in the woods.  It is the perfect place for couples to stay for their honeymoon, anniversary or to simply get away to relax and unwind.  Inside Wooded Bliss are large picture windows, an enormous rain shower and bathtub.  Outdoors, you'll enjoy relaxing on a huge back porch, soaking in the hot tub, resting on the swing bed, strolling along the trails or fishing at the pond.  Make Wooded Bliss your own and rekindle your love.",
+        description: "Wooded Bliss is a brand new, romantic, pond-side treehouse in the woods.",
         price: 281,
       },
       {
@@ -186,7 +186,7 @@ module.exports = {
         lat: 49.0981182,
         lng: 2.997736,
         name: "Cabane jacuzzi 'Plume'",
-        description: "You will be alone in the world in your treehouse. You observe the forest through the windows of your cozy nest. The jacuzzi is heated to 38°C on your terrace. In the early morning, enjoy a gourmet breakfast with bird songs. For your comfort, you have on the floor a small cabin with private bathroom and dining area. Ideal for a break of nature 1h from Paris and 30mn from Disney. Swimming pool open from mid-April to mid-September.",
+        description: "You will be alone in the world in your treehouse. You observe the forest through the windows of your cozy nest.",
         price: 364,
       },
       {
@@ -198,7 +198,7 @@ module.exports = {
         lat: 39.5012367,
         lng: -106.0782304,
         name: "Sunrise Ski Haus",
-        description: "Ideal for family vacations and groups of friends, Sunrise Ski Haus is a modern 4-bedroom mountain home pocketed away in Christie Heights, one of Breckenridge\'s premier neighborhoods. The Breckenridge Connect Gondola is under a mile from the villa and will whisk you away to Peaks 7 and 8 or down to the Main Street where you\'ll discover a rich selection of restaurants, bars, shops and local festivities.",
+        description: "Ideal for family vacations and groups of friends, Sunrise Ski Haus is a modern 4-bedroom mountain home pocketed away in Christie Heights, one of Breckenridge\'s premier neighborhoods.",
         price: 535,
       },
       {
@@ -222,7 +222,7 @@ module.exports = {
         lat: 41.701925,
         lng: -8.787471,
         name: "Santa Marta de Portuzelo Castle",
-        description: "The Castle is located 40 minutes from Porto (Francisco Sa Carneiro) airport, with a variety of cultural experiences near the city. You will love this place because of the location, the beautiful grounds and landscaping, the peaceful atmosphere and the unique construction of the house. My house is great for big families (including young children) and large groups of friends who want to disconnect in a quiet environment, while having convenient access to the city center (1.2 miles).",
+        description: "The Castle is located 40 minutes from Porto (Francisco Sa Carneiro) airport, with a variety of cultural experiences near the city.",
         price: 880,
       },
       {
@@ -234,7 +234,7 @@ module.exports = {
         lat: 56.1496152,
         lng: -3.659436,
         name: "DOLLARBEG CASTLE",
-        description: "DOLLARBEG CASTLE is a unique castle vacation location in Scotland. This luxury apartment has 3 themed bedrooms, a cinema room & tower, with private rooftop terrace and panoramic views of the surrounding countryside & the Ochil Hills. The Tower apartment at the unique & historic Dollarbeg Castle has been fully refurbished & is presented to a high standard, with luxury furnishings. It retains great character throughout, with turreted corners in several rooms & outstanding views from every window.",
+        description: "DOLLARBEG CASTLE is a unique castle vacation location in Scotland.",
         price: 513,
       },
       {
@@ -246,7 +246,7 @@ module.exports = {
         lat: 57.9035344,
         lng: -4.0137802,
         name: "Embo House",
-        description: "Embo House was founded in the 16th Century as a Castle of the Clan Gordon. Remodelled in Georgian times, it combines classic elegance with contemporary luxury and is ideal for large groups of people, as it sleeps up to 16. Seven of the eight double, en-suite bedrooms look out over the sea. Outside there 8 acres of attractive gardens - and a path directly to the beach. Royal Dornoch, with its Castle, Cathederal, Shops, Restaurants and world-famous Golf Club is just 2 miles distant.",
+        description: "Embo House was founded in the 16th Century as a Castle of the Clan Gordon.",
         price: 1564,
       }
     ], {});
