@@ -242,6 +242,7 @@ a {
     border-radius: 5%;
     padding: 15px;
     flex-wrap: wrap;
+    margin-top: 1%;
 }
 
 .reserve-button {
