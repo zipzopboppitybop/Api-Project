@@ -18,6 +18,7 @@ function SignupFormModal() {
     const { closeModal } = useModal();
     const history = useHistory();
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    let wrongPassword = password === confirmPassword ? "" : "Passwords do not match!";
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -96,6 +97,7 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>{wrongPassword}</p>
                 <p>Confirm Password</p>
                 <label>
                     <input
@@ -105,6 +107,7 @@ function SignupFormModal() {
                         required
                     />
                 </label>
+                <p>{wrongPassword}</p>
                 <button className={buttonClassName} disabled={isButtonDisabled} type="submit">Sign Up</button>
             </form>
         </>
