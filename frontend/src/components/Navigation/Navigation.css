@@ -433,3 +433,7 @@ ul {
     resize: none;
     width: 100%;
 }
+
+.error {
+    color: red;
+}

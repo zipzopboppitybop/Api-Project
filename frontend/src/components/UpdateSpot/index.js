@@ -16,8 +16,8 @@ const UpdateSpot = () => {
     const [price, setPrice] = useState(spot.price);
     const [errors, setErrors] = useState([]);
     const history = useHistory();
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const buttonClassName = isButtonDisabled ? "disabled" : "";
+    //const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    //const buttonClassName = isButtonDisabled ? "disabled" : "";
     const { id } = useParams();
 
     if (!user || user.id !== spot.ownerId) history.push('/');
@@ -63,7 +63,7 @@ const UpdateSpot = () => {
                         className='create-spot-input'
                         type="text"
                         onChange={(e) => setCountry(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -72,7 +72,7 @@ const UpdateSpot = () => {
                         defaultValue={spot.address}
                         type="text"
                         onChange={(e) => setAddress(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -81,7 +81,7 @@ const UpdateSpot = () => {
                         defaultValue={spot.city}
                         type="text"
                         onChange={(e) => setCity(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -90,7 +90,7 @@ const UpdateSpot = () => {
                         defaultValue={spot.state}
                         type="text"
                         onChange={(e) => setState(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <label className='spot-form-label '>
@@ -112,7 +112,7 @@ const UpdateSpot = () => {
                         defaultValue={spot.name}
                         type="text"
                         onChange={(e) => setName(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -122,7 +122,7 @@ const UpdateSpot = () => {
                         defaultValue={spot.price}
                         type="number"
                         onChange={(e) => setPrice(e.target.value)}
-                        required
+                    //
                     />
                 </label>
                 <button
