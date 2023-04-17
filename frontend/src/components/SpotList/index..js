@@ -9,7 +9,9 @@ const SpotList = () => {
 
     useEffect(() => {
         dispatch(getAllSpots());
-    }, [dispatch,]);
+    }, [dispatch]);
+
+    console.log(spots)
 
     return (
         <div className='bruh'>
