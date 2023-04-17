@@ -271,4 +271,4 @@ app.use(routes);
 
 to connect the routes to the app.js file.
 
-For the front we will need to install react and redux and create an app for the website.
+For the front we will need to install react and redux and create an app for the website. We will then npm install js-cookie, react-redux, react-router-dom@^5, redux, and redux-thunk. Then npm install -D redux-logger. We can then npm start the backend and frontend and start the server.
