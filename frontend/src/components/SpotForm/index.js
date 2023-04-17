@@ -86,7 +86,7 @@ const SpotInput = () => {
             SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive]
         }
 
-        if (validations.previewImage) {
+        if (validations.previewImage || validations.imageTwo || validations.imageThree || validations.imageFour || validations.imageFive) {
             return setErrors(validations)
         } else {
             const createdSpot = await dispatch(createSpot(spot)).catch(
