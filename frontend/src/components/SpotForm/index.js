@@ -120,8 +120,6 @@ const SpotInput = () => {
 
             if (createSpot) history.push(`/spots/${createdSpot.id}`);
         }
-
-        console.log(errors)
     };
 
     return (

@@ -11,10 +11,18 @@ const CurrentSpots = () => {
     const spots = useSelector(state => state.spots.userSpots);
     const user = useSelector(state => state.session.user);
     const history = useHistory();
-    let spotsArr;
+    let spotsArr = [];
     if (spots) {
-        spotsArr = Object.values(spots)
+        let spotsObj = Object.values(spots);
+
+        for (let i = 0; i < spotsObj.length; i++) {
+            let spot = spotsObj[i];
+
+            if (spot.ownerId === user.id) spotsArr.push(spot);
+        }
     }
+
+    //console.log(spotsArr);
 
     if (!user) history.push('/');
 

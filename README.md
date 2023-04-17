@@ -32,8 +32,7 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 
 ![Get-All-Spots]
 
-[Get-All-Spots]: ./frontend/images/Screenshot%202023-02-27%20091743.png
-
+[Get-All-Spots]: ./frontend/images/getAllSpots.png
 #### Get Details Of Spot From Id
 
 ![Get-Details-Of-Spot-From-Id]
@@ -115,7 +114,7 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 ## Techs/Languages Used
 
 I coded the clone in javascript while using sequelize to work with the database and express to make the api. Both sequelize and express are node based and work very well together. Node is a javascript runtime environment and library for running web app outside of browsers and backend API services. I also used npm which stands for node package manager which means its a library of javascript packages that made coding the API much easier. One thing it helped with was installing dotenv-cli and sequelize-cli which made it so I could use the commands for those tools in the command line.
-The front end is using React and Redux, javascript libraries that streamline the html,css process while also making the website more dynamic. React uses jsx which is just html elements with some javascript functionality. Redux helps maintain the "state" of the site keeping data and features more consistent.
+The front end is using React and Redux, javascript libraries that streamline the html, css process while also making the website more dynamic. React uses jsx which is just html elements with some javascript functionality. Redux helps maintain the "state" of the site keeping data and features more consistent.
 
 ## Technical Problems
 
