@@ -19,14 +19,14 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 
 ![Sign-Up-User]
 
-[Sign-Up-User]: ./frontend/images/Screenshot%2023-03-20%085006.png
+[Sign-Up-User]: ./frontend/images/signUpForm.png
 
 
 #### Login User
 
 ![Login-User]
 
-[Login-User]: ./frontend/images/Screenshot%202023-02-27%20083512.png
+[Login-User]: ./frontend/images/loginForm.png
 
 #### Get All Spots
 
@@ -37,42 +37,72 @@ My AirBnb clone like the original can sign up and login users. Those users can c
 
 ![Get-Details-Of-Spot-From-Id]
 
-[Get-Details-Of-Spot-From-Id]: ./frontend/images/Screenshot%202023-02-27%20091959.png
+[Get-Details-Of-Spot-From-Id]: ./frontend/images/spotDetails.png
 
-#### Get All Spots Of Current User
+#### Get All Spots Of Current User With Spots
 
 ![Get-All-Spots-Of-Current-User]
 
-[Get-All-Spots-Of-Current-User]: ./frontend/images/Screenshot%202023-02-27%20091924.png
+[Get-All-Spots-Of-Current-User]: ./frontend/images/userSpotsFilled.png
+
+#### Without Spots
+
+![Get-All-Spots-Of-Current-User-No-Spots]
+
+[Get-All-Spots-Of-Current-User-No-Spots]: ./frontend/images/userNoSpots.png
 
 #### Create A Spot
 
 ![Create-A-Spot]
 
-[Create-A-Spot]: ./frontend/images/Screenshot%202023-02-27%20083623.png
+[Create-A-Spot]: ./frontend/images/createSpot.png
 
 #### Create An Image For Spot
 
 ![Create-An-Image-For-Spot]
 
-[Create-An-Image-For-Spot]: ./frontend/images/Screenshot%202023-02-27%20083654.png
+[Create-An-Image-For-Spot]: ./frontend/images/spotImage.png
+
+#### Created Spot
+
+![Created-Spot]
+
+[Created-Spot]: ./frontend/images/createdSpot.png
 
 #### Edit A Spot
 
 ![Edit-A-Spot-1]
 
-[Edit-A-Spot-1]: ./frontend/images/Screenshot%202023-02-27%20083623.png
+[Edit-A-Spot-1]: ./frontend/images/editSpot.png
 
 
 ![Edit-A-Spot-2]
 
-[Edit-A-Spot-2]: ./frontend/images/Screenshot%202023-02-27%20092845.png
+[Edit-A-Spot-2]: ./frontend/images/editedSpot.png
 
 #### Create A Review For Spot
 
 ![Create-A-Review]
 
-[Create-A-Review]: ./frontend/images/Screenshot%202023-02-27%20093247.png
+[Create-A-Review]: ./frontend/images/createReview.png
+
+#### Review Form
+
+![Review-Form]
+
+[Review-Form]: ./frontend/images/reviewForm.png
+
+#### Created Review
+
+![Created-Review]
+
+[Created-Review]: ./frontend/images/createdReview.png
+
+#### Delete Spot Form
+
+![Delete-Spot-Form]
+
+[Delete-Spot-Form]: ./frontend/images/deleteSpotForm.png
 
 #### Create An Image for Review
 
