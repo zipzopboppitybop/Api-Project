@@ -20,8 +20,6 @@ const SpotInput = () => {
     const [errors, setErrors] = useState({});
     const history = useHistory();
     const user = useSelector(state => state.session.user);
-    //const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    //const buttonClassName = isButtonDisabled ? "disabled" : "";
 
     if (!user) history.push('/');
 
@@ -43,7 +41,6 @@ const SpotInput = () => {
                 const data = await res.json();
                 if (data && data.errors) {
                     const validations = {}
-                    // if (res.status === 400) return validations.status = "Invalid Data";
 
                     if (data.errors.address) validations.address = data.errors.address;
 
@@ -113,7 +110,6 @@ const SpotInput = () => {
                         value={country}
                         placeholder="Country"
                         onChange={(e) => setCountry(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.country ? <p className='error'>{errors.country}</p> : ""}
@@ -124,7 +120,6 @@ const SpotInput = () => {
                         value={address}
                         placeholder="Street Address"
                         onChange={(e) => setAddress(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.address ? <p className='error'>{errors.address}</p> : ""}
@@ -135,7 +130,6 @@ const SpotInput = () => {
                         value={city}
                         placeholder="City"
                         onChange={(e) => setCity(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.city ? <p className='error'>{errors.city}</p> : ""}
@@ -146,7 +140,6 @@ const SpotInput = () => {
                         value={state}
                         placeholder="State"
                         onChange={(e) => setState(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.state ? <p className='error'>{errors.state}</p> : ""}
@@ -160,7 +153,6 @@ const SpotInput = () => {
                         placeholder='Please write at least 30 characters'
                         rows='10'
                         cols='80'
-                    //required
                     />
                 </label>
                 {errors.description ? <p className='error'>{errors.description}</p> : ""}
@@ -172,7 +164,6 @@ const SpotInput = () => {
                         value={name}
                         placeholder="Name of your spot"
                         onChange={(e) => setName(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.name ? <p className='error'>{errors.name}</p> : ""}
@@ -184,7 +175,6 @@ const SpotInput = () => {
                         value={price}
                         placeholder="$Price per night (USD)"
                         onChange={(e) => setPrice(e.target.value)}
-                    //
                     />
                 </label>
                 {errors.price ? <p className='error'>{errors.price}</p> : ""}
@@ -197,7 +187,6 @@ const SpotInput = () => {
                         value={previewImage}
                         placeholder="Preview Image Url"
                         onChange={(e) => setPreviewImage(e.target.value)}
-                    //
                     />
                     {errors.previewImage ? <p className='error'>{errors.previewImage}</p> : ""}
                     <input
@@ -235,8 +224,6 @@ const SpotInput = () => {
                 </label>
                 <div className='line long'>
                     <button
-                        //className={buttonClassName}
-                        //disabled={isButtonDisabled}
                         type='submit'>
                         Create Spot
                     </button>

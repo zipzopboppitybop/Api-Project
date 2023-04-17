@@ -16,8 +16,6 @@ const UpdateSpot = () => {
     const [price, setPrice] = useState(spot.price);
     const [errors, setErrors] = useState([]);
     const history = useHistory();
-    //const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    //const buttonClassName = isButtonDisabled ? "disabled" : "";
     const { id } = useParams();
 
     if (!user || user.id !== spot.ownerId) history.push('/');
@@ -29,15 +27,6 @@ const UpdateSpot = () => {
         setErrors([]);
         return await dispatch(spotActions.editSpot({ id, vals }))
             .then(history.push(`/spots/${spot.id}`))
-        // .catch(
-        //     async (res) => {
-        //         const data = await res.json();
-        //         if (res.status === 403) {
-        //             return setErrors(['Invalid Data'])
-        //         }
-        //         if (data && data.errors) setErrors(Object.values(data.errors));
-        //     }
-        // );
     };
 
     useEffect(() => {
@@ -63,7 +52,6 @@ const UpdateSpot = () => {
                         className='create-spot-input'
                         type="text"
                         onChange={(e) => setCountry(e.target.value)}
-                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -72,7 +60,6 @@ const UpdateSpot = () => {
                         defaultValue={spot.address}
                         type="text"
                         onChange={(e) => setAddress(e.target.value)}
-                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -81,7 +68,6 @@ const UpdateSpot = () => {
                         defaultValue={spot.city}
                         type="text"
                         onChange={(e) => setCity(e.target.value)}
-                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -90,7 +76,6 @@ const UpdateSpot = () => {
                         defaultValue={spot.state}
                         type="text"
                         onChange={(e) => setState(e.target.value)}
-                    //
                     />
                 </label>
                 <label className='spot-form-label '>
@@ -112,7 +97,6 @@ const UpdateSpot = () => {
                         defaultValue={spot.name}
                         type="text"
                         onChange={(e) => setName(e.target.value)}
-                    //
                     />
                 </label>
                 <label className='spot-form-label'>
@@ -122,14 +106,12 @@ const UpdateSpot = () => {
                         defaultValue={spot.price}
                         type="number"
                         onChange={(e) => setPrice(e.target.value)}
-                    //
                     />
                 </label>
                 <button
                     type='submit'>
                     Update Spot
                 </button>
-
             </form>
         </div>
     )

@@ -40,7 +40,6 @@ const SingleSpot = () => {
         if (sessionUser.id === spot.ownerId) createReviewClassName = "hidden";
         else createReviewClassName = "";
 
-
         for (let i = 0; i < reviewsArr.length; i++) {
             const review = reviewsArr[i];
             if (review.userId === sessionUser.id) {
@@ -113,8 +112,6 @@ const SingleSpot = () => {
                     modalComponent={<ReviewForm />}
                 />
             </div>
-
-
             <ul className='reviews'>
                 {reviewsArr?.length > 0 ? (reviewsArr?.map(({ review, id, User, createdAt, userId }) => (
                     <li
@@ -138,7 +135,6 @@ const SingleSpot = () => {
                     </li>
                 ))) : "Be the first to post a review!"}
             </ul>
-
         </div>
     );
 };

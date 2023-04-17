@@ -36,7 +36,7 @@ const CurrentSpots = () => {
             </h3>
             <ul className='spots'>
                 {spotsArr.map(spot => (
-                    <li key={spot.id}>
+                    <li className='spot-item' key={spot.id}>
                         <SpotItem spot={spot}></SpotItem>
                         <div className='flex spot-description'>
                             <span className='please'>
