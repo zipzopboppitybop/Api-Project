@@ -25,6 +25,55 @@ const SpotInput = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const validations = {};
+
+        if (!previewImage) validations.previewImage = "Preview Image is Required!";
+        else if (previewImage) {
+            if (!previewImage.endsWith(".png") && !previewImage.endsWith(".jpg") && !previewImage.endsWith(".jpeg")) {
+                validations.previewImage = "Image URL must end in .png, .jpeg, or .jpg";
+            }
+        }
+
+        if (imageTwo) {
+            if (!imageTwo.endsWith(".png") && !imageTwo.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+                validations.imageTwo = "Image URL must end in .png, .jpeg, or .jpg";
+            }
+        }
+
+        if (imageThree) {
+            if (!imageThree.endsWith(".png") && !imageThree.endsWith(".jpg") && !imageThree.endsWith(".jpeg")) {
+                validations.imageThree = "Image URL must end in .png, .jpeg, or .jpg";
+            }
+        }
+
+        if (imageFour) {
+            if (!imageFour.endsWith(".png") && !imageFour.endsWith(".jpg") && !imageFour.endsWith(".jpeg")) {
+                validations.imageFour = "Image URL must end in .png, .jpeg, or .jpg";
+            }
+        }
+
+        if (imageFive) {
+            if (!imageFive.endsWith(".png") && !imageFive.endsWith(".jpg") && !imageFive.endsWith(".jpeg")) {
+                validations.imageFive = "Image URL must end in .png, .jpeg, or .jpg";
+            }
+        }
+
+        if (!address) validations.address = "Street address is required";
+
+        if (!country) validations.country = "Country is required";
+
+        if (!city) validations.city = "City is required";
+
+        if (!state) validations.state = "State is required";
+
+        if (!description) validations.description = "Description is required";
+        else if (description) {
+            if (description.length < 30) validations.description = "Description must be 30 characters or more";
+        }
+
+        if (!name) validations.name = "Name is required";
+
+        if (!price) validations.price = "Price per day is not valid";
 
         const spot = {
             country,
@@ -36,63 +85,43 @@ const SpotInput = () => {
             price,
             SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive]
         }
-        const createdSpot = await dispatch(createSpot(spot)).catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    const validations = {}
 
-                    if (data.errors.address) validations.address = data.errors.address;
+        if (validations.previewImage) {
+            return setErrors(validations)
+        } else {
+            const createdSpot = await dispatch(createSpot(spot)).catch(
+                async (res) => {
+                    const data = await res.json();
 
-                    if (data.errors.country) validations.country = data.errors.country;
+                    if (data && data.errors) {
 
-                    if (data.errors.city) validations.city = data.errors.city;
+                        if (res.status === 403) return "Invalid Data"
 
-                    if (data.errors.state) validations.state = data.errors.state;
+                        if (data.errors.address) validations.address = data.errors.address;
 
-                    if (data.errors.description) validations.description = data.errors.description;
+                        if (data.errors.country) validations.country = data.errors.country;
 
-                    if (data.errors.name) validations.name = data.errors.name;
+                        if (data.errors.city) validations.city = data.errors.city;
 
-                    if (data.errors.price) validations.price = data.errors.price;
+                        if (data.errors.state) validations.state = data.errors.state;
 
-                    if (!previewImage) validations.previewImage = "Preview Image is required";
+                        if (data.errors.description) validations.description = data.errors.description;
 
-                    if (previewImage) {
-                        if (!previewImage.endsWith(".png") || !previewImage.endsWith(".jpeg") || !previewImage.endsWith(".jpg")) {
-                            validations.previewImage = "Image URL must end in .png, .jpeg, or .jpg";
-                        }
+                        if (data.errors.name) validations.name = data.errors.name;
+
+                        if (data.errors.price) validations.price = data.errors.price;
+
+                        if (data.errors.previewImage) validations.previewImage = data.errors.previewImage;
+
+                        return setErrors(validations);
                     }
-
-                    if (imageTwo) {
-                        if (!imageTwo.endsWith(".png") || !imageTwo.endsWith(".jpg") || !imageTwo.endsWith(".jpeg")) {
-                            validations.imageTwo = "Image URL must end in .png, .jpeg, or .jpg";
-                        }
-                    }
-
-                    if (imageThree) {
-                        if (!imageThree.endsWith(".png") || !imageThree.endsWith(".jpg") || !imageThree.endsWith(".jpeg")) {
-                            validations.imageThree = "Image URL must end in .png, .jpeg, or .jpg";
-                        }
-                    }
-
-                    if (imageFour) {
-                        if (!imageFour.endsWith(".png") || !imageFour.endsWith(".jpg") || !imageFour.endsWith(".jpeg")) {
-                            validations.imageFour = "Image URL must end in .png, .jpeg, or .jpg";
-                        }
-                    }
-
-                    if (imageFive) {
-                        if (!imageFive.endsWith(".png") || !imageFive.endsWith(".jpg") || !imageFive.endsWith(".jpeg")) {
-                            validations.imageFive = "Image URL must end in .png, .jpeg, or .jpg";
-                        }
-                    }
-
-                    return setErrors(validations);
                 }
-            }
-        );
-        if (createSpot) history.push(`/spots/${createdSpot.id}`);
+            );
+
+            if (createSpot) history.push(`/spots/${createdSpot.id}`);
+        }
+
+        console.log(errors)
     };
 
     return (

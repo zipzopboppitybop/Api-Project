@@ -56,7 +56,6 @@ function LoginFormModal() {
 
     return (
         <>
-
             <form onSubmit={handleSubmit}>
                 <h1>Log In</h1>
                 <ul>
