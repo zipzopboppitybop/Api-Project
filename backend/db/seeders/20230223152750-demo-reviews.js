@@ -104,30 +104,6 @@ module.exports = {
         userId: 5,
         review: "perfect",
         stars: 5
-      },
-      {
-        spotId: 17,
-        userId: 1,
-        review: "perfect",
-        stars: 5
-      },
-      {
-        spotId: 18,
-        userId: 2,
-        review: "great",
-        stars: 4
-      },
-      {
-        spotId: 19,
-        userId: 3,
-        review: "perfect",
-        stars: 5
-      },
-      {
-        spotId: 20,
-        userId: 4,
-        review: "good",
-        stars: 3
       }
 
     ], {});
