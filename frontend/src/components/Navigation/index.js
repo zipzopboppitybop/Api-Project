@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-
+import image from "../../components/Navigation/images/76932324.png"
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
     return (
         <ul className='profile-dropdown-list '>
             <>
-                <NavLink exact to="/" className='logo'><img style={{ width: 50 }} /> <img className='logo-image' src='https://avatars.githubusercontent.com/u/76932324?s=400&u=8db90b6fa94525934157aaeec9bf095bff217e7c&v=4' />  <span className='title'>briarbnb</span></NavLink>
+                <NavLink exact to="/" className='logo'><img style={{ width: 50 }} /> <img className='logo-image' src={image} />  <span className='title'>briarbnb</span></NavLink>
             </>
             {isLoaded && (
                 <>

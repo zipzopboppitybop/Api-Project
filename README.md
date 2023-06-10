@@ -1,274 +1,80 @@
-# AirBnB Clone
+# Briarbnb
 
-https://brian-airbnb-clone.onrender.com
+[Briarbnb](https://briarbnb.onrender.com) is a clone of Airbnb. Users can create their own spots that others can book and review. They can also add images of the spots. Users can book any spot as long as it doesn't belong to them and they don't book on a date another user has booked. With the reviews you can leave your feelings and ratings while also providing images for clarity.
 
-## AirBnb Database Schema
-![AirBnb-Diagram]
+## Index
+[Database Schema](https://github.com/zipzopboppitybop/BriarBnB/wiki/Database-Schema) | [MVP Feature List](https://github.com/zipzopboppitybop/BriarBnB/wiki/Features)
 
-[AirBnb-Diagram]: ./frontend/images/airbnb_dbdiagram.png
+## Technologies Used
 
-## Quick Summary
+<img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" /><img src="https://img.shields.io/badge/Express-000000.svg?style=for-the-badge&logo=Express&logoColor=white" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" /><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /><img src="https://img.shields.io/badge/Render-46E3B7.svg?style=for-the-badge&logo=Render&logoColor=white" />
 
-My AirBnb clone like the original can sign up and login users. Those users can create their own spots that others can book and review. They can add images of the spots so others can get a preview and can provide their reviews with images for a better review. Users can book any spot as long as it doesn't belong to them and they don't book on a date another user has booked. With the reviews you can leave your feelings and ratings while also providing images for clarity.
+## Splash Page
 
-## App In Action
+![Splash](./frontend/images/splash.gif)
 
 
+## Single Spot and Reviews
 
-#### Sign Up User
+![Single-Spot](./frontend/images/Single-spot-reviews.gif)
 
-![Sign-Up-User]
 
-[Sign-Up-User]: ./frontend/images/signUpForm.png
 
+## Getting started
+1. Clone this repository:
 
-#### Login User
+   `
+  https://github.com/zipzopboppitybop/BriarBnB
+   `
+2. Install denpendencies into the backend and frontend repositories with the following:
 
-![Login-User]
+   * `npm install`
 
-[Login-User]: ./frontend/images/loginForm.png
+3. Create a **.env** file using the **.envexample** provided
 
-#### Get All Spots
+4. Set up your database with information from your .env and then run the following to create your database, migrate, and seed:
 
-![Get-All-Spots]
+   * `npx dotenv sequelize db:create`
+   * `npx dotenv sequelize db:migrate`
+   * `npx dotenv sequelize db:seed:all`
 
-[Get-All-Spots]: ./frontend/images/getAllSpots.png
-#### Get Details Of Spot From Id
+5. Start the app for both backend and frontend using:
 
-![Get-Details-Of-Spot-From-Id]
+   * `npm start`
 
-[Get-Details-Of-Spot-From-Id]: ./frontend/images/spotDetails.png
+6. Now you can use the Demo User or Create an account
 
-#### Get All Spots Of Current User With Spots
+***
 
-![Get-All-Spots-Of-Current-User]
 
-[Get-All-Spots-Of-Current-User]: ./frontend/images/userSpotsFilled.png
+# Features
 
-#### Without Spots
+## Spots
+* Users can create a Spot
+* Users can read/view other Spot
+* Users can update their Spot
+* Users can delete their Spot
 
-![Get-All-Spots-Of-Current-User-No-Spots]
+## Reviews
+* Users can create Reviews on Spots
+* users can read/view all of the Reviews on a Spot
+* Users can delete their Review(s) on a Spot
 
-[Get-All-Spots-Of-Current-User-No-Spots]: ./frontend/images/userNoSpots.png
+## Bookings
+Logged-in Users can
+* Create a booking at a spot
+* Update their booking at a spot
+* Read all of their bookings
+* Delete/Cancel their booking
 
-#### Create A Spot
 
-![Create-A-Spot]
 
-[Create-A-Spot]: ./frontend/images/createSpot.png
+## Future Features
 
-#### Create An Image For Spot
+### Google Maps Api
+* Locate their spot with Google Maps Api
 
-![Create-An-Image-For-Spot]
 
-[Create-An-Image-For-Spot]: ./frontend/images/spotImage.png
+## My Links
 
-#### Created Spot
-
-![Created-Spot]
-
-[Created-Spot]: ./frontend/images/createdSpot.png
-
-#### Edit A Spot
-
-![Edit-A-Spot-1]
-
-[Edit-A-Spot-1]: ./frontend/images/editSpot.png
-
-
-![Edit-A-Spot-2]
-
-[Edit-A-Spot-2]: ./frontend/images/editedSpot.png
-
-#### Create A Review For Spot
-
-![Create-A-Review]
-
-[Create-A-Review]: ./frontend/images/createReview.png
-
-#### Review Form
-
-![Review-Form]
-
-[Review-Form]: ./frontend/images/reviewForm.png
-
-#### Created Review
-
-![Created-Review]
-
-[Created-Review]: ./frontend/images/createdReview.png
-
-#### Delete Spot Form
-
-![Delete-Spot-Form]
-
-[Delete-Spot-Form]: ./frontend/images/deleteSpotForm.png
-
-#### Create An Image for Review
-
-![Create-An-Image-Review]
-
-[Create-An-Image-Review]: ./frontend/images/Screenshot%202023-02-27%20083752.png
-
-#### Get Reviews Of Current User
-
-![Get-Reviews-Of-Current-User]
-
-[Get-Reviews-Of-Current-User]: ./frontend/images/Screenshot%202023-02-27%20093556.png
-
-#### Get Reviews By Spot
-
-![Get-Reviews-By-Spot]
-
-[Get-Reviews-By-Spot]: ./frontend/images/Screenshot%202023-02-27%20093742.png
-
-#### Edit A Review
-
-![Edit-A-Review-1]
-
-[Edit-A-Review-1]: ./frontend/images/Screenshot%202023-02-27%20094035.png
-
-
-![Edit-A-Review-2]
-
-[Edit-A-Review-2]: ./frontend/images/Screenshot%202023-02-27%20093247.png
-
-#### Create A Booking On Spot
-
-![Create-A-Booking]
-
-[Create-A-Booking]: ./frontend/images/Screenshot%202023-02-27%20094235.png
-
-
-
-## Techs/Languages Used
-
-I coded the clone in javascript while using sequelize to work with the database and express to make the api. Both sequelize and express are node based and work very well together. Node is a javascript runtime environment and library for running web app outside of browsers and backend API services. I also used npm which stands for node package manager which means its a library of javascript packages that made coding the API much easier. One thing it helped with was installing dotenv-cli and sequelize-cli which made it so I could use the commands for those tools in the command line.
-The front end is using React and Redux, javascript libraries that streamline the html, css process while also making the website more dynamic. React uses jsx which is just html elements with some javascript functionality. Redux helps maintain the "state" of the site keeping data and features more consistent.
-
-## Technical Problems
-
-Something I had a constant problem with was editing existing spots/bookings/reviews. They need to make sure that the current item property you are editing exists while the req.body property exists. I kept trying to check for properties that didn't exist, so if I did not want to edit the address of a spot but wanted to edit the price, I would get an error saying the address property isn't in the req.body even though that's not the property I was trying to change. I had to check if the req.body had the property I wanted and make sure it wasn't throwing errors because I was looking for an undefined property. Another challenge was the dates because of how much code it takes just to turn a simple year,month,day to an integer to compare to another. And even when I figured out the date integers I then had to make sure I thought of every situation where you would try to book dates inside of each other leading to many headaches.
-
-## Installation Instructions
-
-First step is to initialize the server`s package.json by running npm init -y and npm install cookie-parser, cors ,csurf , dotenv , express , express-async-errors, helmet, jsonwebtoken, morgan, per-env, sequelize@6, sequelize-cli@6, and pg. Then npm install -D sqlite3, dotenv=cli, and nodemon. Make a .env file and make a PORT= to a port you have (I recommend 8000), DB_FILE=db/dev.db for your database, JWT_SECRET= and you can generate a random string with openssl rand -base64 10 in your Ubuntu terminal. Next you create a config folder in your server folder with an index.js file with this,
-```module.exports = {
-  environment: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 8000,
-  dbFile: process.env.DB_FILE,
-  jwtConfig: {
-    secret: process.env.JWT_SECRET,
-    expiresIn: process.env.JWT_EXPIRES_IN
-  }
-};
-
-Then we setup sequelize by creating a .sequelizerc file in your backend folder with the following content,
-const path = require('path');
-
-module.exports = {
-  config: path.resolve('config', 'database.js'),
-  'models-path': path.resolve('db', 'models'),
-  'seeders-path': path.resolve('db', 'seeders'),
-  'migrations-path': path.resolve('db', 'migrations')
-}; ```
-
-and initialize sequelize by running npx sequelize init which will create a folder in your config folder called database.js that you will populate with,
-const config = require('./index');
-
-module.exports = {
-  development: {
-    storage: config.dbFile,
-    dialect: "sqlite",
-    seederStorage: "sequelize",
-    logQueryParameters: true,
-    typeValidation: true
-  },
-  production: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
-    seederStorage: 'sequelize',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
-    define: {
-      schema: process.env.SCHEMA
-    }
-  }
-
-Now you will create a file in your backend foler called psql-setup-script.js and populate it with the following,
-
-const { sequelize } = require('./db/models');
-
-sequelize.showAllSchemas({ logging: false }).then(async (data) => {
-  if (!data.includes(process.env.SCHEMA)) {
-    await sequelize.createSchema(process.env.SCHEMA);
-  }
-});
-
-Finally migrate the dabase by running npx dotenv sequelize db:migrate.
-
-Now for express we will create a file called app.js in your backend folder and initialize the express application. At the top of the file you will write the following,
-
-const express = require('express');
-require('express-async-errors');
-const morgan = require('morgan');
-const cors = require('cors');
-const csurf = require('csurf');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
-const { environment } = require('./config');
-const isProduction = environment === 'production';
-const app = express();
-
-app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(express.json());
-
-// Security Middleware
-if (!isProduction) {
-  // enable cors only in development
-  app.use(cors());
-}
-
-// helmet helps set a variety of headers to better secure your app
-app.use(
-  helmet.crossOriginResourcePolicy({
-    policy: "cross-origin"
-  })
-);
-
-// Set the _csrf token and create req.csrfToken method
-app.use(
-  csurf({
-    cookie: {
-      secure: isProduction,
-      sameSite: isProduction && "Lax",
-      httpOnly: true
-    }
-  })
-);
-
-These are the main boilerplate for our express application. Now we add the routes by creating a routes folder and adding an index.js file with the following in it,
-
-const express = require('express');
-const router = express.Router();
-
-router.get('/hello/world', function(req, res) {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  res.send('Hello World!');
-});
-
-module.exports = router;
-
-Back in the app.js folder we will add,
-
-const routes = require('./routes');
-app.use(routes);
-
-to connect the routes to the app.js file.
-
-For the front we will need to install react and redux and create an app for the website. We will then npm install js-cookie, react-redux, react-router-dom@^5, redux, and redux-thunk. Then npm install -D redux-logger. We can then npm start the backend and frontend and start the server.
+([GitHub](https://github.com/zipzopboppitybop) | [LinkedIn](https://www.linkedin.com/in/brian-washington-668129244/))
