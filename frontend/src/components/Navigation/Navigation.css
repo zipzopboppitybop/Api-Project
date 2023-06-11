@@ -73,14 +73,15 @@
     margin-top: 100px;
 }
 
-.create,
-.end {
+.menu-item.end,
+.create {
     border: 1px solid black;
     box-shadow: 5px 5px 5px black;
     background-color: #666666;
     color: white;
     text-align: center;
 }
+
 
 .white {
     color: white;
@@ -98,7 +99,8 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     margin: 0 auto;
-    width: 52%;
+    width: 70%;
+    margin-top: 1rem;
 }
 
 .spot {
@@ -112,16 +114,19 @@
 
 .spot-item {
     margin-bottom: 4%;
+    width: 25rem;
+    margin-right: 2rem;
 }
 
 .spot-description,
 .spot {
     display: flex;
     justify-content: space-between;
+    width: 90%;
 }
 
 .spot-description {
-    margin-top: 2%;
+    margin-top: 3%;
     color: black;
 }
 
@@ -129,7 +134,7 @@
     order: 1;
     align-self: flex-end;
     width: 70px;
-
+    margin-top: 9px;
 }
 
 .flex {
@@ -152,14 +157,12 @@ a {
 }
 
 .spot-image {
-    width: 500px;
-    height: 300px;
+    width: 23rem;
+    height: 21rem;
+    border-radius: 1rem;
 }
 
-.spot,
-.spot-image {
-    width: 270px;
-}
+
 
 .login-button {
     border: 1px solid #999999;
@@ -419,10 +422,16 @@ ul {
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 20px;
+    margin-left: -1rem;
+}
+
+.forever {
+    margin-right: 3rem;
 }
 
 .please {
-    margin-top: 1px;
+    margin-top: 10px;
+    margin-left: 1rem;
 }
 
 .logo-image {
@@ -436,4 +445,32 @@ ul {
 
 .error {
     color: red;
+}
+
+.submit-button {
+    margin-bottom: 2rem;
+    cursor: pointer;
+    background-color: #e61e4d;
+    color: white;
+}
+
+button,
+.fa-star {
+    cursor: pointer;
+}
+
+
+.review-submit {
+    background-color: #e61e4d;
+    color: white;
+}
+
+.review-submit.disabled {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed;
+}
+
+.review-content {
+    word-wrap: break-word;
 }

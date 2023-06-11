@@ -22,8 +22,6 @@ const CurrentSpots = () => {
         }
     }
 
-    //console.log(spotsArr);
-
     if (!user) history.push('/');
 
     const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
@@ -51,7 +49,7 @@ const CurrentSpots = () => {
                                 <NavLink id={spot.id} className={"menu-item end joke"} to={`/spots/${spot.id}/edit`}>
                                     Update
                                 </NavLink></span>
-                            <span>
+                            <span className='forever'>
                                 <OpenModalMenuItem
                                     onClick={(e) => e.preventDefault()}
                                     itemText={"Delete"}

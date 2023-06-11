@@ -109,6 +109,7 @@ const UpdateSpot = () => {
                     />
                 </label>
                 <button
+                    className='submit-button'
                     type='submit'>
                     Update Spot
                 </button>

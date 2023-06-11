@@ -90,7 +90,7 @@ function SignupFormModal() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>
-                <p>{wrongPassword}</p>
+                <p className="error-message">{wrongPassword}</p>
                 <p>Confirm Password</p>
                 <label>
                     <input
@@ -99,7 +99,7 @@ function SignupFormModal() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </label>
-                <p>{wrongPassword}</p>
+                <p className="error-message">{wrongPassword}</p>
                 <button className={buttonClassName} disabled={isButtonDisabled} type="submit">Sign Up</button>
             </form>
         </>

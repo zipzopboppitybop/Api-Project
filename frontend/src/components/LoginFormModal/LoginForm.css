@@ -44,3 +44,19 @@ p {
     margin-left: 15%;
     margin-bottom: 0;
 }
+
+.login-button {
+    cursor: not-allowed;
+    border-radius: .5rem;
+}
+
+.login-buttondisabled {
+    background-color: #e61e4d;
+    color: white;
+    border-radius: .5rem;
+
+}
+
+.error-message {
+    color: red;
+}

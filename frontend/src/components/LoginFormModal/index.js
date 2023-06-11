@@ -60,7 +60,7 @@ function LoginFormModal() {
                 <h1>Log In</h1>
                 <ul>
                     {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
+                        <li className="error-message" key={idx}>{error}</li>
                     ))}
                 </ul>
                 <p>Username or Email</p>
@@ -82,7 +82,7 @@ function LoginFormModal() {
                     />
                 </label>
                 <button className={buttonClassName} disabled={isButtonDisabled} type="submit">Log In</button>
-                <button onClick={demoUser}>Demo User</button>
+                <button className="login-buttondisabled" onClick={demoUser}>Demo User</button>
             </form>
         </>
     );

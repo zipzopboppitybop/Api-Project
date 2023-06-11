@@ -121,7 +121,8 @@ const SingleSpot = () => {
                             <br />
                             {createdAt.slice(0, 7)}
                             <br />
-                            {review}
+                            <span className='review-content'>{review}</span>
+
                             {sessionUser?.id === userId ?
                                 (<OpenModalMenuItem
                                     onClick={(e) => e.preventDefault()}

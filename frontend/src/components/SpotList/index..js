@@ -11,8 +11,6 @@ const SpotList = () => {
         dispatch(getAllSpots());
     }, [dispatch]);
 
-    console.log(spots)
-
     return (
         <div className='bruh'>
             <ul className='spots'>

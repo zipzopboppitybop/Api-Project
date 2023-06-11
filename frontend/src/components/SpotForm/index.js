@@ -251,6 +251,7 @@ const SpotInput = () => {
                 </label>
                 <div className='line long'>
                     <button
+                        className='submit-button'
                         type='submit'>
                         Create Spot
                     </button>
