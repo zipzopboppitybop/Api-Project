@@ -114,9 +114,9 @@ export const editSpot = (payload) => async (dispatch) => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload.vals)
-    })
+    });
 
-    const updatedSpot = response.json();
+    const updatedSpot = await response.json();
     dispatch(editASpot(updatedSpot));
     return updatedSpot
 }
@@ -137,7 +137,7 @@ const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
             newState = { ...state, allSpots: { ...state.allSpots } };
-            action.spots.Spots.forEach((spot) => newState.allSpots[spot.id] = spot);
+            action.spots.forEach((spot) => newState.allSpots[spot.id] = spot);
             return newState;
         case DETAILS_SPOT:
             newState = { ...state, singleSpot: { ...state.singleSpot } };

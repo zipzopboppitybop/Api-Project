@@ -29,16 +29,17 @@
     list-style: none;
     border: 2px solid black;
     width: 150px;
-    margin-top: 5%;
+    margin-top: 10%;
     margin-left: 10%;
     padding: 10px;
     background-color: white;
+    border-radius: .5rem;
 }
 
 .profile-button {
     width: 100px;
     border-radius: 40px;
-    margin-top: 1%;
+    margin-top: 12%;
 }
 
 .email {
@@ -473,4 +474,37 @@ button,
 
 .review-content {
     word-wrap: break-word;
+}
+
+.update-delete-review {
+    display: flex;
+    justify-content: space-between;
+    width: 9.5rem;
+}
+
+.black {
+    color: black;
+    margin: 0;
+}
+
+.black:hover {
+    color: blue;
+}
+
+.review-content {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.manage-reviews {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.review-createdAt {
+    margin-left: 0;
+    margin-top: -.6%;
+    margin-bottom: .5%;
+    color: #999999
 }

@@ -4,16 +4,18 @@ import { useModal } from "../../context/Modal";
 import * as reviewActions from "../../store/reviews";
 import * as spotActions from "../../store/spots"
 
-function DeleteReview({ id }) {
+function DeleteReview({ review }) {
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.singleSpot);
     const { closeModal } = useModal();
+    const id = review.id
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         closeModal()
         await dispatch(reviewActions.deleteAReview(id));
         await dispatch(spotActions.getOneSpot(spot.id));
+        await dispatch(reviewActions.getCurrentUserReviews())
         return await dispatch(reviewActions.getReviewsSpot(spot.id));
     };
 

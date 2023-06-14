@@ -40,6 +40,11 @@ function ProfileButton({ user }) {
         history.push("/spots/current");
     }
 
+    const manageReviews = (e) => {
+        e.preventDefault();
+        history.push("/reviews/current");
+    }
+
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
@@ -62,6 +67,9 @@ function ProfileButton({ user }) {
                         <li className="email">{user.email}</li>
                         <li className="menu-item email link black" onClick={manageSpots}>
                             Manage Spots
+                        </li>
+                        <li className="menu-item email link black" onClick={manageReviews}>
+                            Manage Reviews
                         </li>
                         <li className="menu-item" onClick={logout}>Log Out</li>
                     </>

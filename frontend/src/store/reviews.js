@@ -1,8 +1,9 @@
 // frontend/src/store/reviews.js
 import { csrfFetch } from './csrf';
 
-const DETAILS_SPOT_REVIEWS = 'spots/DETAILS_SPOT_REVIEWS';
-const CREATE_REVIEW = 'spots/CREATE_REVIEW'
+const DETAILS_SPOT_REVIEWS = 'reviews/DETAILS_SPOT_REVIEWS';
+const CREATE_REVIEW = 'reviews/CREATE_REVIEW';
+const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW';
 const DELETE_REVIEW = 'reviews/DELETE_REVIEW';
 const CURRENT_USER_REVIEWS = 'reviews/CURRENT_USER_REVIEWS';
 
@@ -19,6 +20,11 @@ export const userReviews = reviews => ({
 export const createReview = (payload) => ({
     type: CREATE_REVIEW,
     payload
+});
+
+export const editAReview = (id, updateReview) => ({
+    type: UPDATE_REVIEW,
+    payload: { id, updateReview }
 });
 
 export const deleteReview = review => ({
@@ -56,6 +62,21 @@ export const writeReview = (payload) => async (dispatch) => {
     dispatch(createReview(review));
 }
 
+export const editReview = (payload) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${payload.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload.vals)
+    })
+
+
+    const updatedReview = await response.json();
+    dispatch(editAReview(updatedReview));
+    return updatedReview;
+
+
+}
+
 export const deleteAReview = (id) => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${id}`, {
         method: 'DELETE',
@@ -66,7 +87,7 @@ export const deleteAReview = (id) => async dispatch => {
     }
 }
 
-const initialState = { spot: {} };
+const initialState = { spot: {}, usersReviews: {} };
 
 const reviewReducer = (state = initialState, action) => {
     let newState;
@@ -76,14 +97,23 @@ const reviewReducer = (state = initialState, action) => {
             action.spot.Reviews.forEach((review) => newState.spot[review.id] = review);
             return newState;
         case CURRENT_USER_REVIEWS:
-            return { ...state, userReviews: { ...action.reviews } };
+            newState = { ...state, usersReviews: { ...state.usersReviews } };
+            action.reviews.Reviews.forEach((review) =>
+                newState.usersReviews[review.id] = review);
+            return newState;
+
         case CREATE_REVIEW:
             newState = { ...state };
             newState.spot[action.payload.id] = action.payload;
             return newState;
+        case UPDATE_REVIEW:
+            newState = { ...state };
+            newState.spot[action.payload.id.id] = action.payload.id;
+            return newState
         case DELETE_REVIEW:
             newState = { ...state };
             delete newState.spot[action.review];
+            delete newState.usersReviews[action.review];
             return newState;
         default:
             return state;

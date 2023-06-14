@@ -73,119 +73,7 @@ const router = express.Router();
 router.get(
     "/",
     async (req, res) => {
-        let errorResult = new Error();
-        let errorLength = 0;
-        errorResult.message = "Validation error";
-        errorResult.statusCode = 400;
-        errorResult.errors = {};
-        let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-        let pagination = {};
-
-        if (!page) page = 1;
-        if (!size) size = 20;
-
-        if (parseInt(page) >= 1 && parseInt(size) >= 1) {
-            pagination.limit = size;
-            pagination.offset = size * (page - 1);
-        } if (parseInt(page) < 1 || isNaN(size)) {
-            errorResult.errors.page = "Page must be greater than or equal to 1"
-            errorLength++;
-        } if (parseInt(size) < 1 || isNaN(size)) {
-            errorResult.errors.size = "Size must be greater than or equal to 1"
-            errorLength++;
-        }
-
-        const where = {};
-
-        //Errors
-        if (typeof req.query.minLat === "string") {
-            if (isNaN(req.query.minLat) || req.query.minLat < -90 || req.query.minLat > 90 || req.query.minLat === "") {
-                errorResult.errors.minLat = "Minimum latitude is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            }
-        }
-
-        if (typeof req.query.maxLat === "string") {
-            if (isNaN(req.query.maxLat) || req.query.maxLat < -90 || req.query.maxLat > 90 || req.query.maxLat === "") {
-                errorResult.errors.maxLat = "Maximum latitude is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            }
-        }
-
-        if (typeof req.query.minLng === "string") {
-            if (isNaN(req.query.minLng) || req.query.minLng < -180 || req.query.minLng > 180 || req.query.minLng === "") {
-                errorResult.errors.minLng = "Minimum longitude is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            }
-        }
-
-        if (typeof req.query.maxLng === "string") {
-            if (isNaN(req.query.maxLng) || req.query.maxLng < -180 || req.query.maxLng > 180 || req.query.maxLng === "") {
-                errorResult.errors.maxLng = "Maximum latitude is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            }
-        }
-
-        if (typeof req.query.minPrice === "string") {
-            if (isNaN(req.query.minPrice) || req.query.minPrice === "") {
-                errorResult.errors.minPrice = "Minimum price is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            } else if (req.query.minPrice < 0) {
-                errorResult.errors.minPrice = "Minimum price must be greater than or equal to 0"
-                errorLength++;
-            }
-        }
-
-        if (typeof req.query.maxPrice === "string") {
-            if (isNaN(req.query.maxPrice) || req.query.maxPrice === "") {
-                errorResult.errors.maxPrice = "Maximum price is invalid"
-                errorLength++;
-                //return res.json(errorResult)
-            } else if (req.query.maxPrice < 0) {
-                errorResult.errors.minPrice = "Maximum price must be greater than or equal to 0"
-                errorLength++;
-            }
-        }
-
-
-        //Lat
-        if (req.query.minLat && req.query.maxLat) {
-            where.lat = { [Op.between]: [req.query.minLat, req.query.maxLat] }
-        } else if (req.query.minLat) {
-            where.lat = { [Op.gte]: req.query.minLat }
-        } else if (req.query.maxLat) {
-            where.lat = { [Op.lte]: req.query.maxLat }
-        }
-
-        //Lng
-        if (req.query.minLng && req.query.maxLng) {
-            where.lng = { [Op.between]: [req.query.minLng, req.query.maxLng] }
-        } else if (req.query.minLng) {
-            where.lng = { [Op.gte]: req.query.minLng }
-        } else if (req.query.maxLng) {
-            where.lng = { [Op.lte]: req.query.maxLng }
-        }
-
-        //Price
-        if (req.query.minPrice && req.query.maxPrice) {
-            where.price = { [Op.between]: [req.query.minPrice, req.query.maxPrice] }
-        } else if (req.query.minPrice) {
-            where.price = { [Op.gte]: req.query.minPrice }
-        } else if (req.query.maxPrice) {
-            where.price = { [Op.lte]: req.query.maxPrice }
-        }
-
-
-
-        let result = {};
-
         const allSpots = await Spot.findAll({
-            ...pagination,
             include: [
                 {
                     model: Review
@@ -193,8 +81,7 @@ router.get(
                 {
                     model: SpotImage
                 }
-            ],
-            where
+            ]
         });
 
 
@@ -235,18 +122,8 @@ router.get(
             delete spot.Reviews;
         }
 
-        let count = await Spot.count({ where });
-        result.Spots = spotData;
-        result.page = parseInt(page);
-        result.size = spotData.length
-
-        if (errorLength > 0) {
-            res.status(400);
-            return res.json(errorResult);
-        }
-
         res.json(
-            result
+            spotData
         );
     })
 
