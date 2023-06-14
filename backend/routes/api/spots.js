@@ -122,8 +122,10 @@ router.get(
             delete spot.Reviews;
         }
 
-        res.json(
-            spotData
+        res.json({
+            spots: spotData
+        }
+
         );
     })
 

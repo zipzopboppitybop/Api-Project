@@ -137,7 +137,8 @@ const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_SPOTS:
             newState = { ...state, allSpots: { ...state.allSpots } };
-            action.spots.forEach((spot) => newState.allSpots[spot.id] = spot);
+            console.log(action.spots.spots)
+            action.spots.spots.forEach((spot) => newState.allSpots[spot.id] = spot);
             return newState;
         case DETAILS_SPOT:
             newState = { ...state, singleSpot: { ...state.singleSpot } };
