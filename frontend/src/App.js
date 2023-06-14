@@ -10,6 +10,7 @@ import SingleSpot from "./components/SingleSpot";
 import SpotInput from "./components/SpotForm";
 import CurrentUserSpots from "./components/CurrentUserSpots";
 import CurrentReviews from "./components/CurrentUserReviews";
+import CurrentBookings from "./components/CurrentUserBookings";
 import UpdateSpot from "./components/UpdateSpot";
 import ErrorPage from "./components/ErrorPage";
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/spots/new' component={SpotInput} />
           <Route exact path='/spots/current' component={CurrentUserSpots} />
           <Route exact path='/reviews/current' component={CurrentReviews} />
+          <Route exact path='/bookings/current' component={CurrentBookings} />
           <Route path='/spots/:id/edit' component={UpdateSpot} />
           <Route path='/spots/:id' component={SingleSpot} />
           <ErrorPage />

@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as reviewActions from '../../store/reviews';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import ReviewItem from '../ReviewItem';
 
 const CurrentReviews = () => {
@@ -10,11 +9,19 @@ const CurrentReviews = () => {
   const dispatch = useDispatch();
   const reviews = useSelector(state => state.reviews.usersReviews);
   const user = useSelector(state => state.session.user);;
+  let reviewsArr = [];
+
+  if (reviews) {
+    let reviewsObj = Object.values(reviews);
+
+    for (let i = 0; i < reviewsObj.length; i++) {
+      let review = reviewsObj[i];
+
+      if (review.userId === user.id) reviewsArr.push(review);
+    }
+  }
 
   if (!user) history.push('/');
-
-  // const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
-  // const createhiddenClassName = spotsArr?.length < 1 ? "create user-title" : "hidden";
 
   useEffect(() => {
     dispatch(reviewActions.getCurrentUserReviews());
@@ -24,7 +31,7 @@ const CurrentReviews = () => {
     <div className='current-reviews-list'>
       <h1>Manage Reviews</h1>
       <ul>
-        {Object.values(reviews).map(review => (
+        {reviewsArr.map(review => (
           <li key={review.id} >
             <ReviewItem review={review} />
           </li>

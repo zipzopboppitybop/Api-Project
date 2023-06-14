@@ -45,6 +45,11 @@ function ProfileButton({ user }) {
         history.push("/reviews/current");
     }
 
+    const manageBookings = (e) => {
+        e.preventDefault();
+        history.push("/bookings/current");
+    }
+
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout());
@@ -70,6 +75,9 @@ function ProfileButton({ user }) {
                         </li>
                         <li className="menu-item email link black" onClick={manageReviews}>
                             Manage Reviews
+                        </li>
+                        <li className="menu-item email link black" onClick={manageBookings}>
+                            Manage Bookings
                         </li>
                         <li className="menu-item" onClick={logout}>Log Out</li>
                     </>
