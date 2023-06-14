@@ -21,7 +21,7 @@ const CurrentReviews = () => {
   }, [dispatch]);
 
   return (
-    <div className='bruh'>
+    <div className='current-reviews-list'>
       <h1>Manage Reviews</h1>
       <ul>
         {Object.values(reviews).map(review => (

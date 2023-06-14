@@ -5,9 +5,7 @@ import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import DeleteReview from '../DeleteReviewModal';
-import UpdateReview from '../UpdateReview';
+import SingleSpotReviewItem from '../SingleSpotReviewItem';
 
 
 const SingleSpot = () => {
@@ -19,6 +17,9 @@ const SingleSpot = () => {
     let createReviewClassName = "hidden";
     let numReviews = "reviews";
     let reviewsArr = []
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
     const reserve = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -115,38 +116,8 @@ const SingleSpot = () => {
             </div>
             <ul className='reviews'>
                 {reviewsArr?.length > 0 ? (reviewsArr?.map((review) => (
-                    <li
-                        key={review.id}>
-
-                        <h3 className='review'>{review.User?.firstName}
-                            <br />
-                            {review.createdAt.slice(0, 7)}
-                            <br />
-                            <span className='review-content'>{review.review}</span>
-
-                            {sessionUser?.id === review.userId ?
-                                (
-                                    <div className='update-delete-review'>
-                                        <span>
-                                            <OpenModalMenuItem
-                                                onClick={(e) => e.preventDefault()}
-                                                itemText={"Update"}
-                                                modalComponent={<UpdateReview currentReview={review} />}
-                                            />
-                                        </span>
-                                        <span>
-                                            <OpenModalMenuItem
-                                                onClick={(e) => e.preventDefault()}
-                                                itemText={"Delete"}
-                                                modalComponent={<DeleteReview review={review} />}
-                                            />
-                                        </span>
-                                    </div>
-                                )
-                                :
-                                ("")}
-                        </h3>
-
+                    <li key={review.id}>
+                        <SingleSpotReviewItem review={review} />
                     </li>
                 ))) : "Be the first to post a review!"}
             </ul>
