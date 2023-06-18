@@ -356,7 +356,7 @@ router.get(
                 where: {
                     spotId: currentSpot.id
                 },
-                attributes: ["spotId", "startDate", "endDate"]
+                attributes: ["spotId", "startDate", "endDate", "id"]
             })
 
             if (currentSpotBookings < 1) {

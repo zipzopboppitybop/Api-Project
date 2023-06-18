@@ -15,8 +15,8 @@ function BookingForm() {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
 
-  let today = `${year}-0${month}-${day}`;
-  let tommorrow = `${year}-0${month}-${day + 1}`
+  let today = `${year}-0${month}-${day + 1}`;
+  let tommorrow = `${year}-0${month}-${day + 2}`
 
   const user = (useSelector(state => state.session.user))
   const spot = useSelector(state => state.spots.singleSpot);
@@ -110,7 +110,7 @@ function BookingForm() {
         <div className="current-bookings">
           Unavailable Dates:
           <ul className="bookings-list-modal">
-            {upcomingBookings.map(booking => (
+            {Object.values(bookings).map(booking => (
               <li key={booking.id} >
                 {monthNames[booking.startDate.slice(5, 7) - 1]} {booking.startDate.slice(8, 10)}-{monthNames[booking.endDate.slice(5, 7) - 1]} {booking.endDate.slice(8, 10)}
               </li>

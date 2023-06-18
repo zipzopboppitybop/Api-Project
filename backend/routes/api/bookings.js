@@ -69,7 +69,7 @@ router.get(
 
         if (userBookingsData.length < 1) {
             return res.json({
-                Bookings: "No Bookings Yet"
+                Bookings: []
             })
         }
 

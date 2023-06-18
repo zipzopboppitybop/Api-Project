@@ -106,7 +106,9 @@ const bookingReducer = (state = initialState, action) => {
   switch (action.type) {
     case DETAILS_SPOT_BOOKINGS:
       newState = { ...state, spot: {} };
-      action.spot.Bookings.forEach((booking) => newState.spot[booking.id] = booking);
+      action.spot.Bookings.forEach((booking) =>
+        newState.spot[booking.id] = booking)
+        ;
       return newState;
     case CURRENT_USER_BOOKINGS:
       newState = { ...state, usersBookings: {} };
