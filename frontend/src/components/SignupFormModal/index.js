@@ -91,6 +91,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <p className="error-message">{wrongPassword}</p>
+                {/* <p className="error-message">{passwordLength}</p> */}
                 <p>Confirm Password</p>
                 <label>
                     <input

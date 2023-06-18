@@ -341,12 +341,9 @@ a {
     color: white;
 }
 
-.review-form {
+.review-form,
+.booking-form {
     text-align: center;
-}
-
-.review-submit {
-    margin: 0 auto;
 }
 
 .rating-input {
@@ -461,12 +458,15 @@ button,
 }
 
 
-.review-submit {
+.review-submit,
+.booking-submit {
     background-color: #e61e4d;
     color: white;
+    margin: 0 auto;
 }
 
-.review-submit.disabled {
+.review-submit.disabled,
+.booking-submit.disabled {
     background-color: lightgray;
     color: black;
     cursor: not-allowed;
@@ -496,7 +496,8 @@ button,
     font-size: 1.5rem;
 }
 
-.manage-reviews {
+.manage-reviews,
+.booking-item {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
@@ -509,7 +510,110 @@ button,
 
 .review-createdAt {
     margin-left: 0;
-    margin-top: -1%;
-    margin-bottom: 1%;
+    margin-top: -5%;
+    margin-bottom: 2%;
     color: #666666;
+}
+
+.no-list {
+    list-style: none;
+    width: 110%;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    padding-top: 15px;
+    margin-left: -1rem;
+}
+
+.not-possible {
+    background-color: #666666;
+    color: white;
+    margin-left: 1%;
+}
+
+.not-possible:hover {
+    cursor: not-allowed;
+}
+
+.booking-times {
+    margin-left: 0;
+    margin-top: .3rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.select-dates {
+    display: flex;
+    justify-content: space-between;
+}
+
+.start {
+    margin: 0;
+    width: 30%;
+    border: black 1px solid;
+    padding: .5rem;
+    margin-left: 0;
+}
+
+.dates-title {
+    margin-top: 0;
+}
+
+.dates-stuff {
+    margin-left: -76%;
+    margin-top: -7%;
+    color: #666666;
+    font-size: .9rem;
+}
+
+.start-input {
+    width: 100%;
+    margin-left: 1px;
+}
+
+.dates {
+    display: flex;
+    width: 57%;
+    justify-content: right;
+}
+
+.booking-submit,
+.booking-submit.disabled {
+    margin-top: 5rem;
+}
+
+.booking-form {
+    height: fit-content;
+}
+
+.poop {
+    margin-right: 1rem;
+}
+
+.booking-error {
+    margin-left: 1rem;
+}
+
+.current-bookings {
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+}
+
+.bookings-list-modal {
+    margin-left: 0;
+    padding: 0;
+    margin-top: .5rem;
+}
+
+.cancel {
+    margin-left: .2rem;
+}
+
+.this-list {
+    display: flex;
+}
+
+.booking-item {
+    margin-right: 1rem;
 }

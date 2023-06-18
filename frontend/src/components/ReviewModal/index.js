@@ -74,7 +74,7 @@ function ReviewForm({ disabled }) {
                     <span className="stars">Stars</span>
                 </div>
 
-                <button disabled={buttonDisabled} className={buttonClassName} type="submit">Sumbit Your Review</button>
+                <button disabled={buttonDisabled} className={buttonClassName} type="submit">Submit Your Review</button>
             </form>
         </>
     );

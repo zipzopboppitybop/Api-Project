@@ -9,17 +9,6 @@ const CurrentReviews = () => {
   const dispatch = useDispatch();
   const reviews = useSelector(state => state.reviews.usersReviews);
   const user = useSelector(state => state.session.user);;
-  let reviewsArr = [];
-
-  if (reviews) {
-    let reviewsObj = Object.values(reviews);
-
-    for (let i = 0; i < reviewsObj.length; i++) {
-      let review = reviewsObj[i];
-
-      if (review.userId === user.id) reviewsArr.push(review);
-    }
-  }
 
   if (!user) history.push('/');
 
@@ -30,13 +19,17 @@ const CurrentReviews = () => {
   return (
     <div className='current-reviews-list'>
       <h1>Manage Reviews</h1>
-      <ul>
-        {reviewsArr.map(review => (
-          <li key={review.id} >
-            <ReviewItem review={review} />
-          </li>
-        ))}
-      </ul>
+      {Object.values(reviews).length > 0 ? (
+        <ul>
+          {Object.values(reviews).map(review => (
+            <li key={review.id} >
+              <ReviewItem review={review} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <h1>Start Reviewing Some Spots!</h1>
+      )}
     </div>
   )
 }

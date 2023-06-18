@@ -11,21 +11,11 @@ const CurrentSpots = () => {
     const spots = useSelector(state => state.spots.userSpots);
     const user = useSelector(state => state.session.user);
     const history = useHistory();
-    let spotsArr = [];
-    if (spots) {
-        let spotsObj = Object.values(spots);
-
-        for (let i = 0; i < spotsObj.length; i++) {
-            let spot = spotsObj[i];
-
-            if (spot.ownerId === user.id) spotsArr.push(spot);
-        }
-    }
 
     if (!user) history.push('/');
 
-    const hiddenClassName = spotsArr?.length < 1 ? "white" : "hidden";
-    const createhiddenClassName = spotsArr?.length < 1 ? "create user-title" : "hidden";
+    const hiddenClassName = Object.values(spots)?.length < 1 ? "white" : "hidden";
+    const createhiddenClassName = Object.values(spots)?.length < 1 ? "create user-title" : "hidden";
 
     useEffect(() => {
         dispatch(spotActions.getUserSpots());
@@ -41,7 +31,7 @@ const CurrentSpots = () => {
                 </NavLink>
             </h3>
             <ul className='spots'>
-                {spotsArr.map(spot => (
+                {Object.values(spots).map(spot => (
                     <li className='spot-item' key={spot.id}>
                         <SpotItem spot={spot}></SpotItem>
                         <div className='flex spot-description'>

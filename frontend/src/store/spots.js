@@ -147,7 +147,7 @@ const spotReducer = (state = initialState, action) => {
             newState.singleSpot.SpotImages = images;
             return newState;
         case USERS_SPOTS:
-            newState = { ...state, userSpots: { ...state.userSpots } };
+            newState = { ...state, userSpots: {} };
             action.spots.Spots.forEach((spot) => newState.userSpots[spot.id] = spot);
             return newState;
         case CREATE_SPOT:

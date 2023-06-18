@@ -6,7 +6,6 @@ import * as spotActions from "../../store/spots"
 
 function UpdateReview({ disabled, currentReview }) {
   const user = (useSelector(state => state.session.user))
-  const spot = useSelector(state => state.spots.singleSpot);
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [stars, setRating] = useState(currentReview.stars);
@@ -15,7 +14,7 @@ function UpdateReview({ disabled, currentReview }) {
   let buttonClassName = "review-submit";
   let buttonDisabled = false;
 
-  const vals = { userId: user.id, spotId: spot.id, review, stars };
+  const vals = { userId: user.id, spotId: currentReview.spotId, review, stars };
 
   useEffect(() => {
     setActiveRating(stars);
@@ -29,9 +28,9 @@ function UpdateReview({ disabled, currentReview }) {
     e.preventDefault();
     closeModal();
     await dispatch(reviewActions.editReview({ id: currentReview.id, vals }));
-    await dispatch(spotActions.getOneSpot(spot.id));
+    await dispatch(spotActions.getOneSpot(currentReview.spotId));
     await dispatch(reviewActions.getCurrentUserReviews())
-    return await dispatch(reviewActions.getReviewsSpot(spot.id));
+    return await dispatch(reviewActions.getReviewsSpot(currentReview.spotId));
   };
 
   if (review.length < 10 || stars < 1) buttonClassName = "review-submit disabled"

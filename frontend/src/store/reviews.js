@@ -69,12 +69,9 @@ export const editReview = (payload) => async (dispatch) => {
         body: JSON.stringify(payload.vals)
     })
 
-
     const updatedReview = await response.json();
     dispatch(editAReview(updatedReview));
     return updatedReview;
-
-
 }
 
 export const deleteAReview = (id) => async dispatch => {
@@ -97,11 +94,10 @@ const reviewReducer = (state = initialState, action) => {
             action.spot.Reviews.forEach((review) => newState.spot[review.id] = review);
             return newState;
         case CURRENT_USER_REVIEWS:
-            newState = { ...state, usersReviews: { ...state.usersReviews } };
+            newState = { ...state, usersReviews: {} };
             action.reviews.Reviews.forEach((review) =>
                 newState.usersReviews[review.id] = review);
             return newState;
-
         case CREATE_REVIEW:
             newState = { ...state };
             newState.spot[action.payload.id] = action.payload;

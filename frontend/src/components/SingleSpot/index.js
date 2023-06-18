@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneSpot } from '../../store/spots';
 import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
+import { getBookingsSpot } from '../../store/bookings';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
 import SingleSpotReviewItem from '../SingleSpotReviewItem';
+import BookingForm from '../BookingModal';
+import BookingFormModal from '../BookingModal/BookingFormModal';
 
 
 const SingleSpot = () => {
@@ -13,17 +16,11 @@ const SingleSpot = () => {
     const { id } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
+    const bookings = useSelector(state => state.bookings.spot)
     const sessionUser = useSelector(state => state.session.user)
     let createReviewClassName = "hidden";
     let numReviews = "reviews";
     let reviewsArr = []
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const reserve = (e) => {
-        e.preventDefault();
-        alert('Feature Coming Soon...');
-    };
 
     if (reviews) {
         for (const i in reviews) {
@@ -36,6 +33,7 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getOneSpot(id));
         dispatch(getReviewsSpot(id));
+        dispatch(getBookingsSpot(id));
     }, [dispatch]);
 
     if (sessionUser) {
@@ -50,6 +48,7 @@ const SingleSpot = () => {
         }
     }
 
+
     if (spot.numReviews === 1) numReviews = "review"
     else if (spot.numReviews < 1) numReviews = ""
     else if (spot.numReviews === 0) spot.numReviews = ""
@@ -60,6 +59,7 @@ const SingleSpot = () => {
     }
 
     if (!spot) return null;
+
     return (
         <div className='singleSpot'>
             <h1 className='content content-title'>{spot.name}</h1>
@@ -86,7 +86,19 @@ const SingleSpot = () => {
                         <i className='fas fa-star' />
                         {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot()} {spot.numReviews > 0 ? spot.numReviews : ""} {numReviews}
                     </p>
-                    <button onClick={reserve} className='reserve-button'>Reserve</button>
+
+                    {spot.ownerId === sessionUser.id ? (
+                        <button className="not-possible">
+                            Not Possible
+                        </button>
+
+                    ) : (
+                        <button className='reserve-button'>
+                            <BookingFormModal itemText={"Reserve"}
+                                modalComponent={<BookingForm />} />
+                        </button>
+                    )}
+
                 </div>
             </div>
             <div>
