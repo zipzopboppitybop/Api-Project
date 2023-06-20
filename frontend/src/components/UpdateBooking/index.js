@@ -26,6 +26,7 @@ function UpdateBooking({ disabled, currentBooking }) {
   const { closeModal } = useModal();
   let buttonClassName = "booking-submit";
   let buttonDisabled = false;
+  let beforeStart = endDate > startDate ? "" : "Check Out cannot be before Check In!";
 
   const vals = {
     userId: user.id,
@@ -82,6 +83,9 @@ function UpdateBooking({ disabled, currentBooking }) {
     <>
       <form className="booking-form" onSubmit={handleSubmit} >
         {errors.startDate || errors.endDate ? <p className='error booking-error'>Sorry these dates are booked, please look at the Unavailable Dates to make sure you can book.</p> : ""}
+        <p className='error booking-error'>
+          {beforeStart}
+        </p>
 
         <h1 >Your trip</h1>
         <div className="select-dates">

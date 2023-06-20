@@ -31,6 +31,7 @@ function BookingForm() {
   const { closeModal } = useModal();
   let buttonClassName = "booking-submit";
   let buttonDisabled = false;
+  let beforeStart = endDate > startDate ? "" : "Check Out cannot be before Check In!";
 
   for (const booking in bookings) {
     if (bookings[booking].endDate > today) {
@@ -101,6 +102,9 @@ function BookingForm() {
       <form className="booking-form" onSubmit={handleSubmit} >
         {errors.startDate || errors.endDate ? <p className='error booking-error'>Sorry these dates are booked, please look at the Unavailable Dates to make sure you can book.</p> : ""}
         {errors.user ? <p className="error booking-error">{errors.user}</p> : ""}
+        <p className='error booking-error'>
+          {beforeStart}
+        </p>
 
 
         <h1 >Your trip</h1>

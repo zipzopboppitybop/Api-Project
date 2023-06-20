@@ -10,7 +10,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
+        ownerId: 3,
         address: "116 East 16th Sreet+",
         city: "New York",
         state: "New York",
@@ -34,7 +34,7 @@ module.exports = {
         price: 321,
       },
       {
-        ownerId: 1,
+        ownerId: 5,
         address: "345 Demolition Derby",
         city: "Waller",
         state: "Texas",
@@ -46,7 +46,7 @@ module.exports = {
         price: 1233,
       },
       {
-        ownerId: 1,
+        ownerId: 2,
         address: "123 Main Street",
         city: "Shoreacres",
         state: "Texas",
@@ -58,7 +58,7 @@ module.exports = {
         price: 139,
       },
       {
-        ownerId: 2,
+        ownerId: 4,
         address: "2001 Greenville Ave",
         city: "Dallas",
         state: "Texas",
@@ -70,7 +70,7 @@ module.exports = {
         price: 12233,
       },
       {
-        ownerId: 2,
+        ownerId: 1,
         address: "40526 Community Road",
         city: "Magnolia",
         state: "Texas",
@@ -82,7 +82,7 @@ module.exports = {
         price: 105,
       },
       {
-        ownerId: 2,
+        ownerId: 5,
         address: "2511 E 2nd St",
         city: "Austin",
         state: "Texas",
@@ -106,7 +106,7 @@ module.exports = {
         price: 369,
       },
       {
-        ownerId: 3,
+        ownerId: 4,
         address: "169 Three Oaks Ln",
         city: "Langley",
         state: "Kentucky",
@@ -130,7 +130,7 @@ module.exports = {
         price: 1363,
       },
       {
-        ownerId: 3,
+        ownerId: 5,
         address: "903 NW 18th St",
         city: "Cape Coral",
         state: "Florida",
@@ -142,7 +142,7 @@ module.exports = {
         price: 1233,
       },
       {
-        ownerId: 3,
+        ownerId: 1,
         address: "531 Deer Crest Heights",
         city: "Blue Ridge",
         state: "Georgia",
@@ -154,7 +154,7 @@ module.exports = {
         price: 1376,
       },
       {
-        ownerId: 4,
+        ownerId: 2,
         address: "1622 Back Valley Rd",
         city: "Trenton",
         state: "Georgia",
@@ -178,7 +178,7 @@ module.exports = {
         price: 281,
       },
       {
-        ownerId: 4,
+        ownerId: 3,
         address: "4 Chem. des Gendarmes",
         city: "Rosoy-en-Multien",
         state: "Hauts-de-France",
@@ -190,7 +190,7 @@ module.exports = {
         price: 364,
       },
       {
-        ownerId: 4,
+        ownerId: 1,
         address: "200 Highway 273",
         city: "Breckenridge",
         state: "Colorado",
@@ -200,7 +200,55 @@ module.exports = {
         name: "Sunrise Ski Haus",
         description: "Ideal for family vacations and groups of friends, Sunrise Ski Haus is a modern 4-bedroom mountain home pocketed away in Christie Heights, one of Breckenridge\'s premier neighborhoods.",
         price: 535,
-      }
+      },
+      {
+        ownerId: 4,
+        address: "5025 Wickel Rd Burton",
+        city: "Round Top",
+        state: "Texas",
+        country: "United States of America",
+        lat: 39.5012367,
+        lng: -106.0782304,
+        name: "The Barn at The White House on the HillRoundTopTx",
+        description: "Just minutes from Round Top TX, The Barn @The White House on the Hill is an elegant renovated rough cedar barn. All the comforts of home accentuated with designer bed linens and an expansive living area. Outside enjoy a 360 view of the countryside. This ain't your grand daddy's barn!",
+        price: 397,
+      },
+      {
+        ownerId: 5,
+        address: "123 main street",
+        city: "Cunningham",
+        state: "Kansa",
+        country: "United States of America",
+        lat: 39.5012367,
+        lng: -106.0782304,
+        name: "Turn-of-the-Century Barn Working Farm/Cattle Ranch",
+        description: "Escape to the Country and stay in our amazing Turn-of-the-Century restored Barn! Nestled along the banks of the Petyt Creek in South Central Kansas . Peaceful, quiet, and lots of Blue Sky! Enjoy the outdoors, hiking, photography, wildlife, and great bird watching as we are located in the peak migration pattern of the Central Flyway. 60 minutes from Wichita, 4 hours from Kansas City. Close to restaurants, shopping, and museums , the towns of Zenda, Kingman, Cunningham, Pratt,& Hutchinson.",
+        price: 173,
+      },
+      {
+        ownerId: 2,
+        address: "185 Stevens Ln",
+        city: "LaFollette",
+        state: "Tennessee",
+        country: "United States of America",
+        lat: 39.5012367,
+        lng: -106.0782304,
+        name: "Norris Lake Barn Loft Apt 1- lake view & access.",
+        description: "Charming 1 bedroom cabin apt with kitchenette and living room. Cabin is located on second story of Horse barn and is accessible by a stair case. Cabin has a private bath and living area, and a beautiful view of Norris lake and mountains. Located on a 140 acre farm surrounded by an additional 260 acres of forest and over 10 miles of old logging trails. Norris Lake is a short hike to fish, boat, hike, bike, wild life, camp and picnics.",
+        price: 170,
+      },
+      {
+        ownerId: 3,
+        address: "3321 Tigerpoint Rd",
+        city: "Brenham",
+        state: "Texas",
+        country: "United States of America",
+        lat: 39.5012367,
+        lng: -106.0782304,
+        name: "12 Armadillos Barndo",
+        description: "Great weekend getaway and activities for all! The 12 Armadillos Barndo is located on 7 beautiful acres of land. The 5000 sq ft inside contains 8 bedrooms, a 6 bed bunk room, and 7.5 baths. There are also 2 couch beds and 2 futons. The grand room contains a custom bar, pool table, table that seats 20, kitchen, living room area, and half bath. The 1500 sq ft covered porch provides a great place to hang out next to the firepit. The back part of the barndo has a ping pong table.",
+        price: 1400,
+      },
     ], {});
   },
 

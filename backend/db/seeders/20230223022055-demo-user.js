@@ -44,6 +44,41 @@ module.exports = {
         email: 'bw49078@gmail.io',
         username: 'bw49078',
         hashedPassword: bcrypt.hashSync('password5')
+      },
+      {
+        firstName: "Michael",
+        lastName: "Tuazon",
+        email: "Michael@gmail.com",
+        username: 'MikeIsTired',
+        hashedPassword: bcrypt.hashSync('password6')
+      },
+      {
+        firstName: "Derrick",
+        lastName: "Truong",
+        email: "Derrick@gmail.com",
+        username: 'DerrickIsAlive?',
+        hashedPassword: bcrypt.hashSync('password7')
+      },
+      {
+        firstName: "Kisha",
+        lastName: "Onia",
+        email: "Kisha@gmail.com",
+        username: 'KishaDying',
+        hashedPassword: bcrypt.hashSync('password8')
+      },
+      {
+        firstName: "Python",
+        lastName: "Master",
+        email: "Python@isbetter.com",
+        username: 'PythonMaster',
+        hashedPassword: bcrypt.hashSync('password9')
+      },
+      {
+        firstName: "Java",
+        lastName: "Script",
+        email: "Javascript@gmail.com",
+        username: 'JSIsSuperior',
+        hashedPassword: bcrypt.hashSync('password10')
       }
     ], {});
   },

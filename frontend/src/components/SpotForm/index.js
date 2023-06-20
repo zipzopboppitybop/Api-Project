@@ -73,7 +73,7 @@ const SpotInput = () => {
 
         if (!name) validations.name = "Name is required";
 
-        if (!price) validations.price = "Price per day is not valid";
+        if (!price || price < 1) validations.price = "Price per day is not valid";
 
         const spot = {
             country,
@@ -86,7 +86,7 @@ const SpotInput = () => {
             SpotImages: [previewImage, imageTwo, imageThree, imageFour, imageFive]
         }
 
-        if (validations.previewImage || validations.imageTwo || validations.imageThree || validations.imageFour || validations.imageFive) {
+        if (validations.previewImage || validations.imageTwo || validations.imageThree || validations.imageFour || validations.imageFive, validations.price) {
             return setErrors(validations)
         } else {
             const createdSpot = await dispatch(createSpot(spot)).catch(

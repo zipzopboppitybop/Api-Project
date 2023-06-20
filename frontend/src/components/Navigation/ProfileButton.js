@@ -58,10 +58,11 @@ function ProfileButton({ user }) {
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+    const extraMargin = "profile-button" + (user ? "" : " extra");
 
     return (
         <>
-            <button className="profile-button" onClick={openMenu}>
+            <button className={extraMargin} onClick={openMenu}>
                 <i className="fas fa-bars icon fa-2x" />
                 <i className="fas fa-user-circle icon fa-2x" />
             </button>
