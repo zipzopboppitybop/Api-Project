@@ -16,16 +16,22 @@ module.exports = {
         endDate: new Date("2022-12-12"),
       },
       {
+        spotId: 1,
+        userId: 1,
+        startDate: new Date("2023-06-17"),
+        endDate: new Date("2023-06-22"),
+      },
+      {
         spotId: 2,
         userId: 3,
-        startDate: new Date("2022-10-14"),
-        endDate: new Date("2022-10-16"),
+        startDate: new Date("2023-10-14"),
+        endDate: new Date("2023-10-16"),
       },
       {
         spotId: 3,
         userId: 1,
-        startDate: new Date("2022-12-01"),
-        endDate: new Date("2023-01-01"),
+        startDate: new Date("2023-12-01"),
+        endDate: new Date("2024-01-01"),
       }
     ], {});
   },

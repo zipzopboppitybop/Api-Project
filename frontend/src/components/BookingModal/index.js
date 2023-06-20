@@ -135,7 +135,7 @@ function BookingForm() {
         <div className="current-bookings">
           Unavailable Dates:
           <ul className="bookings-list-modal">
-            {Object.values(bookings).map(booking => (
+            {upcomingBookings.map(booking => (
               <li key={booking.id} >
                 {monthNames[booking.startDate.slice(5, 7) - 1]} {booking.startDate.slice(8, 10)}-{monthNames[booking.endDate.slice(5, 7) - 1]} {booking.endDate.slice(8, 10)}
               </li>
