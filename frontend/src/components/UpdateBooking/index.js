@@ -41,6 +41,10 @@ function UpdateBooking({ disabled, currentBooking }) {
 
   if (startDate > endDate || !startDate || !endDate) buttonClassName = "booking-submit disabled"
 
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,6 +66,10 @@ function UpdateBooking({ disabled, currentBooking }) {
     dispatch(getOneSpot(currentBooking.spotId));
     dispatch(getBookingsSpot(currentBooking.spotId))
     dispatch(getCurrentUserBookings())
+
+    if (isEmpty(validations)) {
+      closeModal();
+    }
 
   };
 

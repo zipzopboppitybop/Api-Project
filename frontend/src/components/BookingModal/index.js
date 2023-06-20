@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { writeBooking, getBookingsSpot } from "../../store/bookings";
+import { writeBooking, getBookingsSpot, getCurrentUserBookings } from "../../store/bookings";
 import { getOneSpot } from "../../store/spots";
 
 function BookingForm() {
+  const history = useHistory();
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
     "July", "Aug", "Sept", "Oct", "Nov", "Dec"
   ];
@@ -37,15 +39,26 @@ function BookingForm() {
   }
 
   useEffect(() => {
+    if (!user) {
+      buttonClassName = "booking-submit disabled"
+    } else buttonClassName = "booking-submit"
     dispatch(getOneSpot(spot.id));
     dispatch(getBookingsSpot(spot.id));
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   if (startDate > endDate) buttonClassName = "booking-submit disabled"
+
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validations = {};
+
+    if (!user) validations.user = "Please Log in before trying to book!";
+
+    setErrors(validations)
 
     const newBooking = {
       userId: user.id,
@@ -58,17 +71,24 @@ function BookingForm() {
         const data = await res.json();
 
         if (data && data.errors) {
+          console.log(data)
           if (data.errors.startDate) validations.startDate = data.errors.startDate;
 
           if (data.errors.endDate) validations.endDate = data.errors.endDate;
 
+
+
           return setErrors(validations);
-        }
+        } else return successBooking;
       }
     )
     dispatch(getOneSpot(spot.id));
     dispatch(getBookingsSpot(spot.id))
-
+    dispatch(getCurrentUserBookings());
+    if (isEmpty(validations)) {
+      closeModal();
+      history.push("/bookings/current");
+    }
   };
 
   const cancel = (e) => {
@@ -80,6 +100,7 @@ function BookingForm() {
     <>
       <form className="booking-form" onSubmit={handleSubmit} >
         {errors.startDate || errors.endDate ? <p className='error booking-error'>Sorry these dates are booked, please look at the Unavailable Dates to make sure you can book.</p> : ""}
+        {errors.user ? <p className="error booking-error">{errors.user}</p> : ""}
 
 
         <h1 >Your trip</h1>

@@ -17,7 +17,7 @@
 
 .profile-dropdown-list-item {
     width: 200px;
-    margin-top: 1.5%;
+    margin-top: 2%;
 }
 
 .up {
@@ -29,7 +29,7 @@
     list-style: none;
     border: 2px solid black;
     width: 150px;
-    margin-top: 2%;
+    margin-top: 5%;
     margin-left: 10%;
     padding: 10px;
     background-color: white;
@@ -39,7 +39,7 @@
 .profile-button {
     width: 100px;
     border-radius: 40px;
-    margin-top: 25%;
+    margin-top: 40%;
 }
 
 .email {
@@ -616,4 +616,23 @@ button,
 
 .booking-item {
     margin-right: 1rem;
+}
+
+.about {
+    margin-left: 25%;
+}
+
+.footer {
+    position: fixed;
+    color: black;
+    bottom: -1.5rem;
+    width: 100%;
+    display: flex;
+    background-color: white;
+    border-top: solid 1px black;
+    margin-left: -3rem;
+}
+
+.link {
+    margin-left: 1rem;
 }

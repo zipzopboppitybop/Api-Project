@@ -16,6 +16,25 @@ function Navigation({ isLoaded }) {
             <>
                 <NavLink exact to="/" className='logo'><img style={{ width: 50 }} /> <img className='logo-image' src={image} />  <span className='title'>briarbnb</span></NavLink>
             </>
+            <>
+                <h1 className='footer'>
+                    Brian Washington :
+                    <a
+                        href='https://github.com/zipzopboppitybop'
+                        target='_blank'>
+                        <i className="fa fa-github link">
+                        </i>
+                    </a>
+                    <a
+                        href='https://www.linkedin.com/in/brian-washington-668129244/'
+                        target='_blank'>
+                        <i className="fa fa-linkedin link">
+                        </i>
+                    </a>
+                </h1>
+
+
+            </>
             {isLoaded && (
                 <>
                     <li className={createSpotClassName}><NavLink className="link" to={"/spots/new"}>Create a New Spot</NavLink></li>

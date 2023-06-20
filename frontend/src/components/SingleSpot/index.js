@@ -4,6 +4,8 @@ import { getOneSpot } from '../../store/spots';
 import { useEffect } from 'react';
 import { getReviewsSpot } from '../../store/reviews';
 import { getBookingsSpot } from '../../store/bookings';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal';
 import ReviewForm from '../ReviewModal';
 import ReviewFormModal from '../ReviewModal/ReviewFormModal';
 import SingleSpotReviewItem from '../SingleSpotReviewItem';
@@ -58,9 +60,19 @@ const SingleSpot = () => {
         else return ""
     }
 
+    // const reserveButton = () => {
+    //     if (!sessionUser) return ()
+    //     else if (spot.ownerId === sessionUser?.id) {
+    //         <button className="not-possible">
+    //             Not Possible
+    //         </button>
+    //     }
+    // }
+
     if (!spot) return null;
 
     return (
+
         <div className='singleSpot'>
             <h1 className='content content-title'>{spot.name}</h1>
             <h3 className='content'>{spot.city}, {spot.state}, {spot.country} </h3>
@@ -87,7 +99,8 @@ const SingleSpot = () => {
                         {spot.avgStarRating > 0 ? (Number.parseFloat(spot.avgStarRating).toFixed(2)) : ("New")}  {dot()} {spot.numReviews > 0 ? spot.numReviews : ""} {numReviews}
                     </p>
 
-                    {spot.ownerId === sessionUser.id ? (
+
+                    {spot.ownerId === sessionUser?.id ? (
                         <button className="not-possible">
                             Not Possible
                         </button>
@@ -98,6 +111,7 @@ const SingleSpot = () => {
                                 modalComponent={<BookingForm />} />
                         </button>
                     )}
+
 
                 </div>
             </div>
