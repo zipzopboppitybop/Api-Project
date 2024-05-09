@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/zipzopboppitybop/BriarBnB/issues"
   },
-  "homepage": "https://github.com/zipzopboppitybop/BriarBnB#readme"
+  "homepage": "https://github.com/zipzopboppitybop/BriarBnB#readme",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
 }
