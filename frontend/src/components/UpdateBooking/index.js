@@ -24,16 +24,9 @@ function UpdateBooking({ disabled, currentBooking }) {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const upcomingBookings = [];
   let buttonClassName = "booking-submit";
   let buttonDisabled = false;
   let beforeStart = endDate > startDate ? "" : "Check Out cannot be before Check In!";
-
-  for (const booking in bookings) {
-    if (bookings[booking].endDate > today) {
-      upcomingBookings.push(bookings[booking])
-    }
-  }
 
   const vals = {
     userId: user.id,
@@ -122,7 +115,7 @@ function UpdateBooking({ disabled, currentBooking }) {
         <div className="current-bookings">
           Unavailable Dates:
           <ul className="bookings-list-modal">
-            {upcomingBookings.map(booking => (
+            {Object.values(bookings).map(booking => (
               <li key={booking.id} >
                 {monthNames[booking.startDate.slice(5, 7) - 1]} {booking.startDate.slice(8, 10)}-{monthNames[booking.endDate.slice(5, 7) - 1]} {booking.endDate.slice(8, 10)}
               </li>

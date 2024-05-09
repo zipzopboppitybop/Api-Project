@@ -210,7 +210,7 @@ module.exports = {
         lat: 39.5012367,
         lng: -106.0782304,
         name: "The Barn at The White House on the HillRoundTopTx",
-        description: "Just minutes from Round Top TX, The Barn @The White House on the Hill is an elegant renovated rough cedar barn. ",
+        description: "Just minutes from Round Top TX, The Barn @The White House on the Hill is an elegant renovated rough cedar barn. All the comforts of home accentuated with designer bed linens and an expansive living area. Outside enjoy a 360 view of the countryside. This ain't your grand daddy's barn!",
         price: 397,
       },
       {
@@ -222,7 +222,7 @@ module.exports = {
         lat: 39.5012367,
         lng: -106.0782304,
         name: "Turn-of-the-Century Barn Working Farm/Cattle Ranch",
-        description: "Escape to the Country and stay in our amazing Turn-of-the-Century restored Barn! Nestled along the banks of the Petyt Creek in South Central Kansas . ",
+        description: "Escape to the Country and stay in our amazing Turn-of-the-Century restored Barn! Nestled along the banks of the Petyt Creek in South Central Kansas . Peaceful, quiet, and lots of Blue Sky! Enjoy the outdoors, hiking, photography, wildlife, and great bird watching as we are located in the peak migration pattern of the Central Flyway. 60 minutes from Wichita, 4 hours from Kansas City. Close to restaurants, shopping, and museums , the towns of Zenda, Kingman, Cunningham, Pratt,& Hutchinson.",
         price: 173,
       },
       {
@@ -234,7 +234,7 @@ module.exports = {
         lat: 39.5012367,
         lng: -106.0782304,
         name: "Norris Lake Barn Loft Apt 1- lake view & access.",
-        description: "Charming 1 bedroom cabin apt with kitchenette and living room. ",
+        description: "Charming 1 bedroom cabin apt with kitchenette and living room. Cabin is located on second story of Horse barn and is accessible by a stair case. Cabin has a private bath and living area, and a beautiful view of Norris lake and mountains. Located on a 140 acre farm surrounded by an additional 260 acres of forest and over 10 miles of old logging trails. Norris Lake is a short hike to fish, boat, hike, bike, wild life, camp and picnics.",
         price: 170,
       },
       {
@@ -246,7 +246,7 @@ module.exports = {
         lat: 39.5012367,
         lng: -106.0782304,
         name: "12 Armadillos Barndo",
-        description: "Great weekend getaway and activities for all! ",
+        description: "Great weekend getaway and activities for all! The 12 Armadillos Barndo is located on 7 beautiful acres of land. The 5000 sq ft inside contains 8 bedrooms, a 6 bed bunk room, and 7.5 baths. There are also 2 couch beds and 2 futons. The grand room contains a custom bar, pool table, table that seats 20, kitchen, living room area, and half bath. The 1500 sq ft covered porch provides a great place to hang out next to the firepit. The back part of the barndo has a ping pong table.",
         price: 1400,
       },
     ], {});
