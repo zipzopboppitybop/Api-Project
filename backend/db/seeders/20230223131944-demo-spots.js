@@ -54,7 +54,7 @@ module.exports = {
         lat: 20.7645358,
         lng: -90.4730327,
         name: "The Carriage House Near the Shore",
-        description: "Newly built, beautifully appointed, private carriage house next to Federalist style home on half acre in quiet community on the shores of Galveston Bay.",
+        description: "to Federalist style home on half acre in quiet community on the shores of Galveston Bay.",
         price: 139,
       },
       {
@@ -114,7 +114,7 @@ module.exports = {
         lat: 37.5270526,
         lng: -82.7917978,
         name: "The Bluegrass Palace",
-        description: "There is a special place, nestled amidst the rolling hills of Kentucky bluegrass, where 29,000 square feet of unmitigated luxury welcomes you. Where the private gates open to a 9 acre idyllic paradise all your own.",
+        description: "luegrass, where 29,000 square feet of unmitigated luxury welcomes you. Where the private gates open to a 9 acre idyllic paradise all your own.",
         price: 778,
       },
       {
